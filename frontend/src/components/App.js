@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import RegistrationForm from "./registration/RegistrationForm";
 
 export class App extends Component {
   render() {
-    return <h1>Hello world!</h1>;
+    return (
+      <div>
+        <RegistrationForm />
+      </div>
+    )
   }
 }
 
