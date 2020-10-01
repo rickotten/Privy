@@ -27,7 +27,7 @@ SECRET_KEY = '92_nx2stvk6r1%=gdr1e%3b^ns17s6s%+zqwq#6xgb(y&v+gi7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['privy-testing.herokuapp.com']
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -141,4 +141,4 @@ STATIC_URL = '/static/'
 #Keep this commented for local deployments, uncomment for heroku deployment
 #Additional settings on heroku will be required for the heroku deployment
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
