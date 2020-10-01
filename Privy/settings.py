@@ -86,8 +86,14 @@ WSGI_APPLICATION = 'Privy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        "CLIENT": {
+           "name": 'PrivyDb',
+           "host": 'mongodb+srv://PrivyDBAdminUser:LnncBVPuQiSWMj31@cluster0.mygtz.gcp.mongodb.net/PrivyDb?retryWrites=true&w=majority',
+           "username": 'PrivyDBAdminUser',
+           "password": 'LnncBVPuQiSWMj31',
+           "authMechanism": "SCRAM-SHA-1",
+        }, 
     }
 }
 
@@ -131,4 +137,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-django_heroku.settings(locals())
+
+#Keep this commented for local deployments, uncomment for heroku deployment
+#Additional settings on heroku will be required for the heroku deployment
+
+#django_heroku.settings(locals())
