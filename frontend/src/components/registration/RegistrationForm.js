@@ -19,9 +19,9 @@ export class RegistrationForm extends Component {
     render() {
         const { username, email, password, password2 } = this.state;
         return (
-            <div>
-                {/* REGISTRATION SECTION */}
-                <div>
+            <div className="col-md-6 m-auto">
+                <div className="card card-body mt-5">
+                    <h2 className="text-center">Register</h2>
                     <form onSubmit={this.onSubmit}>
                         {/* email, username, password*/}
                         <div className="form-group">
@@ -29,7 +29,7 @@ export class RegistrationForm extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
+                                name="email"
                                 onChange={this.onChange}
                                 value={email}
                             />
@@ -116,26 +116,9 @@ export class RegistrationForm extends Component {
                         </div>
 
                         <button type="submit" className="btn btn-primary">Register!</button>
-                    </form>
-
-
-                </div>
-
-                {/* LOGIN SECTION */}
-                <div>
-                    <form onSubmit={this.onSubmit}>
-                        {/* email/username, password*/}
-                        <div className="form-group">
-                            <label htmlFor="emailOrUsernameInput">Email or Username</label>
-                            <input className="form-control" id="emailInput" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="passwordInput">Password</label>
-                            <input type="password" className="form-control" id="passwordInput" />
-                        </div>
-                        <button type="submit" className="btn btn-danger">forgot password</button>
-
-                        <button type="submit" className="btn btn-primary">login</button>
+                        <p>
+                            Already have an account? <Link to="/login">Login</Link>
+                        </p>
                     </form>
                 </div>
             </div>

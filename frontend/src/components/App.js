@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import RegistrationForm from "./registration/RegistrationForm";
+import LoginForm from "./login/LoginForm";
 import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
 
@@ -21,8 +22,9 @@ export class App extends Component {
           <Fragment>
             <div className="container">
               <Switch>
-                <Route exact path="/" component={RegistrationForm} />
-                <PrivateRoute exact path="/user" component={User} />
+                <PrivateRoute exact path="/" component={User} />
+                <Route exact path="/register" component={RegistrationForm} />
+                <Route exact path="/login" component={LoginForm} />
               </Switch>
             </div>
           </Fragment>
