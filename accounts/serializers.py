@@ -38,7 +38,7 @@ class ForgotSerializer(serializers.Serializer):
     email = serializers.CharField()
 
     def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
+        if User.objects.filter(email = data.email).exists():
+            return True
+        else:
+            raise serializers.ValidationError("Incorrect Credentials")

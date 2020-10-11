@@ -129,8 +129,11 @@ export const forgot = (email) => (dispatch) => {
     // Request Body
     const body = JSON.stringify({ email });
 
+    console.log(body);
+
     axios.post('/api/auth/forgot', body, config)
         .then(res => {
+            console.log("RES DATA: ", res.data);
             dispatch({
                 type: FORGOT_SUCCESS,
                 payload: res.data

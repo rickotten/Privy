@@ -29,7 +29,6 @@ export class ForogtCredentialsForm extends Component {
             return <Redirect to="/register" />;
         }
         const { email, answer1, answer2, answer3 } = this.state;
-        console.log("forgot NOT authenticaded");
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
