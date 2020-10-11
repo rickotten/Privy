@@ -2,32 +2,34 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { login } from '../../actions/auth';
+import { forgot } from '../../actions/auth';
 
 
-export class LoginForm extends Component {
+export class ForogtCredentialsForm extends Component {
     state = {
-        username: "",
-        password: ""
+        email: ""
     }
 
     static propTypes = {
-        login: PropTypes.func.isRequired,
+        //login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     }
 
     onSubmit = e => {
         e.preventDefault();
-        this.props.login(this.state.username, this.state.password);
+        console.log("EMAIL: " + this.state.email);
+        this.props.forgot(this.state.email);
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     render() {
         if (this.props.isAuthenticated) {
-            return <Redirect to="/" />;
+            console.log("forgot authenticaded");
+            return <Redirect to="/register" />;
         }
-        const { username, password } = this.state;
+        const { email, answer1, answer2, answer3 } = this.state;
+        console.log("forgot NOT authenticaded");
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
@@ -38,9 +40,9 @@ export class LoginForm extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
+                                name="email"
                                 onChange={this.onChange}
-                                value={username}
+                                value={email}
                             />
                         </div>
                         <div className="form-group">
@@ -48,9 +50,9 @@ export class LoginForm extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
+                                name="answer1"
                                 onChange={this.onChange}
-                                value={username}
+                                value={answer1}
                             />
                         </div>
                         <div className="form-group">
@@ -58,9 +60,9 @@ export class LoginForm extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
+                                name="answer2"
                                 onChange={this.onChange}
-                                value={username}
+                                value={answer2}
                             />
                         </div>
                         <div className="form-group">
@@ -68,9 +70,9 @@ export class LoginForm extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
+                                name="answer3"
                                 onChange={this.onChange}
-                                value={username}
+                                value={answer3}
                             />
                         </div>
                         <div className="form-group">
@@ -89,4 +91,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { login })(LoginForm)
+export default connect(mapStateToProps, { forgot })(ForogtCredentialsForm)
