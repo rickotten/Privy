@@ -48,7 +48,7 @@ class ForgotSerializer(serializers.Serializer):
         users = User.objects.all()
         for user in users:
             logger.error(user.email)
-    #    if User.objects.filter(email = data.email).exists():
-    #        return True
-    #    else:
-    #        raise serializers.ValidationError("Incorrect Credentials")
+            if data.get('email') == user.email:
+                logger.error('match!!!')
+                return data.get('email')
+        raise serializers.ValidationError("Email not associted with any account")
