@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ForgotSerializer
+import logging
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -55,6 +56,9 @@ class ForgotAPI(generics.GenericAPIView):
     serializer_class = ForgotSerializer
 
     def post(self, request, *args, **kwargs):
+        logger = logging.getLogger(__name__)
+        #logger.error(request.data.email)
+        
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         exists = serializer.validated_data
