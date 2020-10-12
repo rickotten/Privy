@@ -9,7 +9,9 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    GOOGLE_OAUTH_FAILURE,
+    GOOGLE_OAUTH_SUCCESS,
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -29,6 +31,32 @@ export const loadUser = () => (dispatch, getState) => {
                 type: AUTH_ERROR,
             })
         });
+}
+
+// GOOGLE OAUTH TO REGISTER/LOGIN USER
+export const google_oauth = (access_token) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({access_token});
+
+    axios.post('/social/google-oauth2/', body, config)
+        .then(res => {
+            dispatch({
+                type: GOOGLE_OAUTH_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: GOOGLE_OAUTH_FAILURE,
+            });
+        })
 }
 
 // LOGIN USER
@@ -53,7 +81,7 @@ export const login = (username, password) => (dispatch) => {
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: LOGIN_FAIL,
-            })
+            });
         });
 }
 

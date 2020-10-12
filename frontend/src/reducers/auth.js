@@ -6,11 +6,14 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    GOOGLE_OAUTH_FAILURE,
+    GOOGLE_OAUTH_SUCCESS
 } from '../actions/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
+    accessToken: localStorage.getItem('accessToken'),
     isAuthenticated: null,
     isLoading: false,
     user: null
@@ -30,6 +33,15 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 user: action.payload
             }
+        
+            // localStorage.setItem('token', action.payload.token);
+            // return {
+            //     ...state,
+            //     ...action.payload,
+            //     isAuthenticated: true,
+            //     isLoading: false
+            // }
+        case GOOGLE_OAUTH_SUCCESS:
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token);
@@ -43,10 +55,13 @@ export default function (state = initialState, action) {
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
+        case GOOGLE_OAUTH_FAILURE:
             localStorage.removeItem('token');
+            localStorage.removeItem('accessToken');
             return {
                 ...state,
                 token: null,
+                accessToken: null,
                 user: null,
                 isAuthenticated: false,
                 isLoading: false

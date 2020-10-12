@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { login } from '../../actions/auth';
+import GoogleOAuth from '../oauth/GoogleOAuth';
 
 
 export class LoginForm extends Component {
@@ -60,6 +61,9 @@ export class LoginForm extends Component {
                         </div>
                         <p>
                             Don't have an account? <Link to="/register">Register</Link>
+                        </p>
+                        <p>
+                            <GoogleOAuth/>
                         </p>
                     </form>
                 </div>

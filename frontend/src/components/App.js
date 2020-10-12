@@ -11,6 +11,8 @@ import LoginForm from "./login/LoginForm";
 import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
 
+import GoogleOAuth from './oauth/GoogleOAuth';
+
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
