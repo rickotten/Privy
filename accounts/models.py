@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import User
 
 # Create your models here.
 class User(AbstractUser):
