@@ -36,19 +36,19 @@ class LoginSerializer(serializers.Serializer):
 
 # Forgot Serializer
 class ForgotSerializer(serializers.Serializer):
-    #logger = logging.getLogger(__name__)
-    #logger.error(User.objects.all())
     
+    # grab the user input
     email = serializers.CharField()
-    #logger.error(User.email)
-
+    
     def validate(self, data):
-        logger = logging.getLogger(__name__)
-        logger.error(data.get('email'))
+        
+        # retrieve all registered users
         users = User.objects.all()
+
+        # if there us a matching email, return it
         for user in users:
-            logger.error(user.email)
             if data.get('email') == user.email:
-                logger.error('match!!!')
                 return data.get('email')
+
+        # otherwise raise an error
         raise serializers.ValidationError("Email not associted with any account")

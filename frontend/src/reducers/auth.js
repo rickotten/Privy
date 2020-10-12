@@ -41,14 +41,6 @@ export default function (state = initialState, action) {
                 isAuthenticated: true,
                 isLoading: false
             }
-        case FORGOT_SUCCESS:
-            return {
-                ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.payload
-            }
-        case FORGOT_FAIL:
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:

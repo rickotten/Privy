@@ -11,23 +11,20 @@ export class ForogtCredentialsForm extends Component {
     }
 
     static propTypes = {
-        //login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     }
 
     onSubmit = e => {
         e.preventDefault();
         console.log("EMAIL: " + this.state.email);
+
+        // send this to forgot request in actions/auth.js
         this.props.forgot(this.state.email);
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     render() {
-        if (this.props.isAuthenticated) {
-            console.log("forgot authenticaded");
-            return <Redirect to="/register" />;
-        }
         const { email, answer1, answer2, answer3 } = this.state;
         return (
             <div className="col-md-6 m-auto">
