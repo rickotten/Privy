@@ -27,7 +27,7 @@ SECRET_KEY = '92_nx2stvk6r1%=gdr1e%3b^ns17s6s%+zqwq#6xgb(y&v+gi7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['privy-testing.herokuapp.com']
+ALLOWED_HOSTS = ['privy-jc.herokuapp.com']
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -88,12 +88,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": 'PrivyDb',
-           "host": 'mongodb+srv://PrivyDBAdminUser:LnncBVPuQiSWMj31@cluster0.mygtz.gcp.mongodb.net/PrivyDb?retryWrites=true&w=majority',
-           "username": 'PrivyDBAdminUser',
-           "password": 'LnncBVPuQiSWMj31',
-           "authMechanism": "SCRAM-SHA-1",
-        }, 
+            "name": "Project 0",
+            "host": "mongodb+srv://Privy_Master:fqZZDafGVD0NmwE0@privy.vywyz.mongodb.net/Privy?retryWrites=true&w=majority",
+            "username": "Privy_Master",
+            "password": "fqZZDafGVD0NmwE0",
+            "authMechanism": "SCRAM-SHA-1",
+        },
     }
 }
 
