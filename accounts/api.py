@@ -90,7 +90,7 @@ class ForgotAPI(generics.GenericAPIView):
             subject='Forgot Password',
             html_content='Here is your temporary password:<br>' + generated_password)
         try:
-            sg = SendGridAPIClient(os.environ.get('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'))
+            sg = SendGridAPIClient('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')
             response = sg.send(message)
             print(response.status_code)
             print(response.body)

@@ -15,6 +15,7 @@ psycopg2-binary = "*"
 requests = "*"
 djongo = "*"
 dnspython = "*"
+sendgrid = "*"
 
 [requires]
 python_version = "3.8"
