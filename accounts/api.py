@@ -1,11 +1,17 @@
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+import os
+import random
+import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework import status
 from knox.models import AuthToken
-<<<<<<< HEAD
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer
+
+
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -13,15 +19,6 @@ from rest_framework.permissions import AllowAny
 from requests.exceptions import HTTPError
 
 from social_django.utils import psa
-=======
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ForgotSerializer
-import logging
-import random
-
-import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
->>>>>>> master
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
