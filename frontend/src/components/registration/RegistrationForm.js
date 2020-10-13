@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { register } from '../../actions/auth';
 import { createMessage } from '../../actions/errors';
 import GoogleOAuth from '../oauth/GoogleOAuth';
+import FacebookOAuth from '../oauth/FacebookOAuth';
 
 export class RegistrationForm extends Component {
     state = {
@@ -144,6 +145,9 @@ export class RegistrationForm extends Component {
                         </p>
                         <p>
                         <GoogleOAuth/>
+                        </p>
+                        <p>
+                            <FacebookOAuth/>
                         </p>
                     </form>
                 </div>

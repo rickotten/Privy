@@ -12,6 +12,8 @@ import {
     REGISTER_SUCCESS,
     GOOGLE_OAUTH_FAILURE,
     GOOGLE_OAUTH_SUCCESS,
+    FACEBOOK_OAUTH_FAILURE,
+    FACEBOOK_OAUTH_SUCCESS
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -31,6 +33,31 @@ export const loadUser = () => (dispatch, getState) => {
                 type: AUTH_ERROR,
             })
         });
+}
+
+export const facebook_oauth = (access_token) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({ access_token });
+
+    axios.post('/social/facebook/', body, config)
+        .then(res => {
+            dispatch({
+                type: FACEBOOK_OAUTH_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: FACEBOOK_OAUTH_FAILURE,
+            });
+        })
 }
 
 // GOOGLE OAUTH TO REGISTER/LOGIN USER

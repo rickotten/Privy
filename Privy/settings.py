@@ -60,6 +60,8 @@ REST_FRAMEWORK = {
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-zWijk9baxNPQQBJqJ-6KTFI'
+SOCIAL_AUTH_FACEBOOK_KEY = '4397489906992106'
+SOCIAL_AUTH_FACEBOOK_SECRET = '02fdbab2fc3f849406f90c443ca43652'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
@@ -80,6 +82,7 @@ SOCIAL_AUTH_PIPELINE = (
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { login } from '../../actions/auth';
 import GoogleOAuth from '../oauth/GoogleOAuth';
+import FacebookOAuth from '../oauth/FacebookOAuth';
 
 
 export class LoginForm extends Component {
@@ -64,6 +65,9 @@ export class LoginForm extends Component {
                         </p>
                         <p>
                             <GoogleOAuth/>
+                        </p>
+                        <p>
+                            <FacebookOAuth/>
                         </p>
                     </form>
                 </div>
