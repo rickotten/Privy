@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 # from django.contrib.auth.models import User
 from .models import User
-from django.contrib.auth import authenticate
+
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -42,4 +43,24 @@ class SocialSerializer(serializers.Serializer):
         allow_blank=False,
         trim_whitespace=True,
     )
+
+# Forgot Serializer
+class ForgotSerializer(serializers.Serializer):
+
+    # grab the user input
+    email = serializers.CharField()
+
+    def validate(self, data):
+
+        # retrieve all registered users
+        users = User.objects.all()
+
+        # if there us a matching email, return it
+        for user in users:
+            if data.get('email') == user.email:
+                return data.get('email')
+
+        # otherwise raise an error
+        raise serializers.ValidationError(
+            "Email not associted with any account")
 

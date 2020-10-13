@@ -10,7 +10,9 @@ import {
     GOOGLE_OAUTH_FAILURE,
     GOOGLE_OAUTH_SUCCESS,
     FACEBOOK_OAUTH_FAILURE,
-    FACEBOOK_OAUTH_SUCCESS
+    FACEBOOK_OAUTH_SUCCESS,
+    FORGOT_SUCCESS,
+    FORGOT_FAIL
 } from '../actions/types';
 
 const initialState = {

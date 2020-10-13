@@ -10,6 +10,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import LoginForm from "./login/LoginForm";
 import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
+import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
 
 import GoogleOAuth from './oauth/GoogleOAuth';
 
@@ -40,6 +41,7 @@ export class App extends Component {
                   <PrivateRoute exact path="/" component={User} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
+                  <Route exact path="/forgot" component={ForgotCredentialsForm} />
                 </Switch>
               </div>
             </Fragment>

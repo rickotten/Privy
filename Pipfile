@@ -17,6 +17,7 @@ requests = "*"
 djongo = "*"
 dnspython = "*"
 social-auth-app-django = "*"
+sendgrid = "*"
 
 [requires]
 python_version = "3.8"

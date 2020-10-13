@@ -13,7 +13,9 @@ import {
     GOOGLE_OAUTH_FAILURE,
     GOOGLE_OAUTH_SUCCESS,
     FACEBOOK_OAUTH_FAILURE,
-    FACEBOOK_OAUTH_SUCCESS
+    FACEBOOK_OAUTH_SUCCESS,
+    FORGOT_SUCCESS,
+    FORGOT_FAIL
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -168,4 +170,30 @@ export const tokenConfig = getState => {
         config.headers['Authorization'] = `Token ${token}`;
     }
     return config;
+}
+
+// FORGOT CREDENTIALS
+export const forgot = (email) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({ email });
+
+    axios.post('/api/auth/forgot', body, config)
+        .then(res => {
+            dispatch({
+                type: FORGOT_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: FORGOT_FAIL,
+            })
+        });
 }

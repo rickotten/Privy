@@ -69,6 +69,9 @@ export class LoginForm extends Component {
                         <p>
                             <FacebookOAuth/>
                         </p>
+                        <p>
+                            Forgot your username or password? <Link to="/forgot">Forgot</Link>
+                        </p>
                     </form>
                 </div>
             </div>
