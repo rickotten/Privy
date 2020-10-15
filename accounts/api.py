@@ -20,6 +20,9 @@ from requests.exceptions import HTTPError
 
 from social_django.utils import psa
 
+from django.contrib.auth import authenticate
+from .models import User
+
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -172,13 +175,20 @@ class ForgotAPI(generics.GenericAPIView):
         for x in range(10):
             random_number = random.randint(0, 9)
             generated_password = generated_password + str(random_number)
+
+        # update user password to the newly generated one and retrieve username
+        u = User.objects.get(email=validated_email)
+        u.set_password(generated_password)
+        u.save()
+        retrieved_username = u.username
         
         # send a new password to the email address
         message = Mail(
             from_email='privy_support@protonmail.com',
             to_emails=validated_email,
             subject='Forgot Password',
-            html_content='Here is your temporary password:<br>' + generated_password)
+            html_content='Here is your username: ' + retrieved_username + 
+            '<br>Here is your temporary password: ' + generated_password)
         try:
             sg = SendGridAPIClient('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')
             response = sg.send(message)
