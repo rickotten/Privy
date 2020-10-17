@@ -50,6 +50,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',)
 }
 
+
+
+#AUTHENTICATION_BACKENDS = ['path.to.auth.module.CustomBackend']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,10 +92,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-            "name": "Project 0",
-            "host": "mongodb+srv://Privy_Master:fqZZDafGVD0NmwE0@privy.vywyz.mongodb.net/Privy?retryWrites=true&w=majority",
+            "name": "PrivyDB",
+            "host": "mongodb+srv://Privy_Master:8GKkP61syUJwwzbR@cluster0.esnfd.mongodb.net/PrivyDB?retryWrites=true&w=majority",
             "username": "Privy_Master",
-            "password": "fqZZDafGVD0NmwE0",
+            "password": "8GKkP61syUJwwzbR",
             "authMechanism": "SCRAM-SHA-1",
         },
     }
