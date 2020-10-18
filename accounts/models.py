@@ -12,6 +12,6 @@ class UserPost(models.Model):
 
     def __str__(self):
         """A string representation of the model."""
-        return self.id
+        return str(self.id)
 
 

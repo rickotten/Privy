@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
-from .models import UserPost
+from .models import UserPost, User
 
 
 
@@ -215,20 +215,11 @@ class UserPostCreateAPI(generics.GenericAPIView):
             }
         )
 
-#UserPost GET API NEEDS TO BE FINISHED
+#UserPost GET request 
 class UserPostGetAPI(generics.ListAPIView):
     
     serializer_class = UserPostSerializer
 
     def get_queryset(self):
-        return UserPost.objects.filter(author=self.request.user.username)
-
-# Get User API
-#class UserAPI(generics.RetrieveAPIView):
- #   permission_classes = [
-  #      permissions.IsAuthenticated,
-   # ]
-    #serializer_class = UserSerializer
-
-    #def get_object(self):
-     #   return self.request.user
+        user = User.objects.get(username=self.request.user.username)
+        return UserPost.objects.filter(author=user)
