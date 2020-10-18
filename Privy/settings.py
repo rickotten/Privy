@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'frontend',
     'accounts',
     'knox',
-    'social_django',
+    'social_django'
 ]
 
 REST_FRAMEWORK = {
@@ -124,14 +124,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": 'PrivyDB',
-           "host": 'mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority',
+           "name": 'PrivyDb',
+           "host": 'mongodb+srv://PrivyDBAdminUser:LnncBVPuQiSWMj31@cluster0.mygtz.gcp.mongodb.net/PrivyDb?retryWrites=true&w=majority',
            "username": 'PrivyDBAdminUser',
-           "password": 'mP2JQ1a0wkN8BY43',
+           "password": 'LnncBVPuQiSWMj31',
            "authMechanism": "SCRAM-SHA-1",
-        },
+        }, 
     }
 }
+
 
 
 # Password validation
