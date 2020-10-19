@@ -16,9 +16,8 @@ export class User extends Component {
             <div>
                 <NavigationBar />
                 <h2>Hello you are logged in as {user['username']}</h2>
-
+                 
                 <button onClick={this.props.logout} className="btn btn-info btn-sm text-light">Logout</button>
-
             </div>
         )
     }
