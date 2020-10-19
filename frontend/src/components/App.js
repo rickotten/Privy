@@ -27,7 +27,6 @@ const alertOptions = {
 export class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
-    store.dispatch(get_user_posts());
   }
 
   render() {

@@ -4,12 +4,10 @@ import UserPost from '../posts/UserPost';
 import { Jumbotron } from "react-bootstrap";
 import User from '../user/User';
 import { connect } from "react-redux";
-import { get_user_posts } from "../../actions/posts";
-import PropTypes, { array } from 'prop-types'
+import PropTypes from 'prop-types'
 
 export class HomePage extends Component {
     static propTypes = {
-        get_user_posts: PropTypes.func.isRequired,
         posts: PropTypes.object.isRequired
     }
 
@@ -26,9 +24,11 @@ export class HomePage extends Component {
             commentCount: 10
         };
         const { _, userPosts } = this.props.posts;
-        userPosts.forEach(post => {
-            this.userPosts.push(<UserPost key={post.id} tempContent={tempContent} post={post}/>);
-        });
+        if (userPosts) {
+            userPosts.forEach(post => {
+                this.userPosts.push(<UserPost key={post.id} tempContent={tempContent} post={post}/>);
+            });
+        }
     }
 
     render() {
@@ -49,4 +49,4 @@ const mapStateToProps = state => ({
     posts: state.posts,
 })
 
-export default connect(mapStateToProps, { get_user_posts })(HomePage)
+export default connect(mapStateToProps)(HomePage)
