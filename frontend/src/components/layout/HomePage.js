@@ -2,41 +2,51 @@ import React, { Component } from 'react';
 import NavigationBar from './NavigationBar';
 import UserPost from '../posts/UserPost';
 import { Jumbotron } from "react-bootstrap";
-// import Scream from '../posts/Scream';
+import User from '../user/User';
+import { connect } from "react-redux";
+import PropTypes from 'prop-types'
 
 export class HomePage extends Component {
-    state = {
-        description: "test description" ,
-        text_body: "here is a text body"
+    static propTypes = {
+        posts: PropTypes.object.isRequired
     }
 
     userPosts = [];
     
     populatePosts = () => {
-        const post = {
-            body: "hello there",
-            createdAt: "2000-01-31T12:59-0500",
+        if (this.props.posts.postsLoading) {
+            return;
+        }
+        const tempContent = {
+            createdAt: "2020-01-31T12:59-0500",
             userImage: "/static/images/no-img.png",
-            userHandle: 'alphanum',
-            postId: 1,
             likeCount: 5,
             commentCount: 10
         };
-        this.userPosts.push(<UserPost key={post.postId} post={post}/>);
-        this.userPosts.push(<UserPost key={post.postId + 1} post={post} />);
+        const { _, userPosts } = this.props.posts;
+        if (userPosts) {
+            userPosts.forEach(post => {
+                this.userPosts.push(<UserPost key={post.id} tempContent={tempContent} post={post}/>);
+            });
+        }
     }
 
     render() {
-       this.populatePosts();
+        this.populatePosts();
         return (
             <div>
                 <NavigationBar/>
                 <Jumbotron>
                     {this.userPosts}
                 </Jumbotron>
+                <User/>
             </div>
         )
     }
 }
 
-export default HomePage
+const mapStateToProps = state => ({
+    posts: state.posts,
+})
+
+export default connect(mapStateToProps)(HomePage)

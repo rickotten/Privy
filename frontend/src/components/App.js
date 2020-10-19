@@ -16,6 +16,7 @@ import HomePage from "./layout/HomePage";
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
+import { get_user_posts } from "../actions/posts";
 
 // Alert Options
 const alertOptions = {

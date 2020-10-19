@@ -16,7 +16,8 @@ import {
     FACEBOOK_OAUTH_FAILURE,
     FACEBOOK_OAUTH_SUCCESS,
     FORGOT_SUCCESS,
-    FORGOT_FAIL
+    FORGOT_FAIL,
+    CLEAR_USERS_POSTS
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -75,7 +76,6 @@ export const google_oauth = (access_token) => (dispatch) => {
     // Request Body
     const body = JSON.stringify({access_token});
 
-    console.log(access_token);
     if (access_token == null) {
         dispatch({
             type: GOOGLE_OAUTH_INIT_FAILURE
@@ -154,6 +154,9 @@ export const logout = () => (dispatch, getState) => {
     const config = tokenConfig(getState);
     axios.post('/api/auth/logout', null, config)
         .then(res => {
+            dispatch({
+                type: CLEAR_USERS_POSTS
+            })
             dispatch({
                 type: LOGOUT_SUCCESS
             });
