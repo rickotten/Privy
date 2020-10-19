@@ -9,6 +9,7 @@ import {
     REGISTER_FAIL,
     GOOGLE_OAUTH_FAILURE,
     GOOGLE_OAUTH_SUCCESS,
+    GOOGLE_OAUTH_INIT_FAILURE,
     FACEBOOK_OAUTH_FAILURE,
     FACEBOOK_OAUTH_SUCCESS,
     FORGOT_SUCCESS,
@@ -63,6 +64,7 @@ export default function (state = initialState, action) {
                 isAuthenticated: false,
                 isLoading: false
             }
+        case GOOGLE_OAUTH_INIT_FAILURE:
         default:
             return state;
     }
