@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 # from django.contrib.auth.models import User
 from .models import User
+from .models import UserPost
 
 
 # User Serializer
@@ -63,4 +64,23 @@ class ForgotSerializer(serializers.Serializer):
         # otherwise raise an error
         raise serializers.ValidationError(
             "Email not associted with any account")
+
+#User Post Serializer
+class UserPostSerializer(serializers.ModelSerializer):
+    description = serializers.CharField()
+    author = serializers.CharField(source='author.username', read_only=True)
+
+    class Meta:
+        model = UserPost
+        fields = (
+            'author',
+            'id',
+            'description'
+        )  
+
+    def create(self, validated_data):
+        userPost = UserPost.objects.create(
+            author = self.context['request'].user, title = None, description = validated_data["description"])
+
+        return userPost
 
