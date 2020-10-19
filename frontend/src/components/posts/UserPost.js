@@ -33,27 +33,30 @@ const styles = {
 };
 
 export class UserPost extends Component {
-    
+    static propTypes = {
+        tempContent: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired,
+        post: PropTypes.object.isRequired
+    }
+
     render() {
         dayjs.extend(relativeTime);
         const {
             classes,
-            post: {
-                body,
+            tempContent: {
                 createdAt,
                 userImage,
-                userHandle,
-                postId,
                 likeCount,
                 commentCount
             },
-            // user: {
-            //     authenticated,
-            //     credentials: { handle }
-            // }
+            post: {
+                id,
+                author,
+                description
+            }
         } = this.props;
 
-        const deleteButton = <h1>howdy</h1>
+        const deleteButton = <h3>title</h3>
 
         return(
             <Card className={classes.card}>
@@ -66,17 +69,17 @@ export class UserPost extends Component {
                     <Typography
                         variant="h5"
                         component={Link}
-                        to={`/users/${userHandle}`}
+                        to={`/users/${author}`}
                         color="primary"
                     >
-                        {userHandle}
+                        {author}
                     </Typography>
                     {deleteButton}
                     <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).fromNow()}
                     </Typography>
-                    <Typography variant="body1">{body}</Typography>
-                    <LikeButton postId={postId} />
+                    <Typography variant="body1">{description}</Typography>
+                    <LikeButton postId={id} />
                     <span>{likeCount} Likes</span>
                     <MyButton tip="comments">
                             <ChatIcon color="primary" />
@@ -92,6 +95,7 @@ export class UserPost extends Component {
         )
     }
 }
+
 
 export default connect(null)(withStyles(styles)(UserPost));
 

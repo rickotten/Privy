@@ -75,7 +75,6 @@ export const google_oauth = (access_token) => (dispatch) => {
     // Request Body
     const body = JSON.stringify({access_token});
 
-    console.log(access_token);
     if (access_token == null) {
         dispatch({
             type: GOOGLE_OAUTH_INIT_FAILURE
