@@ -67,6 +67,7 @@ class ForgotSerializer(serializers.Serializer):
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
+    likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
     author = serializers.CharField(source='author.username', read_only=True)
 
@@ -75,7 +76,8 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = (
             'author',
             'id',
-            'description'
+            'description',
+            'likesCount'
         )  
 
     def create(self, validated_data):
