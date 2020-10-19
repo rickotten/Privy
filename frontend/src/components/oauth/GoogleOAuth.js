@@ -6,7 +6,8 @@ import { google_oauth } from '../../actions/auth';
 
 export class GoogleOAuth extends Component {
     static propTypes = {
-        google_oauth: PropTypes.func.isRequired
+        google_oauth: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
     }
 
     responseGoogle = (response) => {
@@ -14,16 +15,23 @@ export class GoogleOAuth extends Component {
     }
 
     render() {
-        return (
-            <GoogleLogin
-                clientId="449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com"
-                buttonText="Sign in with Google"
-                onSuccess={this.responseGoogle}
-                onFailure={this.responseGoogle}
-                cookiePolicy={'single_host_origin'}
-            />
-        )
+        if (!this.props.isAuthenticated) {
+            return (
+                <GoogleLogin
+                    clientId="449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com"
+                    buttonText="Sign in with Google"
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
+            )
+        }
+        return null
     }
 }
 
-export default connect(null,  { google_oauth })(GoogleOAuth)
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps,  { google_oauth })(GoogleOAuth)
