@@ -41,9 +41,22 @@ class CustomBackend(BaseBackend):
             return user
         return None
 
+<<<<<<< HEAD
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
             '''
+=======
+class UserPost(models.Model):
+    title = models.CharField(max_length=250)
+    description = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """A string representation of the model."""
+        return str(self.id)
+
+
+>>>>>>> f6d6b0dd8ab655d2d902479dd4b7f89354c4a137

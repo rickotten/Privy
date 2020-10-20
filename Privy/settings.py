@@ -27,9 +27,16 @@ SECRET_KEY = '92_nx2stvk6r1%=gdr1e%3b^ns17s6s%+zqwq#6xgb(y&v+gi7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['privy-jc.herokuapp.com']
+=======
+ALLOWED_HOSTS = []
+>>>>>>> f6d6b0dd8ab655d2d902479dd4b7f89354c4a137
 
 AUTH_USER_MODEL = 'accounts.User'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 
 # Application definition
 
@@ -41,18 +48,53 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'frontend',
     'accounts',
-    'knox'
+    'knox',
+    'social_django'
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',)
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
+<<<<<<< HEAD
 
 
 #AUTHENTICATION_BACKENDS = ['path.to.auth.module.CustomBackend']
+=======
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-zWijk9baxNPQQBJqJ-6KTFI'
+SOCIAL_AUTH_FACEBOOK_KEY = '4397489906992106'
+SOCIAL_AUTH_FACEBOOK_SECRET = '02fdbab2fc3f849406f90c443ca43652'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
+
+SOCIAL_AUTH_PIPELINE = (
+  'social_core.pipeline.social_auth.social_details',
+  'social_core.pipeline.social_auth.social_uid',
+  'social_core.pipeline.social_auth.auth_allowed',
+  'social_core.pipeline.social_auth.social_user',
+  'social_core.pipeline.user.get_username',
+  'social_core.pipeline.social_auth.associate_by_email',
+  'social_core.pipeline.user.create_user',
+  'social_core.pipeline.social_auth.associate_user',
+  'social_core.pipeline.social_auth.load_extra_data',
+  'social_core.pipeline.user.user_details',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+>>>>>>> f6d6b0dd8ab655d2d902479dd4b7f89354c4a137
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,6 +142,7 @@ DATABASES = {
         },
     }
 }
+
 
 
 # Password validation

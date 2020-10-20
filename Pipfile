@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+responses = "*"
 
 [packages]
 djangorestframework = "*"
@@ -15,6 +16,9 @@ psycopg2-binary = "*"
 requests = "*"
 djongo = "*"
 dnspython = "*"
+social-auth-app-django = "*"
+sendgrid = "*"
+python-social-auth = {extras = ["django"], version = "*"}
 
 [requires]
 python_version = "3.8"

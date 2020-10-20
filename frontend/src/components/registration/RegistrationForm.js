@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { register } from '../../actions/auth';
 import { createMessage } from '../../actions/errors';
+import GoogleOAuth from '../oauth/GoogleOAuth';
+import FacebookOAuth from '../oauth/FacebookOAuth';
 
 export class RegistrationForm extends Component {
     state = {
@@ -24,7 +26,6 @@ export class RegistrationForm extends Component {
         if (password !== password2) {
             this.props.createMessage({ passwordNotMatch: 'Passwords do not match' });
         } else {
-            console.log('hello');
             const newUser = {
                 username,
                 email,
@@ -141,6 +142,12 @@ export class RegistrationForm extends Component {
                         <button type="submit" className="btn btn-primary">Register!</button>
                         <p>
                             Already have an account? <Link to="/login">Login</Link>
+                        </p>
+                        <p>
+                        <GoogleOAuth/>
+                        </p>
+                        <p>
+                            <FacebookOAuth/>
                         </p>
                     </form>
                 </div>

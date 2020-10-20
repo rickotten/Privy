@@ -9,7 +9,15 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    GOOGLE_OAUTH_FAILURE,
+    GOOGLE_OAUTH_SUCCESS,
+    GOOGLE_OAUTH_INIT_FAILURE,
+    FACEBOOK_OAUTH_FAILURE,
+    FACEBOOK_OAUTH_SUCCESS,
+    FORGOT_SUCCESS,
+    FORGOT_FAIL,
+    CLEAR_USERS_POSTS
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -29,6 +37,64 @@ export const loadUser = () => (dispatch, getState) => {
                 type: AUTH_ERROR,
             })
         });
+}
+
+export const facebook_oauth = (access_token) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({ access_token });
+
+    axios.post('/social/facebook/', body, config)
+        .then(res => {
+            dispatch({
+                type: FACEBOOK_OAUTH_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: FACEBOOK_OAUTH_FAILURE,
+            });
+        })
+}
+
+// GOOGLE OAUTH TO REGISTER/LOGIN USER
+export const google_oauth = (access_token) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({access_token});
+
+    if (access_token == null) {
+        dispatch({
+            type: GOOGLE_OAUTH_INIT_FAILURE
+        });
+        return;
+    }
+
+    axios.post('/social/google-oauth2/', body, config)
+        .then(res => {
+            dispatch({
+                type: GOOGLE_OAUTH_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: GOOGLE_OAUTH_FAILURE,
+            });
+        })
 }
 
 // LOGIN USER
@@ -53,7 +119,7 @@ export const login = (username, password) => (dispatch) => {
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: LOGIN_FAIL,
-            })
+            });
         });
 }
 
@@ -89,6 +155,9 @@ export const logout = () => (dispatch, getState) => {
     axios.post('/api/auth/logout', null, config)
         .then(res => {
             dispatch({
+                type: CLEAR_USERS_POSTS
+            })
+            dispatch({
                 type: LOGOUT_SUCCESS
             });
         }).catch(err => {
@@ -113,4 +182,30 @@ export const tokenConfig = getState => {
         config.headers['Authorization'] = `Token ${token}`;
     }
     return config;
+}
+
+// FORGOT CREDENTIALS
+export const forgot = (email) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({ email });
+
+    axios.post('/api/auth/forgot', body, config)
+        .then(res => {
+            dispatch({
+                type: FORGOT_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: FORGOT_FAIL,
+            })
+        });
 }
