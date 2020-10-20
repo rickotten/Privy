@@ -46,14 +46,9 @@ export class UserPost extends Component {
             tempContent: {
                 createdAt,
                 userImage,
-                likeCount,
                 commentCount
             },
-            post: {
-                id,
-                author,
-                description
-            }
+            post
         } = this.props;
 
         const deleteButton = <h3>title</h3>
@@ -69,18 +64,17 @@ export class UserPost extends Component {
                     <Typography
                         variant="h5"
                         component={Link}
-                        to={`/users/${author}`}
+                        to={`/users/${post.author}`}
                         color="primary"
                     >
-                        {author}
+                        {post.author}
                     </Typography>
                     {deleteButton}
                     <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).fromNow()}
                     </Typography>
-                    <Typography variant="body1">{description}</Typography>
-                    <LikeButton postId={id} />
-                    <span>{likeCount} Likes</span>
+                    <Typography variant="body1">{post.description}</Typography>
+                    <LikeButton post={post} postId={post.id} />
                     <MyButton tip="comments">
                             <ChatIcon color="primary" />
                     </MyButton>
