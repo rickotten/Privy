@@ -6,8 +6,8 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework import status
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
 from .models import UserPost, User
@@ -233,3 +233,15 @@ class UserPostGetAPI(generics.ListAPIView):
     def get_queryset(self):
         user = User.objects.get(username=self.request.user.username)
         return UserPost.objects.filter(author=user)
+
+# UserPostUpdate PUT request
+class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    queryset = UserPost.objects.all()
+    serializer_class = UserPostSerializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)

@@ -17,10 +17,10 @@ export class HomePage extends Component {
         if (this.props.posts.postsLoading) {
             return;
         }
+        this.userPosts = [];
         const tempContent = {
             createdAt: "2020-01-31T12:59-0500",
             userImage: "/static/images/no-img.png",
-            likeCount: 5,
             commentCount: 10
         };
         const { _, userPosts } = this.props.posts;
