@@ -10,6 +10,7 @@ class UserPost(models.Model):
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
+    usersLiked = models.ManyToManyField(User, related_name="usersLiked")
 
     def __str__(self):
         """A string representation of the model."""

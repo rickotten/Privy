@@ -7,6 +7,8 @@ from .models import UserPost
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    username= serializers.CharField(required=False)
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
@@ -70,6 +72,7 @@ class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
     author = serializers.CharField(source='author.username', read_only=True)
+    usersLiked = UserSerializer(many=True, required=False)
 
     class Meta:
         model = UserPost
@@ -77,7 +80,8 @@ class UserPostSerializer(serializers.ModelSerializer):
             'author',
             'id',
             'description',
-            'likesCount'
+            'likesCount',
+            'usersLiked'
         )  
 
     def create(self, validated_data):
@@ -86,3 +90,19 @@ class UserPostSerializer(serializers.ModelSerializer):
 
         return userPost
 
+    # Need custom update function since default does not support nested (many to many) objects
+    # For this to work, the entire UserPost object is needed otherwise data may be lost
+    def update(self, instance, validated_data):
+        instance.description = validated_data.get("description", instance.description)
+        instance.likesCount = validated_data.get("likesCount", instance.likesCount)
+
+        newUsersLiked = validated_data.get("usersLiked")
+        instance.usersLiked.clear()
+        for user in newUsersLiked:
+            user_id = user.get('id')
+            user = User.objects.get(id=user_id)
+            if not instance.usersLiked.filter(id=user.id).exists():
+                instance.usersLiked.add(user)
+        
+        instance.save()
+        return instance
