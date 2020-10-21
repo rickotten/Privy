@@ -11,8 +11,6 @@ from django.contrib.auth.decorators import login_required
 class User(AbstractUser):
     privFlag = False
 
-    
-
 
 # Model for user privacy page
 
@@ -24,31 +22,7 @@ class UserPrivacy(User):
         else:
             return PermissionError
 
-# Model for custom backend
-'''
-class CustomBackend(BaseBackend):
-    def authenticate(self, request, username=None, email=None, password=None):
-        login_valid = (username.ADMIN_LOGIN == username or settings.ADMIN_LOGIN == email)
-        pwd_valid = check_password(password, settings.ADMIN_LOGIN)
-        if(login_valid and pwd_valid):
-            try:
-                user = User.objects.get(username=username)
-            except User.DoesNotExist:
-                user = User(username = username)
-                user.is_staff = True
-                user.is_supervisor = True
-                user.save()
-            return user
-        return None
 
-<<<<<<< HEAD
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None
-            '''
-=======
 class UserPost(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField()
@@ -57,6 +31,3 @@ class UserPost(models.Model):
     def __str__(self):
         """A string representation of the model."""
         return str(self.id)
-
-
->>>>>>> f6d6b0dd8ab655d2d902479dd4b7f89354c4a137

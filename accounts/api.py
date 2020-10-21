@@ -233,3 +233,16 @@ class UserPostGetAPI(generics.ListAPIView):
     def get_queryset(self):
         user = User.objects.get(username=self.request.user.username)
         return UserPost.objects.filter(author=user)
+
+
+
+#PrivacySettings POST request
+class UserPrivacySettings(generics.GenericAPIView):
+    serializer_class = UserPrivacySerializer
+
+    def switch_privacy(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        user = User.objects.get(username = self.request.user.username)
+        
+        
