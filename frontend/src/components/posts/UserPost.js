@@ -1,96 +1,138 @@
 import React, { Component } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Link, Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import PropTypes from 'prop-types';
-import MyButton from '../../util/MyButton';
-import LikeButton from '../../util/LikeButton';
-//MUI
+import { withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-// Icons
-import ChatIcon from '@material-ui/icons/Chat';
-// Redux
-import { connect } from 'react-redux';
+import { red } from '@material-ui/core/colors';
+import CommentIcon from '@material-ui/icons/Comment';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import PropTypes from 'prop-types'
+import LikeButton from '../../util/LikeButton'
+import CommentForm from './CommentForm';
+import Comment from './Comment';
 
-const styles = {
-    card: {
-        position: 'relative',
-        display: 'flex',
-        marginBottom: 20
+const useStyles = theme => ({
+    root: {
+        minWidth: 600,
+        maxWidth: 600
     },
-    image: {
-        minWidth: 200,
-        minHeight: 200
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
     },
-    content: {
-        padding: 25,
-        objectFit: 'cover'
-    }
-};
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(0deg)',
+    },
+    avatar: {
+        backgroundColor: red[500],
+    },
+});
 
-export class UserPost extends Component {
+
+export class UserPost2 extends Component {
+
     static propTypes = {
         tempContent: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
         post: PropTypes.object.isRequired
     }
 
+    addCommentOnPost = (username, comment) => {
+        this.setState({ comments: [...this.state.comments, <Comment key={comment} authorName={username} comment={comment} />]});
+        
+    }
+
+    state = {
+        expanded: false,
+        comments: this.props.post.comments.map(
+            (comment, i) => (<Comment key={comment.id} authorName={comment.author.username} comment={comment.comment} />))
+    }
+
+
+    toggleCommentForm = () => {
+        this.setState({ expanded: !this.state.expanded });
+    }
+
     render() {
         dayjs.extend(relativeTime);
+        const { expanded, comments } = this.state;
         const {
             classes,
             tempContent: {
                 createdAt,
-                userImage,
-                commentCount
+                userImage
             },
             post
         } = this.props;
 
-        const deleteButton = <h3>title</h3>
+        const avatar = <Avatar aria-label="profile" className={classes.avatar}>
+                                {this.props.post.author.toUpperCase().charAt(0)}
+                                </Avatar>
 
-        return(
-            <Card className={classes.card}>
-                <CardMedia
-                    image={userImage}
-                    title="Profile image"
-                    className={classes.image}
+        return (
+            <Card className={classes.root}>
+                <CardHeader
+                    avatar={avatar}
+                    action={
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                    title="A Creative Title"
+                    subheader={dayjs(createdAt).fromNow()}
                 />
-                <CardContent className={classes.content}>
-                    <Typography
-                        variant="h5"
-                        component={Link}
-                        to={`/users/${post.author}`}
-                        color="primary"
-                    >
-                        {post.author}
+                <CardMedia
+                    className={classes.media}
+                    image={userImage}
+                    title="Post Image"
+                />
+                <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {post.description}
                     </Typography>
-                    {deleteButton}
-                    <Typography variant="body2" color="textSecondary">
-                        {dayjs(createdAt).fromNow()}
-                    </Typography>
-                    <Typography variant="body1">{post.description}</Typography>
-                    <LikeButton post={post} postId={post.id} />
-                    <MyButton tip="comments">
-                            <ChatIcon color="primary" />
-                    </MyButton>
-                    <span>{commentCount} comments</span>
-                    {/* <ScreamDialog
-                            screamId={screamId}
-                            userHandle={userHandle}
-                            openDialog={this.props.openDialog}
-                        /> */}
                 </CardContent>
+                <CardActions disableSpacing >
+
+                    <LikeButton post={post} postId={post.id} />
+
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={this.toggleCommentForm}
+                        aria-expanded={expanded}
+                        aria-label="show comments"
+                    >
+                        <CommentIcon />
+                    </IconButton>
+                    <span>{comments.length} comments</span>
+
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
+                        {comments.slice().reverse()}
+                    </CardContent>
+                </Collapse>
             </Card>
         )
     }
 }
 
-
-export default connect(null)(withStyles(styles)(UserPost));
-
-
+export default withStyles(useStyles)(UserPost2);

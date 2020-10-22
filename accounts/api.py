@@ -263,7 +263,7 @@ class UserPostCommentAPI(generics.GenericAPIView):
         return Response(
             {
                 "id": userComment.id,
-                "authorId": userComment.author.id,
+                "author": UserSerializer(userComment.author).data,
                 "postId": request.data["postId"],
                 "comment": userComment.comment
             }
