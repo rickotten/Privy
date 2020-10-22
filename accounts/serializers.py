@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 # from django.contrib.auth.models import User
-from .models import User
-from .models import UserPost
+from .models import User, UserPost, UserPostComment
 
 
 # User Serializer
@@ -77,8 +76,8 @@ class UserPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPost
         fields = (
-            'author',
             'id',
+            'author',
             'description',
             'likesCount',
             'usersLiked'
@@ -106,3 +105,28 @@ class UserPostSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+
+# User Comment Serializer
+class UserPostCommentSerializer(serializers.ModelSerializer):
+    comment = serializers.CharField()
+    author = UserSerializer(required=False)
+    authorId = serializers.IntegerField(write_only=True)
+    postId = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = UserPostComment
+        fields = (
+            'id',
+            'author',
+            'comment',
+            'postId',
+            'authorId'
+        )
+
+    def create(self, validated_data):
+        relatedPost = UserPost.objects.get(id=validated_data.get("postId"))
+        comment = UserPostComment.objects.create(
+            author=self.context['request'].user, relatedPost=relatedPost, comment=validated_data.get("comment")
+        )
+        return comment
+        

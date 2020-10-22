@@ -9,7 +9,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer
 from .models import UserPost, User
 
 
@@ -245,3 +245,26 @@ class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+#UserPost Comment Creation POST API
+class UserPostCommentAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = UserPostCommentSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        userComment = serializer.save()
+
+        return Response(
+            {
+                "id": userComment.id,
+                "authorId": userComment.author.id,
+                "postId": request.data["postId"],
+                "comment": userComment.comment
+            }
+        )
