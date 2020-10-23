@@ -268,3 +268,30 @@ class UserPostCommentAPI(generics.GenericAPIView):
                 "comment": userComment.comment
             }
         )
+
+# UserPost Like POST API
+class UserPostLikeAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def post(self, request, *args, **kwargs):
+        userId = request.data["userId"]
+        postId = request.data["postId"]
+
+        user = User.objects.get(id=userId)
+        post = UserPost.objects.get(id=postId)
+
+        try:
+            post.usersLiked.add(user)
+            post.likesCount += 1
+        except:
+            post.usersLiked.remove(user)
+            post.likesCount -= 1
+
+        post.save()
+        return Response(
+            {
+                "post": UserPostSerializer(post).data
+            }
+        )

@@ -91,20 +91,20 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     # Need custom update function since default does not support nested (many to many) objects
     # For this to work, the entire UserPost object is needed otherwise data may be lost
-    def update(self, instance, validated_data):
-        instance.description = validated_data.get("description", instance.description)
-        instance.likesCount = validated_data.get("likesCount", instance.likesCount)
+    # def update(self, instance, validated_data):
+    #     instance.description = validated_data.get("description", instance.description)
+    #     instance.likesCount = validated_data.get("likesCount", instance.likesCount)
 
-        newUsersLiked = validated_data.get("usersLiked")
-        instance.usersLiked.clear()
-        for user in newUsersLiked:
-            user_id = user.get('id')
-            user = User.objects.get(id=user_id)
-            if not instance.usersLiked.filter(id=user.id).exists():
-                instance.usersLiked.add(user)
+    #     newUsersLiked = validated_data.get("usersLiked")
+    #     instance.usersLiked.clear()
+    #     for user in newUsersLiked:
+    #         user_id = user.get('id')
+    #         user = User.objects.get(id=user_id)
+    #         if not instance.usersLiked.filter(id=user.id).exists():
+    #             instance.usersLiked.add(user)
         
-        instance.save()
-        return instance
+    #     instance.save()
+    #     return instance
 
 # User Comment Serializer
 class UserPostCommentSerializer(serializers.ModelSerializer):
