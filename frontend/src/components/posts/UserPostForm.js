@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { register } from '../../actions/auth';
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { createMessage } from '../../actions/errors';
 
 export class UserPost extends Component {
@@ -27,6 +27,7 @@ export class UserPost extends Component {
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+    //What is rendered for the user
     render() {
         if (this.props.isAuthenticated) {
             return <Redirect to="/" />
@@ -42,11 +43,11 @@ export class UserPost extends Component {
                             <label>Status</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 name="text_post"
                                 onChange={this.onChange}
                                 value={text_post}
                             />
+                            <Button type="submit">Post</Button>
                         </div>
                     </form>
                 </div>
@@ -57,6 +58,7 @@ export class UserPost extends Component {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
+    //text_post: PropTypes.func.isRequired
 })
 
 export default connect(mapStateToProps, { textPost, createMessage })(UserPost)
