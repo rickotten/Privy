@@ -124,12 +124,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": 'PrivyDb',
-           "host": 'mongodb+srv://PrivyDBAdminUser:LnncBVPuQiSWMj31@cluster0.mygtz.gcp.mongodb.net/PrivyDb?retryWrites=true&w=majority',
+           "name": 'PrivyDB',
+           "host": 'mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority',
            "username": 'PrivyDBAdminUser',
-           "password": 'LnncBVPuQiSWMj31',
+           "password": 'mP2JQ1a0wkN8BY43',
            "authMechanism": "SCRAM-SHA-1",
-        }, 
+        },
     }
 }
 

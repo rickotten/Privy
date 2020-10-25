@@ -16,4 +16,10 @@ class UserPost(models.Model):
         """A string representation of the model."""
         return str(self.id)
 
-
+class UserPostComment(models.Model):
+    author = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    relatedPost = models.ForeignKey(UserPost, related_name="comments", on_delete=models.CASCADE)
+    comment = models.TextField()
+    
+    def __str__(self):
+        return f'{self.id}'

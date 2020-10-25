@@ -8,31 +8,14 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // REdux
 import { connect } from 'react-redux';
 // import { likeScream, unlikeScream } from '../../redux/actions/dataActions';
-import { update_user_post } from "../actions/posts";
+import { like_user_post } from "../actions/posts";
 
 export class LikeButton extends Component {
-    // likedScream = () => {
-    //     if (
-    //         this.props.user.likes &&
-    //         this.props.user.likes.find(
-    //             (like) => like.screamId === this.props.screamId
-    //         )
-    //     )
-    //         return true;
-    //     else return false;
-    // };
-    // likeScream = () => {
-    //     this.props.likeScream(this.props.screamId);
-    // };
-    // unlikeScream = () => {
-    //     this.props.unlikeScream(this.props.screamId);
-    // };
-    
     static propTypes = {
-        update_user_post: PropTypes.func.isRequired,
         post: PropTypes.object.isRequired,
         isAuthenticated: PropTypes.bool,
-        userId: PropTypes.number.isRequired
+        userId: PropTypes.number.isRequired,
+        like_user_post: PropTypes.func.isRequired
     }
 
     state = {
@@ -55,31 +38,16 @@ export class LikeButton extends Component {
     }
 
     likeScream = () => {
-        this.setState({ liked: true });
-        const updatedPost = {
-            ...this.props.post,
-            likesCount: (this.props.post.likesCount + 1),
-            usersLiked: [...this.props.post.usersLiked, {"id": this.props.userId}]
-        }
-        this.setState({ likesCount: this.state.likesCount + 1 });
-        this.props.update_user_post(updatedPost);
+        this.setState({ liked: true, likesCount: this.state.likesCount + 1 });
+        this.props.like_user_post(this.props.userId, this.props.post.id);
     }
 
     unlikeScream = () => {
-        this.setState({ liked: false });
-        const updatedPost = {
-            ...this.props.post,
-            likesCount: (this.props.post.likesCount - 1),
-            usersLiked: this.props.post.usersLiked.filter((user, i) => {
-                return this.props.userId !== user.id
-            })
-        }
-        this.setState({ likesCount: this.state.likesCount - 1 });
-        this.props.update_user_post(updatedPost);
+        this.setState({ liked: false, likesCount: this.state.likesCount - 1 });
+        this.props.like_user_post(this.props.userId, this.props.post.id);
     }
 
     render() {
-
         const authenticated = this.props.isAuthenticated;
         const likeButton = !authenticated ? (
             <Link to="/login">
@@ -109,4 +77,4 @@ const mapStateToProps = (state) => ({
     userId: state.auth.user.id
 })
 
-export default connect(mapStateToProps, { update_user_post })(LikeButton);
+export default connect(mapStateToProps, { like_user_post })(LikeButton);

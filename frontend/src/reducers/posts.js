@@ -2,9 +2,7 @@ import {
     USER_POSTS_GET_FAILURE,
     USER_POSTS_GET_SUCESS,
     USER_POSTS_GET_LOADING,
-    CLEAR_USERS_POSTS,
-    UPDATE_USER_POST_FAILURE,
-    UPDATE_USER_POST_SUCCESS
+    CLEAR_USERS_POSTS
  } from "../actions/types";
 
 const initialState = {
@@ -37,18 +35,7 @@ export default function (state = initialState, action) {
                 postsLoading: false,
                 userPosts: null
             }
-        case UPDATE_USER_POST_SUCCESS:
-            const updatedPosts = state.userPosts.map(
-                (post, i) => {
-                    return post.id === action.payload.id ? action.payload
-                        : post
-                }
-            )
-            return {
-                ...state,
-                userPosts: updatedPosts
-            }
-            
+        
         default:
             return state
 

@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 # from django.contrib.auth.models import User
-from .models import User
-from .models import UserPost
+from .models import User, UserPost, UserPostComment
 
 
 # User Serializer
@@ -67,21 +66,48 @@ class ForgotSerializer(serializers.Serializer):
         raise serializers.ValidationError(
             "Email not associted with any account")
 
+# User Comment Serializer
+class UserPostCommentSerializer(serializers.ModelSerializer):
+    comment = serializers.CharField()
+    author = UserSerializer(required=False)
+    authorId = serializers.IntegerField(write_only=True)
+    postId = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = UserPostComment
+        fields = (
+            'id',
+            'author',
+            'comment',
+            'postId',
+            'authorId'
+        )
+
+    def create(self, validated_data):
+        relatedPost = UserPost.objects.get(id=validated_data.get("postId"))
+        comment = UserPostComment.objects.create(
+            author=self.context['request'].user, relatedPost=relatedPost, comment=validated_data.get(
+                "comment")
+        )
+        return comment
+
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
+    comments = UserPostCommentSerializer(many=True, required=False)
 
     class Meta:
         model = UserPost
         fields = (
-            'author',
             'id',
+            'author',
             'description',
             'likesCount',
-            'usersLiked'
+            'usersLiked',
+            "comments"
         )  
 
     def create(self, validated_data):
@@ -92,17 +118,19 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     # Need custom update function since default does not support nested (many to many) objects
     # For this to work, the entire UserPost object is needed otherwise data may be lost
-    def update(self, instance, validated_data):
-        instance.description = validated_data.get("description", instance.description)
-        instance.likesCount = validated_data.get("likesCount", instance.likesCount)
+    # def update(self, instance, validated_data):
+    #     instance.description = validated_data.get("description", instance.description)
+    #     instance.likesCount = validated_data.get("likesCount", instance.likesCount)
 
-        newUsersLiked = validated_data.get("usersLiked")
-        instance.usersLiked.clear()
-        for user in newUsersLiked:
-            user_id = user.get('id')
-            user = User.objects.get(id=user_id)
-            if not instance.usersLiked.filter(id=user.id).exists():
-                instance.usersLiked.add(user)
+    #     newUsersLiked = validated_data.get("usersLiked")
+    #     instance.usersLiked.clear()
+    #     for user in newUsersLiked:
+    #         user_id = user.get('id')
+    #         user = User.objects.get(id=user_id)
+    #         if not instance.usersLiked.filter(id=user.id).exists():
+    #             instance.usersLiked.add(user)
         
-        instance.save()
-        return instance
+    #     instance.save()
+    #     return instance
+
+        
