@@ -5,6 +5,7 @@ import { Jumbotron } from "react-bootstrap";
 import User from '../user/User';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
+import UserPostForm from '../posts/UserPostForm';
 
 export class HomePage extends Component {
     static propTypes = {
@@ -40,7 +41,7 @@ export class HomePage extends Component {
                     {this.userPosts}
                 </Jumbotron>
                 <User/>
-                <Button tip="Make a post"></Button>
+                <UserPostForm/>
             </div>
         )
     }

@@ -13,7 +13,8 @@ import {
     FACEBOOK_OAUTH_FAILURE,
     FACEBOOK_OAUTH_SUCCESS,
     FORGOT_SUCCESS,
-    FORGOT_FAIL
+    FORGOT_FAIL,
+    CREATE_USER_POST_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -67,5 +68,14 @@ export default function (state = initialState, action) {
         case GOOGLE_OAUTH_INIT_FAILURE:
         default:
             return state;
+        case CREATE_USER_POST_SUCCESS:
+            return {
+                ...action.payload,
+                ...state
+            }
+        case CREATE_USER_POST_FAILURE:
+            return {
+                ...state
+            }
     }
 }

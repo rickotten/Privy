@@ -1,6 +1,6 @@
 import { 
     USER_POSTS_GET_FAILURE,
-    USER_POSTS_GET_SUCESS,
+    USER_POSTS_GET_SUCCESS,
     USER_POSTS_GET_LOADING,
     CLEAR_USERS_POSTS,
     UPDATE_USER_POST_FAILURE,
@@ -50,7 +50,6 @@ export default function (state = initialState, action) {
                 ...state,
                 userPosts: updatedPosts
             }
-        //maybe right? no clue tbh
         case USER_POSTS_CREATE_SUCCESS:
             return {
                 userPosts: action.payload,

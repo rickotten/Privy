@@ -3,7 +3,7 @@ import { returnErrors } from './errors';
 import { tokenConfig } from './auth';
 
 import { 
-    USER_POSTS_CREATE_SUCESS,
+    USER_POSTS_CREATE_SUCCESS,
     USER_POSTS_CREATE_FAILURE,
     USER_POSTS_GET_SUCESS,
     USER_POSTS_GET_FAILURE,
@@ -19,10 +19,10 @@ export const create_user_post = (text_post) => (dispatch, getState)  => {
 
     //maybe change axios states?
     //axios.post(`/api/auth/userposts/${post.id}`, body, config)
-    axios.post(`/api/auth/userposts`, body, config)
+    axios.post(`/api/auth/posts`, text_post, config)
         .then(res => {
             dispatch({
-                type: USER_POSTS_CREATE_SUCESS,
+                type: USER_POSTS_CREATE_SUCCESS,
                 payload: res.data
             })
         }).catch(err => {
