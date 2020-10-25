@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { createMessage } from '../../actions/errors';
+import { create_user_post} from '../../actions';
 
 export class UserPost extends Component {
     state = {
@@ -16,22 +16,16 @@ export class UserPost extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { text_post } = this.state;
-
         const text_post = {
             text_post
         }
-        this.props.textPost(text_post);
-        
+        this.props.textPost(text_post); 
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     //What is rendered for the user
     render() {
-        if (this.props.isAuthenticated) {
-            return <Redirect to="/" />
-        }
         const { text_post } = this.state;
         return (
             <div className="col-md-6 m-auto">
@@ -57,8 +51,7 @@ export class UserPost extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-    //text_post: PropTypes.func.isRequired
+    text_post: PropTypes.func.isRequired
 })
 
-export default connect(mapStateToProps, { textPost, createMessage })(UserPost)
+export default connect(mapStateToProps, { create_user_post })(UserPostForm)
