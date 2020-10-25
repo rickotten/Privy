@@ -84,27 +84,33 @@ class FriendRequestSerializer(serializers.Serializer):
             'sender_friend'
         )
 
-    def create(self, validated_data):
+    def create(self, data):
+        logger = logging.getLogger(__name__)
+        logger.error("IN CREATE")
         friend = Friend.objects.create(
-            receiver_friend = validated_data["friendUsername"])
+            #receiver_friend = 'ExampleMatt',
+            receiver_friend = data.get('friendUsername'),
+            #sender_friend = 'ExampleSarah'
+            sender_friend = self.context['request'].user.username
+            )
 
         logger = logging.getLogger(__name__)
-        friends = Friend.objects.all()
-        logger.error(friends)
+        logger.error(friend.sender_friend + " --> " + friend.receiver_friend)
         
         return friend
 
+    
     def validate(self, data):
 
         # retrieve all registered users
         users = User.objects.all()
 
-        # if there us a matching email, return it
+        # make sure there is a matching username
         logger = logging.getLogger(__name__)
         logger.error(data.get('friendUsername'))
         for user in users:
             if data.get('friendUsername') == user.username:
-                return data.get('username')
+                return data
 
         # otherwise raise an error
         raise serializers.ValidationError(

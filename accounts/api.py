@@ -218,10 +218,10 @@ class FriendRequestAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        logger.error("FRIEND USERNAME: " + serializer.validated_data)
+        #logger.error("FRIEND USERNAME: " + serializer.validated_data)
 
         # create
-        friend = serializer.save()
+        serializer.save()
 
         # return an OK response
         return Response(status=status.HTTP_200_OK)

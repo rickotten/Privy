@@ -23,4 +23,5 @@ class Friend(models.Model):
     receiver_friend = models.CharField(max_length=250)
 
     # username of user who is sending the friend request
-    sender_friend = models.ForeignKey(User, on_delete=models.CASCADE)
+    #sender_friend = models.ForeignKey(User, on_delete=models.CASCADE)
+    sender_friend = models.CharField(max_length=250)
