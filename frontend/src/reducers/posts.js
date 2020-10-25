@@ -6,7 +6,7 @@ import {
     UPDATE_USER_POST_FAILURE,
     UPDATE_USER_POST_SUCCESS,
     USER_POSTS_CREATE_FAILURE,
-    USER_POSTS_CREATE_SUCESS
+    USER_POSTS_CREATE_SUCCESS
  } from "../actions/types";
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case USER_POSTS_GET_SUCESS:
+        case USER_POSTS_GET_SUCCESS:
             return {
                 ...state,
                 userPosts: action.payload,
