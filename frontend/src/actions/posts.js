@@ -3,12 +3,33 @@ import { returnErrors } from './errors';
 import { tokenConfig } from './auth';
 
 import { 
+    CREATE_USER_POST_SUCCESS,
+    CREATE_USER_POST_FAILURE,
     USER_POSTS_GET_SUCESS,
     USER_POSTS_GET_FAILURE,
     USER_POSTS_GET_LOADING,
     UPDATE_USER_POST_FAILURE,
     UPDATE_USER_POST_SUCCESS
  } from "./types";
+
+//CREATE A USER POST
+export const create_user_post = (description) => (dispatch, getState)  => {
+    const config = tokenConfig(getState);
+    const body = JSON.stringify({description});
+    
+    axios.post(`/api/auth/posts`, body, config)
+        .then(res => {
+            dispatch({
+                type: CREATE_USER_POST_SUCCESS,
+                payload: res.data
+            })
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: CREATE_USER_POST_FAILURE,
+            })
+        });
+}
 
 // GET POSTS OF AUTHENTICATED USER
 export const get_user_posts = () => (dispatch, getState) => {

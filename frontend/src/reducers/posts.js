@@ -3,8 +3,9 @@ import {
     USER_POSTS_GET_SUCESS,
     USER_POSTS_GET_LOADING,
     CLEAR_USERS_POSTS,
-    UPDATE_USER_POST_FAILURE,
-    UPDATE_USER_POST_SUCCESS
+    UPDATE_USER_POST_SUCCESS,
+    CREATE_USER_POST_SUCCESS,
+    CREATE_USER_POST_FAILURE
  } from "../actions/types";
 
 const initialState = {
@@ -47,6 +48,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 userPosts: updatedPosts
+            }
+        case CREATE_USER_POST_SUCCESS:
+            return {
+                userPosts: action.payload,
+                ...state
+            }
+        case CREATE_USER_POST_FAILURE:
+            return {
+                ...state,
+                postsLoading: false
             }
             
         default:
