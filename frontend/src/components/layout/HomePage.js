@@ -40,6 +40,7 @@ export class HomePage extends Component {
                     {this.userPosts}
                 </Jumbotron>
                 <User/>
+                <Button tip="Make a post"></Button>
             </div>
         )
     }
