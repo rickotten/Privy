@@ -9,7 +9,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
+from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
 from .models import UserPost, User
 
 
@@ -199,6 +199,29 @@ class ForgotAPI(generics.GenericAPIView):
             logger.error("sent email to " + str(validated_email))
         except Exception as e:
             logger.error("ERROR SENDING EMAIL:  " + str(e))
+
+        # return an OK response
+        return Response(status=status.HTTP_200_OK)
+
+# Friend Request API
+class FriendRequestAPI(generics.GenericAPIView):
+
+    # reference serializer
+    serializer_class = FriendRequestSerializer
+
+    def post(self, request, *args, **kwargs):
+        
+        # initialize logger
+        logger = logging.getLogger(__name__)
+        
+        # send data to serializer
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        logger.error("FRIEND USERNAME: " + serializer.validated_data)
+
+        # create
+        friend = serializer.save()
 
         # return an OK response
         return Response(status=status.HTTP_200_OK)

@@ -3,7 +3,8 @@ from rest_framework import serializers
 # from django.contrib.auth.models import User
 from .models import User
 from .models import UserPost
-
+from .models import Friend
+import logging
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -66,6 +67,48 @@ class ForgotSerializer(serializers.Serializer):
         # otherwise raise an error
         raise serializers.ValidationError(
             "Email not associted with any account")
+
+# Friend Request Serializer
+class FriendRequestSerializer(serializers.Serializer):
+
+    # grab the user input
+    friendUsername = serializers.CharField()
+
+    logger = logging.getLogger(__name__)
+    logger.error("HELLO")
+
+    class Meta:
+        model = Friend
+        fields = (
+            'receiver_friend',
+            'sender_friend'
+        )
+
+    def create(self, validated_data):
+        friend = Friend.objects.create(
+            receiver_friend = validated_data["friendUsername"])
+
+        logger = logging.getLogger(__name__)
+        friends = Friend.objects.all()
+        logger.error(friends)
+        
+        return friend
+
+    def validate(self, data):
+
+        # retrieve all registered users
+        users = User.objects.all()
+
+        # if there us a matching email, return it
+        logger = logging.getLogger(__name__)
+        logger.error(data.get('friendUsername'))
+        for user in users:
+            if data.get('friendUsername') == user.username:
+                return data.get('username')
+
+        # otherwise raise an error
+        raise serializers.ValidationError(
+            "Username not associted with any account")
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
