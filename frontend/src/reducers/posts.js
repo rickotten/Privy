@@ -1,12 +1,11 @@
 import { 
     USER_POSTS_GET_FAILURE,
-    USER_POSTS_GET_SUCCESS,
+    USER_POSTS_GET_SUCESS,
     USER_POSTS_GET_LOADING,
     CLEAR_USERS_POSTS,
-    UPDATE_USER_POST_FAILURE,
     UPDATE_USER_POST_SUCCESS,
-    USER_POSTS_CREATE_FAILURE,
-    USER_POSTS_CREATE_SUCCESS
+    CREATE_USER_POST_SUCCESS,
+    CREATE_USER_POST_FAILURE
  } from "../actions/types";
 
 const initialState = {
@@ -16,7 +15,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case USER_POSTS_GET_SUCCESS:
+        case USER_POSTS_GET_SUCESS:
             return {
                 ...state,
                 userPosts: action.payload,
@@ -50,16 +49,15 @@ export default function (state = initialState, action) {
                 ...state,
                 userPosts: updatedPosts
             }
-        case USER_POSTS_CREATE_SUCCESS:
+        case CREATE_USER_POST_SUCCESS:
             return {
                 userPosts: action.payload,
                 ...state
             }
-        case USER_POSTS_CREATE_FAILURE:
+        case CREATE_USER_POST_FAILURE:
             return {
                 ...state,
-                postsLoading: false,
-                userPosts: null
+                postsLoading: false
             }
             
         default:
