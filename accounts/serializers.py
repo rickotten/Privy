@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
+        slug_field = 'username'
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
