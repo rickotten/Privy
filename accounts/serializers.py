@@ -92,3 +92,6 @@ class UserPrivacySerializer(serializers.Serializer):
             user.privFlag = False
         else:
             user.privFlag = True
+
+        return user.privFlag
+        

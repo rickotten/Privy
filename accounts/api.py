@@ -243,6 +243,6 @@ class UserPrivacySettings(generics.GenericAPIView):
     def switch_privacy(self, request, *args, **kwargs):
         serializer = self.get_serializer(data = request.data)
         serializer.is_valid(raise_exception=True)
-        user = User.objects.get(username = self.request.user.username)
+        return User.objects.get(username = self.request.user.username)
         
         
