@@ -16,7 +16,7 @@ import HomePage from "./layout/HomePage";
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
-import { get_user_posts } from "../actions/posts";
+import UserProfile from "./user/UserProfile";
 
 // Alert Options
 const alertOptions = {
@@ -39,6 +39,7 @@ export class App extends Component {
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={HomePage} />
+                  <PrivateRoute exact path="/profile" component={UserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
                   <Route exact path="/forgot" component={ForgotCredentialsForm} />
