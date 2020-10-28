@@ -244,12 +244,13 @@ class UserPostCreateAPI(generics.GenericAPIView):
         )
 
 #UserPost GET request 
+#Used for getting all posts from a user through the URL
 class UserPostGetAPI(generics.ListAPIView):
     
     serializer_class = UserPostSerializer
 
     def get_queryset(self):
-        user = User.objects.get(username=self.request.user.username)
+        user = User.objects.get(username=self.kwargs['username'])
         return UserPost.objects.filter(author=user)
 
 # UserPostUpdate PUT request
