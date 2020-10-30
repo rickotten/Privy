@@ -6,10 +6,10 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework import status
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer
 from .models import UserPost, User
 
 
@@ -234,6 +234,7 @@ class UserPostGetAPI(generics.ListAPIView):
         user = User.objects.get(username=self.request.user.username)
         return UserPost.objects.filter(author=user)
 
+<<<<<<< HEAD
 
 
 #PrivacySettings POST request
@@ -246,3 +247,66 @@ class UserPrivacySettings(generics.GenericAPIView):
         return User.objects.get(username = self.request.user.username)
         
         
+=======
+# UserPostUpdate PUT request
+class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    queryset = UserPost.objects.all()
+    serializer_class = UserPostSerializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+#UserPost Comment Creation POST API
+class UserPostCommentAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = UserPostCommentSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        userComment = serializer.save()
+
+        return Response(
+            {
+                "id": userComment.id,
+                "author": UserSerializer(userComment.author).data,
+                "postId": request.data["postId"],
+                "comment": userComment.comment
+            }
+        )
+
+# UserPost Like POST API
+class UserPostLikeAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def post(self, request, *args, **kwargs):
+        userId = request.data["userId"]
+        postId = request.data["postId"]
+
+        user = User.objects.get(id=userId)
+        post = UserPost.objects.get(id=postId)
+
+        try:
+            post.usersLiked.add(user)
+            post.likesCount += 1
+        except:
+            post.usersLiked.remove(user)
+            post.likesCount -= 1
+
+        post.save()
+        return Response(
+            {
+                "post": UserPostSerializer(post).data
+            }
+        )
+>>>>>>> 4a45da7ff011a015c64aed9b85aa2972792cca85

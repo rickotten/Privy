@@ -8,84 +8,73 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // REdux
 import { connect } from 'react-redux';
 // import { likeScream, unlikeScream } from '../../redux/actions/dataActions';
+import { like_user_post } from "../actions/posts";
 
 export class LikeButton extends Component {
-    // likedScream = () => {
-    //     if (
-    //         this.props.user.likes &&
-    //         this.props.user.likes.find(
-    //             (like) => like.screamId === this.props.screamId
-    //         )
-    //     )
-    //         return true;
-    //     else return false;
-    // };
-    // likeScream = () => {
-    //     this.props.likeScream(this.props.screamId);
-    // };
-    // unlikeScream = () => {
-    //     this.props.unlikeScream(this.props.screamId);
-    // };
-    liked = false;
+    static propTypes = {
+        post: PropTypes.object.isRequired,
+        isAuthenticated: PropTypes.bool,
+        userId: PropTypes.number.isRequired,
+        like_user_post: PropTypes.func.isRequired
+    }
+
+    state = {
+        liked: this.props.post.usersLiked.reduce(
+            (accumulator, user) => accumulator || (user.id === this.props.userId),false),
+        likesCount: this.props.post.likesCount
+    }
+
+    // alreadylikedByUser() > {
+    //     for (const user in this.props.post.usersLiked) {
+    //         if (user.id === this.props.userId) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     likedScream = () => {
-        return this.liked;
+        return this.state.liked
     }
 
     likeScream = () => {
-        console.log('like');
-        this.liked = true;
-        console.log(this.liked);
+        this.setState({ liked: true, likesCount: this.state.likesCount + 1 });
+        this.props.like_user_post(this.props.userId, this.props.post.id);
     }
 
     unlikeScream = () => {
-        console.log('unlike');
-        this.liked = false;
+        this.setState({ liked: false, likesCount: this.state.likesCount - 1 });
+        this.props.like_user_post(this.props.userId, this.props.post.id);
     }
+
     render() {
-        // const { authenticated } = this.props.user;
-        // const likeButton = !authenticated ? (
-        //     <Link to="/login">
-        //         <MyButton tip="Like">
-        //             <FavoriteBorder color="primary" />
-        //         </MyButton>
-        //     </Link>
-        // ) : this.likedScream() ? (
-        //     <MyButton tip="Undo like" onClick={this.unlikeScream}>
-        //         <FavoriteIcon color="primary" />
-        //     </MyButton>
-        // ) : (
-        //             <MyButton tip="Like" onClick={this.likeScream}>
-        //                 <FavoriteBorder color="primary" />
-        //             </MyButton>
-        //         );
-        const likeButton = this.likedScream() ? (
+        const authenticated = this.props.isAuthenticated;
+        const likeButton = !authenticated ? (
+            <Link to="/login">
+                <MyButton tip="Like">
+                    <FavoriteBorder color="primary" />
+                </MyButton>
+            </Link>
+        ) : this.likedScream() ? (
             <MyButton tip="Undo like" onClick={this.unlikeScream}>
-                 <FavoriteIcon color="primary" />
-             </MyButton>
-        ) : (
-            <MyButton tip="Like" onClick={this.likeScream}>
-                <FavoriteBorder color="primary" />
+                <FavoriteIcon color="primary" />
             </MyButton>
-        )
-        return likeButton;
+        ) : (
+                    <MyButton tip="Like" onClick={this.likeScream}>
+                        <FavoriteBorder color="primary" />
+                    </MyButton>
+                );
+
+        return <div>
+                {likeButton}
+                <span>{this.state.likesCount} Likes</span>
+            </div>;
     }
 }
 
-LikeButton.propTypes = {
-    // user: PropTypes.object.isRequired,
-    postId: PropTypes.number.isRequired
-    // likeScream: PropTypes.func.isRequired,
-    // unlikeScream: PropTypes.func.isRequired
-};
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    userId: state.auth.user.id
+})
 
-// const mapStateToProps = (state) => ({
-//     user: state.user
-// });
-
-// const mapActionsToProps = {
-//     likeScream,
-//     unlikeScream
-// };
-
-export default connect(null)(LikeButton);
+export default connect(mapStateToProps, { like_user_post })(LikeButton);

@@ -35,6 +35,7 @@ export default function (state = initialState, action) {
                 postsLoading: false,
                 userPosts: null
             }
+        
         default:
             return state
 
