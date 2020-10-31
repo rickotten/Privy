@@ -295,3 +295,17 @@ class UserPostLikeAPI(generics.GenericAPIView):
                 "post": UserPostSerializer(post).data
             }
         )
+
+# Get User API
+class GetUserProfileAPI(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = UserSerializer
+
+    def get(self, request, **kwargs):
+        username = kwargs.get('username')
+        user = User.objects.get(username=username)
+        return Response({
+            "user": UserSerializer(user).data
+        })
