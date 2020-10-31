@@ -12,6 +12,7 @@ export class NavigationBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link>Features</Nav.Link>
                         <Nav.Link>Pricing</Nav.Link>
+                        <Nav.Link href="#profile">Profile</Nav.Link>
                         <Nav.Link>Logout</Nav.Link>
                     </Nav>
                 </Navbar>
