@@ -32,6 +32,7 @@ export const create_user_post = (description) => (dispatch, getState)  => {
 }
 
 // GET POSTS OF AUTHENTICATED USER
+//This will likely need to be changed later
 export const get_user_posts = () => (dispatch, getState) => {
     dispatch({ type: USER_POSTS_GET_LOADING });
 
@@ -67,5 +68,23 @@ export const update_user_post = (post) => (dispatch, getState) => {
                 type: UPDATE_USER_POST_FAILURE,
             })
         });
-    
 }
+
+// GET POSTS FOR A USER
+//only their posts, not friends
+export const get_user_data = (username) => dispatch => {
+    dispatch({ type: USER_POSTS_GET_LOADING });
+
+    axios.get('/api/auth/${username}')
+        .then(res => {
+            dispatch({
+                type: USER_POSTS_GET_SUCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: USER_POSTS_GET_FAILURE,
+            })
+        });
+    }

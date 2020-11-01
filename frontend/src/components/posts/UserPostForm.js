@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Label } from 'react';
 import { create_user_post} from '../../actions/posts';
+import NavigationBar from '../layout/NavigationBar';
 
 export class UserPostForm extends Component {
     state = {
@@ -24,11 +25,11 @@ export class UserPostForm extends Component {
 
     //What is rendered for the user
     render() {
-        
         const { text_post } = this.state;
-        console.log(text_post);
         return (
+            
             <div className="col-md-6 m-auto">
+                <NavigationBar/>
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Create a Post</h2>
                     <form onSubmit={this.onSubmit}>
