@@ -121,7 +121,7 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
-    image = serializers.ImageField(required=False)
+    image = serializers.ImageField(allow_empty_file=True)
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
 

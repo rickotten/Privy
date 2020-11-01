@@ -19,22 +19,9 @@ export class UserTimeline extends Component {
         userPosts: null
     }
     
-    //dont use compdidmount
-    componentDidMount(){
-        const username = this.props.match.params.username;
-        this.props.get_user_data(username);
-        axios.get('/api/auth/${username}')
-        .then(res => {
-                this.setState({
-                    user: res.data.userPosts
-                })
-        }).catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch({
-                type: USER_POSTS_GET_FAILURE,
-            })
-        });
-    }
+
+        //axios.get('/api/auth/${username}') the two pages are going to have to have some kind of axios calls to get the user's posts
+
 
     render() {
         this.populatePosts();

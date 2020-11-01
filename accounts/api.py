@@ -239,7 +239,6 @@ class UserPostCreateAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        parser_classes = (JSONParser, FormParser, MultiPartParser, FileUploadParser)
 
         userPost = serializer.save()
 

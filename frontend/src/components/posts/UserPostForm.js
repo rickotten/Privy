@@ -8,7 +8,8 @@ import NavigationBar from '../layout/NavigationBar';
 
 export class UserPostForm extends Component {
     state = {
-        text_post: ''
+        text_post: '',
+        media: null
     }
 
     static propTypes = {
@@ -18,39 +19,41 @@ export class UserPostForm extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        this.props.create_user_post(this.state.text_post); 
+        this.props.create_user_post(this.state.text_post, this.state.media); 
     }
 
-    onChange = e => this.setState({ [e.target.name]: e.target.value });
+    onChange = e => this.setState({ text_post: this.text_post, media: this.media });
 
     //What is rendered for the user
     render() {
-        const { text_post } = this.state;
         return (
             <div className="form-group">
                 <NavigationBar/>
                     <h2 className="text-center">Create a Post</h2>
                     <form onSubmit={this.onSubmit}>
                         {/* The text for the user's post */}
-                    
-                            
-                            <Form>
+
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                     
                                     <Form.Control type="text" placeholder="What do you want to say?"
                                         type="text"
                                         name="text_post"
                                         onChange={this.onChange}
-                                        value={text_post} />
+                                        value={this.state.text_post} />
 
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.File id="exampleFormControlFile1" label="Want to Attach a File?" />
+                                    <Form.File id="exampleFormControlFile1" label="Want to Attach a File?" 
+                                    type="file"
+                                    id="media"
+                                    onChange={this.onChange}
+                                    value={this.state.media}
+                                    />
             
                                     
                                 </Form.Group>
-                                </Form>
+
                                 <a href = "/">
                                     <button type="submit" className="btn btn-info btn-sm text-light">Create Post</button>
                                 </a>
