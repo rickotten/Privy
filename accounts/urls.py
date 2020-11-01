@@ -1,5 +1,15 @@
 from django.urls import path, include, re_path
-from .api import RegisterAPI, LoginAPI, UserAPI, exchange_token, ForgotAPI, UserPostCreateAPI, UserPostGetAPI, UserPostUpdateAPI, UserPostCommentAPI, UserPostLikeAPI
+from .api import (RegisterAPI,
+                             LoginAPI,
+                            UserAPI,
+                            exchange_token,
+                            ForgotAPI,
+                            UserPostCreateAPI,
+                            UserPostGetAPI,
+                            UserPostUpdateAPI,
+                            UserPostCommentAPI,
+                            UserPostLikeAPI,
+                            GetUserProfileAPI)
 from knox import views as knox_views
 
 urlpatterns = [
@@ -14,5 +24,6 @@ urlpatterns = [
     path('api/auth/userposts/like', UserPostLikeAPI.as_view()),
     path('api/auth/userposts/comment', UserPostCommentAPI.as_view()),
     re_path('api/auth/userposts/(?P<pk>\d+)$', UserPostUpdateAPI.as_view()),
-    re_path('api/auth/userposts', UserPostGetAPI.as_view())
+    re_path('api/auth/userposts', UserPostGetAPI.as_view()),
+    path('profiles/<str:username>', GetUserProfileAPI.as_view())
 ]

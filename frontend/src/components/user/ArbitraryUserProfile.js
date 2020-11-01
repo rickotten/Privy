@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -34,24 +35,64 @@ const useStyles = (theme) => ({
     },
 });
 
-export class UserProfile extends Component {
+export class ArbitraryUserProfile extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        user: PropTypes.object.isRequired
+        auth: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired
     }
 
-    state = {
-        username: this.props.user.username,
-        profilePicture: "/static/images/penguin.jpg",
-        email: this.props.user.email,
-        bio: "Here's a simple bio",
-        createdAt: dayjs("2020-10-12T20:01:10.560000Z").format("dddd, MMMM D YYYY"),
-        postCount: 5,
-        friendsCount: 10
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: "loading....",
+            profilePicture: "/static/images/penguin.jpg",
+            email: "loading...",
+            bio: "Here's a simple bio",
+            createdAt: "Loading...",
+            postCount: 5,
+            friendsCount: 10
+        }
+    }
+
+    componentDidMount() {
+        this.lookUpProfile();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.username !== prevProps.match.params.username) {
+            this.lookUpProfile();
+        }
+    }
+
+    lookUpProfile = () => {
+        // Code below taken from auth.js action
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
+        axios.get(`/profiles/${this.props.match.params.username}`, config)
+            .then(res => {
+                this.setState({
+                    username: res.data.user.username,
+                    email: res.data.user.email,
+                    createdAt: dayjs(res.data.user.date_joined).format("dddd, MMMM D YYYY")
+                })
+            }).catch(err => {
+                console.log(err);
+            });
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount} = this.state;
+        const { username, profilePicture, email, bio, createdAt, postCount, friendsCount } = this.state;
         const classes = this.props.classes;
         return (
             <div className="col-md-6 m-auto">
@@ -61,7 +102,7 @@ export class UserProfile extends Component {
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>
-                                    <FaceIcon/>
+                                    <FaceIcon />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={username} secondary="Username" />
@@ -70,7 +111,7 @@ export class UserProfile extends Component {
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>
-                                    <NoteIcon/>
+                                    <NoteIcon />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={bio} secondary="Bio" />
@@ -118,8 +159,8 @@ export class UserProfile extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    user: state.auth.user
+const mapStateToProps = (state) => ({
+    auth: state.auth
 })
 
-export default connect(mapStateToProps)(withStyles(useStyles)(UserProfile));
+export default connect(mapStateToProps)(withStyles(useStyles)(ArbitraryUserProfile));
