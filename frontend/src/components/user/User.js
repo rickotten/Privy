@@ -18,8 +18,6 @@ export class User extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        console.log("FRIEND USERNAME: " + this.state.friendUsername);
-        console.log("MY USERNAME: " + this.state.username);
 
         // send this to forgot request in actions/auth.js
         this.props.friendRequest(this.state.username, this.state.friendUsername);
@@ -34,7 +32,9 @@ export class User extends Component {
                 {/* <NavigationBar /> */}
                 <h2>Hello you are logged in as {user['username']}</h2>
                 <button onClick={this.props.logout} className="btn btn-info btn-sm text-light">Logout</button>
-                {this.state.username = user['username']}
+                
+                {/*variable assignmen*/this.state.username = user['username']}
+                
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Friend's username</label>

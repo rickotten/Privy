@@ -75,8 +75,7 @@ class FriendRequestSerializer(serializers.Serializer):
     username = serializers.CharField()
     friendUsername = serializers.CharField()
 
-    logger = logging.getLogger(__name__)
-
+    # access friend class
     class Meta:
         model = Friend
         fields = (
@@ -84,19 +83,20 @@ class FriendRequestSerializer(serializers.Serializer):
             'sender_friend'
         )
 
+    # this happens when you save a frined
     def create(self, data):
-        logger = logging.getLogger(__name__)
-        logger.error("IN CREATE")
+        
+        # create object
         friend = Friend.objects.create(
-            #receiver_friend = 'ExampleMatt',
             receiver_friend = data.get('friendUsername'),
-            #sender_friend = 'ExampleSarah'
             sender_friend = data.get('username')
             )
 
+        # log friendship
         logger = logging.getLogger(__name__)
-        logger.error(friend.sender_friend + " --> " + friend.receiver_friend)
+        logger.error("NEW FRIENDSHIP: " + friend.sender_friend + " --> " + friend.receiver_friend)
         
+        # return object
         return friend
 
     

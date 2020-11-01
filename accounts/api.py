@@ -211,16 +211,11 @@ class FriendRequestAPI(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         
-        # initialize logger
-        logger = logging.getLogger(__name__)
-        
         # send data to serializer
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        #logger.error("FRIEND USERNAME: " + serializer.validated_data)
-
-        # create
+        # create friend object
         serializer.save()
 
         # return an OK response
