@@ -5,6 +5,7 @@ from .models import User
 from .models import UserPost
 from .models import Friend
 import logging
+from django import forms
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -121,7 +122,7 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
-    image = serializers.ImageField(allow_empty_file=True)
+    image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}))  #serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
 
@@ -138,7 +139,7 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         userPost = UserPost.objects.create(
-            author = self.context['request'].user, image = validated_data["image"],title = None, description = validated_data["description"])
+            author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
 
         return userPost
 

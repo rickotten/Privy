@@ -10,10 +10,11 @@ class UserPost(models.Model):
 
     title = models.CharField(max_length=250)
     description = models.TextField()
-    image = models.FileField(
+    image = models.ImageField(
         upload_to='postFile/',
         max_length=254, blank=True, null=True
     )
+    #image = forms.ImageField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}))
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")

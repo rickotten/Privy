@@ -90,4 +90,4 @@ const mapStateToProps = state => ({
     posts: state.posts,
 })*/
 
-export default connect(mapStateToProps, {get_user_data})(UserTimeline)
+export default connect(mapStateToProps)(UserTimeline)
