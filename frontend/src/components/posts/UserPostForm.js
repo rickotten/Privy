@@ -22,7 +22,7 @@ export class UserPostForm extends Component {
         this.props.create_user_post(this.state.text_post, this.state.media); 
     }
 
-    onChange = e => this.setState({ text_post: this.text_post, media: this.media });
+    onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     //What is rendered for the user
     render() {
