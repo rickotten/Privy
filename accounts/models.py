@@ -10,7 +10,7 @@ class UserPost(models.Model):
 
     title = models.CharField(max_length=250)
     description = models.TextField()
-    image = models.ImageField(
+    image = models.FileField(
         upload_to='postFile/',
         max_length=254, blank=True, null=True
     )

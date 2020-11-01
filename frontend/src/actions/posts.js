@@ -13,11 +13,14 @@ import {
  } from "./types";
 
 //CREATE A USER POST
-export const create_user_post = (description) => (dispatch, getState)  => {
+export const create_user_post = (description, media) => (dispatch, getState)  => {
     const config = tokenConfig(getState);
-    const body = JSON.stringify({description});
+
+    let form_data = new FormData();
+    form_data.append('description', description);
+    form_data.append('image', media);
     
-    axios.post(`/api/auth/posts`, body, config)
+    axios.post(`/api/auth/posts`, form_data, config)
         .then(res => {
             dispatch({
                 type: CREATE_USER_POST_SUCCESS,
