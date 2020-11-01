@@ -39,10 +39,7 @@ export class HomePage extends Component {
                 <NavigationBar/>
                 <Jumbotron>
                     {this.userPosts}
-                    //here we need to make a timeline of friends rather than simple posts
                 </Jumbotron>
-                <User/>
-                <UserPostForm/>
             </div>
         )
     }
