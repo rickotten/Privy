@@ -1,13 +1,19 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django import forms
 
 # Create your models here.
 class User(AbstractUser):
     pass
 
 class UserPost(models.Model):
+
     title = models.CharField(max_length=250)
     description = models.TextField()
+    image = models.ImageField(
+        upload_to='postFile/',
+        max_length=254, blank=True, null=True
+    )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")

@@ -121,6 +121,7 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
+    image = serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
 
@@ -129,6 +130,7 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = (
             'author',
             'id',
+            'image',
             'description',
             'likesCount',
             'usersLiked'
@@ -136,7 +138,7 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         userPost = UserPost.objects.create(
-            author = self.context['request'].user, title = None, description = validated_data["description"])
+            author = self.context['request'].user, image = validated_data["image"],title = None, description = validated_data["description"])
 
         return userPost
 

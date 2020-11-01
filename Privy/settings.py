@@ -96,6 +96,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'Privy.urls'
 
 TEMPLATES = [
@@ -175,9 +176,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-#For future multimedia upload
-#MEDIA_URL = "/media"
-#MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/' # 'http://myhost:port/media/'
 
 #Keep this commented for local deployments, uncomment for heroku deployment
 #Additional settings on heroku will be required for the heroku deployment

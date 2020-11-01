@@ -6,6 +6,7 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
@@ -229,12 +230,16 @@ class UserPostCreateAPI(generics.GenericAPIView):
 
     serializer_class = UserPostSerializer
 
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        parser_classes = (JSONParser, FormParser, MultiPartParser, FileUploadParser)
 
         userPost = serializer.save()
+
         
+
         return Response(
             {
                 "userPost": UserPostSerializer(
@@ -242,6 +247,8 @@ class UserPostCreateAPI(generics.GenericAPIView):
                 ).data,
             }
         )
+
+    
 
 #UserPost GET request 
 #Used for getting all posts from a user through the URL
