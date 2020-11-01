@@ -72,10 +72,10 @@ class ForgotSerializer(serializers.Serializer):
 class FriendRequestSerializer(serializers.Serializer):
 
     # grab the user input
+    username = serializers.CharField()
     friendUsername = serializers.CharField()
 
     logger = logging.getLogger(__name__)
-    logger.error("HELLO")
 
     class Meta:
         model = Friend
@@ -91,7 +91,7 @@ class FriendRequestSerializer(serializers.Serializer):
             #receiver_friend = 'ExampleMatt',
             receiver_friend = data.get('friendUsername'),
             #sender_friend = 'ExampleSarah'
-            sender_friend = self.context['request'].user.username
+            sender_friend = data.get('username')
             )
 
         logger = logging.getLogger(__name__)
@@ -114,7 +114,7 @@ class FriendRequestSerializer(serializers.Serializer):
 
         # otherwise raise an error
         raise serializers.ValidationError(
-            "Username not associted with any account")
+            "Username not associated with any account")
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):

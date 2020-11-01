@@ -211,7 +211,7 @@ export const forgot = (email) => (dispatch) => {
 }
 
 // FRIEND REQUEST
-export const friendRequest = (friendUsername) => (dispatch) => {
+export const friendRequest = (username, friendUsername) => (dispatch) => {
     // Headers 
     const config = {
         headers: {
@@ -220,7 +220,7 @@ export const friendRequest = (friendUsername) => (dispatch) => {
     };
 
     // Request Body
-    const body = JSON.stringify({ friendUsername });
+    const body = JSON.stringify({ username, friendUsername });
 
     axios.post('/api/auth/friendRequest', body, config)
         .then(res => {
