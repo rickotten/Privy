@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
 from .models import UserPost, User, Friend
+from itertools import *
 
 
 
@@ -257,7 +258,7 @@ class UserPostGetAPI(generics.ListAPIView):
     
     def get_queryset(self):
         user = User.objects.get(username=self.kwargs['username'])
-        return UserPost.objects.filter(author=user).order_by('id')
+        return UserPost.objects.filter(author=user).order_by('-id')
 
 #Used for getting all posts from a given users friends + their own
 class UserPostGetFriendsAPI(generics.ListAPIView):
@@ -265,19 +266,28 @@ class UserPostGetFriendsAPI(generics.ListAPIView):
     serializer_class = UserPostSerializer
     
     def get_queryset(self):
-        #Getting friendslist
+        #Getting current user's posts
         user = User.objects.get(username=self.kwargs['username'])
-        friends = Friend.objects.all()
-        friendlist = friends.filter(sender_friend = user) 
-
         userposts = UserPost.objects.filter(author=user)
 
-        for x in friendlist:
-            thisUserPosts = UserPost.objects.filter(author=x)
-            for y in thisUserPosts:
-                userposts.append(y)
+        #Get list of friends of the current user
+        friendlist = Friend.objects.filter(sender_friend = self.kwargs['username']) 
 
-        return userposts.order_by('id')
+        #Empty query set
+        userFriends = User.objects.filter(username='')
+
+        #For each Friend in the list of friend, search users with the same name
+        #append it to userFriends
+        for x in friendlist:
+            userFriends = userFriends | User.objects.filter(username=x.receiver_friend)
+
+        #For every user in userFriends
+        for x in userFriends:
+            #Get all of their posts, add them to the list
+            userposts = userposts | UserPost.objects.filter(author=x)
+
+
+        return userposts.order_by('-id')
 
 # UserPostUpdate PUT request
 class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):

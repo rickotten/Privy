@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/auth/posts', UserPostCreateAPI.as_view()),
     re_path('api/auth/userposts/(?P<pk>\d+)$', UserPostUpdateAPI.as_view()),
     path('api/auth/friendRequest', FriendRequestAPI.as_view()),
-    re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view()),
-    re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view())
+    re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
+    re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view())
+    
 ] 
