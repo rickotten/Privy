@@ -305,3 +305,17 @@ class UserPrivacySettings(generics.GenericAPIView):
         serializer = self.get_serializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         return User.objects.get(username = self.request.user.username)
+        
+# Get User API
+class GetUserProfileAPI(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = UserSerializer
+
+    def get(self, request, **kwargs):
+        username = kwargs.get('username')
+        user = User.objects.get(username=username)
+        return Response({
+            "user": UserSerializer(user).data
+        })

@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     username= serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'date_joined')
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -133,6 +133,7 @@ class UserPostSerializer(serializers.ModelSerializer):
     #     instance.save()
     #     return instance
 
+        
 #User Privacy Serializer 
 class UserPrivacySerializer(serializers.Serializer):
     def setPrivacy(self):
@@ -143,4 +144,3 @@ class UserPrivacySerializer(serializers.Serializer):
             user.privFlag = True
 
         return user.privFlag
-        
