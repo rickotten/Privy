@@ -18,6 +18,7 @@ import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile"
+import './myStyles.css';
 
 // Alert Options
 const alertOptions = {

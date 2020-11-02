@@ -9,6 +9,7 @@ export class NavigationBar extends Component {
             <div>
                 <Navbar bg="primary" variant="dark">
                     <Navbar.Brand>P R I V Y</Navbar.Brand>
+                    <img src="../static/images/outhouse.png"/>
                     <Nav className="mr-auto">
                         <Nav.Link>Features</Nav.Link>
                         <Nav.Link>Pricing</Nav.Link>
