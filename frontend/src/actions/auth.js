@@ -209,3 +209,29 @@ export const forgot = (email) => (dispatch) => {
             })
         });
 }
+
+// FRIEND REQUEST
+export const friendRequest = (username, friendUsername) => (dispatch) => {
+    // Headers 
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    // Request Body
+    const body = JSON.stringify({ username, friendUsername });
+
+    axios.post('/api/auth/friendRequest', body, config)
+        .then(res => {
+            dispatch({
+                type: FORGOT_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: FORGOT_FAIL,
+            })
+        });
+}

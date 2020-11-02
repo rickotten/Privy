@@ -23,3 +23,11 @@ class UserPostComment(models.Model):
     
     def __str__(self):
         return f'{self.id}'
+# class for a relationship betwee 2 users
+class Friend(models.Model):
+    
+    # username of user who is receiving the friend request
+    receiver_friend = models.CharField(max_length=250)
+
+    # username of user who is sending the friend request
+    sender_friend = models.CharField(max_length=250)

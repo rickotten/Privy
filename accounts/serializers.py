@@ -1,8 +1,12 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 # from django.contrib.auth.models import User
-from .models import User, UserPost, UserPostComment
 
+from .models import (User, 
+                                    UserPost, 
+                                    UserPostComment,
+                                    Friend)
+import logging
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -90,6 +94,54 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
                 "comment")
         )
         return comment
+        
+# Friend Request Serializer
+class FriendRequestSerializer(serializers.Serializer):
+
+    # grab the user input
+    username = serializers.CharField()
+    friendUsername = serializers.CharField()
+
+    # access friend class
+    class Meta:
+        model = Friend
+        fields = (
+            'receiver_friend',
+            'sender_friend'
+        )
+
+    # this happens when you save a frined
+    def create(self, data):
+        
+        # create object
+        friend = Friend.objects.create(
+            receiver_friend = data.get('friendUsername'),
+            sender_friend = data.get('username')
+            )
+
+        # log friendship
+        logger = logging.getLogger(__name__)
+        logger.error("NEW FRIENDSHIP: " + friend.sender_friend + " --> " + friend.receiver_friend)
+        
+        # return object
+        return friend
+
+    
+    def validate(self, data):
+
+        # retrieve all registered users
+        users = User.objects.all()
+
+        # make sure there is a matching username
+        logger = logging.getLogger(__name__)
+        logger.error(data.get('friendUsername'))
+        for user in users:
+            if data.get('friendUsername') == user.username:
+                return data
+
+        # otherwise raise an error
+        raise serializers.ValidationError(
+            "Username not associated with any account")
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
