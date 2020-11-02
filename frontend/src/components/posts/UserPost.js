@@ -22,7 +22,7 @@ import Comment from './Comment';
 
 const useStyles = theme => ({
     root: {
-        maxWidth: "50%"
+        width: "100%"
     },
     media: {
         height: 0,

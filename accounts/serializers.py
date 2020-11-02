@@ -7,6 +7,7 @@ from .models import (User,
                                     UserPostComment,
                                     Friend)
 import logging
+from django import forms
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'date_joined')
+        slug_field = 'username'
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -147,6 +149,7 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
+    image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}))  #serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
     comments = UserPostCommentSerializer(many=True, required=False)
@@ -156,6 +159,7 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'author',
+            'image',
             'description',
             'likesCount',
             'usersLiked',
@@ -164,7 +168,7 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         userPost = UserPost.objects.create(
-            author = self.context['request'].user, title = None, description = validated_data["description"])
+            author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
 
         return userPost
 

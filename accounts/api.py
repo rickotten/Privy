@@ -7,10 +7,13 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User
+from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
+from .models import UserPost, User, Friend
+from itertools import *
 
 
 
@@ -229,12 +232,15 @@ class UserPostCreateAPI(generics.GenericAPIView):
 
     serializer_class = UserPostSerializer
 
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        parser_classes = (JSONParser, FormParser, MultiPartParser, FileUploadParser)
         userPost = serializer.save()
+
         
+
         return Response(
             {
                 "userPost": UserPostSerializer(
@@ -243,14 +249,46 @@ class UserPostCreateAPI(generics.GenericAPIView):
             }
         )
 
+    
+
 #UserPost GET request 
+#Used for getting all posts from a user through the URL
 class UserPostGetAPI(generics.ListAPIView):
     
     serializer_class = UserPostSerializer
-
+    
     def get_queryset(self):
-        user = User.objects.get(username=self.request.user.username)
-        return UserPost.objects.filter(author=user)
+        user = User.objects.get(username=self.kwargs['username'])
+        return UserPost.objects.filter(author=user).order_by('-id')
+
+#Used for getting all posts from a given users friends + their own
+class UserPostGetFriendsAPI(generics.ListAPIView):
+    
+    serializer_class = UserPostSerializer
+    
+    def get_queryset(self):
+        #Getting current user's posts
+        user = User.objects.get(username=self.kwargs['username'])
+        userposts = UserPost.objects.filter(author=user)
+
+        #Get list of friends of the current user
+        friendlist = Friend.objects.filter(sender_friend = self.kwargs['username']) 
+
+        #Empty query set
+        userFriends = User.objects.filter(username='')
+
+        #For each Friend in the list of friend, search users with the same name
+        #append it to userFriends
+        for x in friendlist:
+            userFriends = userFriends | User.objects.filter(username=x.receiver_friend)
+
+        #For every user in userFriends
+        for x in userFriends:
+            #Get all of their posts, add them to the list
+            userposts = userposts | UserPost.objects.filter(author=x)
+
+
+        return userposts.order_by('-id')
 
 # UserPostUpdate PUT request
 class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):

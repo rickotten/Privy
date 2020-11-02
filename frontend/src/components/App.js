@@ -12,6 +12,10 @@ import LoginForm from "./login/LoginForm";
 import PrivateRoute from "./common/PrivateRoute";
 import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
 import HomePage from "./layout/HomePage";
+import UserTimeline from "./layout/UserTimeline"
+import UserPostForm from "./posts/UserPostForm"
+import User from "./user/User"
+import Logout from "./user/Logout"
 
 import { Provider } from 'react-redux';
 import store from '../store';
@@ -45,7 +49,11 @@ export class App extends Component {
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
-                  <Route exact path="/forgot" component={ForgotCredentialsForm} />
+                  <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />
+                  <Route exact path="/users/:username" component={UserTimeline} />
+                  <PrivateRoute exact path="/createpost" component={UserPostForm} />
+                  <PrivateRoute exact path="/addfriend" component={User} />
+                  <PrivateRoute exact path="/logout" component={Logout} />
                 </Switch>
               </div>
             </Fragment>

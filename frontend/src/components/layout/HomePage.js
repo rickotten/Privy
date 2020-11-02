@@ -5,50 +5,99 @@ import User from '../user/User';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 import UserPost2 from "../posts/UserPost";
+import UserPostForm from '../posts/UserPostForm';
+import axios from 'axios'
+import get_user_data from '../../actions/posts';
+import { ImageTwoTone } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+
+const useStyles = theme => ({
+    root: {
+        width: "50%"
+    }
+})
 
 export class HomePage extends Component {
-    static propTypes = {
-        user: PropTypes.object.isRequired,
-        posts: PropTypes.object.isRequired
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: 'Loading...',
+            userPosts: []
+        }
     }
 
-    userPosts = [];
+    static propTypes = {
+        auth: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
+    }
 
-    populatePosts = () => {
-        if (this.props.posts.postsLoading) {
-            return;
+    componentDidMount() {
+        this.lookUpPosts();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.username !== prevProps.match.params.username) {
+            this.lookUpPosts();
+            
         }
-        this.userPosts = [];
+    }
+    
+
+        //axios.get('/api/auth/${username}') the two pages are going to have to have some kind of axios calls to get the user's posts
+
+    lookUpPosts = () => {
+        // Code below taken from auth.js action
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
         const tempContent = {
             createdAt: "2020-01-31T12:59-0500",
             userImage: "/static/images/no-img.png"
         };
-        const { _, userPosts } = this.props.posts;
-        if (userPosts) {
-            userPosts.forEach(post => {
-                this.userPosts.push(<Grid key={post.id} item>
-                    <UserPost2 key={post.id} tempContent={tempContent} post={post} />
-                </Grid>);
-            });
-        }
-    }
 
+            
+        //Getting the user posts
+        axios.get(`/api/auth/home/${this.props.auth.user.username}`, config)
+            .then(res => {
+                    const localPosts = [];
+                    res.data.forEach(post => {
+                        localPosts.push(<Grid key={post.id} item><UserPost2 key={post.id} tempContent={tempContent} post={post}/></Grid>);
+                    })
+                    this.setState({userPosts: localPosts});
+
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+        
     render() {
-        this.populatePosts();
+
         return (
             <div>
                 <NavigationBar />
                 <Grid container
                     direction="column"
                     justify="flex-start"
-                    alignItems="center">
-                    {this.userPosts}
+                    alignItems="flex-start"
+                    classes={this.props.classes}
+                >
+                    {this.state.userPosts}
                 </Grid>
                 {/* <Jumbotron>
                     {this.userPosts}
                 </Jumbotron> */}
 
-                <User />
+                {/* <User /> */}
                 {/* <CommentForm username={this.props.user["username"]}/> */}
             </div>
         )
@@ -56,8 +105,7 @@ export class HomePage extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    posts: state.posts,
+    auth: state.auth
 })
 
-export default connect(mapStateToProps)(HomePage)
+export default connect(mapStateToProps)(withStyles(useStyles)(HomePage))

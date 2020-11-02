@@ -14,7 +14,10 @@ export class NavigationBar extends Component {
                         <Nav.Link>Features</Nav.Link>
                         <Nav.Link>Pricing</Nav.Link>
                         <Nav.Link href="#profile">Profile</Nav.Link>
-                        <Nav.Link>Logout</Nav.Link>
+                        <Nav.Link href="/#">Home</Nav.Link>
+                        <Nav.Link href="/#/addfriend">Add Friend</Nav.Link>
+                        <Nav.Link href="/#/createpost">Create Post</Nav.Link>
+                        <Nav.Link href="/#/logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar>
             </div>
