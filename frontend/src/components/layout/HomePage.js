@@ -10,6 +10,7 @@ import axios from 'axios'
 import get_user_data from '../../actions/posts';
 import { ImageTwoTone } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import PrivacyPage from "../privacy/PrivacyPage";
 
 const useStyles = theme => ({
     root: {

@@ -1,6 +1,6 @@
+from .models import User, UserPost, UserPostComment
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-# from django.contrib.auth.models import User
 
 from .models import (User, 
                                     UserPost, 
@@ -188,5 +188,18 @@ class UserPostSerializer(serializers.ModelSerializer):
         
     #     instance.save()
     #     return instance
+
+    #User Privacy Serializer
+
+
+class UserPrivacySerializer(serializers.Serializer):
+    def setPrivacy(self):
+        user = User.objects.get(username=self.request.user.username)
+        if user.privFlag:
+            user.privFlag = False
+        else:
+            user.privFlag = True
+
+        return user.privFlag
 
         

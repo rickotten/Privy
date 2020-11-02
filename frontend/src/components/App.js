@@ -23,6 +23,7 @@ import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile"
 import './myStyles.css';
+import PrivacyPage from "./privacy/PrivacyPage";
 
 // Alert Options
 const alertOptions = {
@@ -45,6 +46,7 @@ export class App extends Component {
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={HomePage} />
+                  <PrivateRoute exact path="/settings" component={PrivacyPage} />
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
                   <PrivateRoute exact path="/profile" component={UserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />

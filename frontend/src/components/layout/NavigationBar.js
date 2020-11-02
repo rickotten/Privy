@@ -11,12 +11,13 @@ export class NavigationBar extends Component {
                     <Navbar.Brand>P R I V Y</Navbar.Brand>
                     <img src="../static/images/outhouse.png"/>
                     <Nav className="mr-auto">
+                        <Nav.Link href="/#">Home</Nav.Link>
                         <Nav.Link>Features</Nav.Link>
                         <Nav.Link>Pricing</Nav.Link>
                         <Nav.Link href="#profile">Profile</Nav.Link>
-                        <Nav.Link href="/#">Home</Nav.Link>
                         <Nav.Link href="/#/addfriend">Add Friend</Nav.Link>
                         <Nav.Link href="/#/createpost">Create Post</Nav.Link>
+                        <Nav.Link href="#settings">Settings</Nav.Link>
                         <Nav.Link href="/#/logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar>

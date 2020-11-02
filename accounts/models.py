@@ -1,10 +1,26 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django import forms
+from django.contrib.auth.decorators import login_required
 
 # Create your models here.
+
+
+# This is the custom user model
 class User(AbstractUser):
-    pass
+    privFlag = False
+
+
+# Model for user privacy page
+
+class UserPrivacy(User):
+    @login_required
+    def fetchUserEmail(self):
+        if(self.privFlag):
+            return self.email
+        else:
+            return PermissionError
+
 
 class UserPost(models.Model):
 

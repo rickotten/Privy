@@ -1,3 +1,4 @@
+from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPrivacySerializer
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
@@ -11,7 +12,6 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
 from .models import UserPost, User, Friend
 from itertools import *
 
@@ -352,6 +352,16 @@ class UserPostLikeAPI(generics.GenericAPIView):
             }
         )
 
+
+#PrivacySettings POST request
+class UserPrivacySettings(generics.GenericAPIView):
+    serializer_class = UserPrivacySerializer
+
+    def switch_privacy(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        return User.objects.get(username = self.request.user.username)
+        
 # Get User API
 class GetUserProfileAPI(generics.RetrieveAPIView):
     permission_classes = [
