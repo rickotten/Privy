@@ -53,7 +53,7 @@ export class UserTimeline extends Component {
 
             
         //Getting the user posts
-        axios.get(`/api/auth/home/${this.props.match.params.username}`, config)
+        axios.get(`/api/auth/${this.props.match.params.username}`, config)
             .then(res => {
                     const localPosts = []
                     res.data.forEach(post => {
