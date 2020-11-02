@@ -38,7 +38,7 @@ export class LoginForm extends Component {
         }
         const { username, password } = this.state;
         return (
-            <div className="col-md-6 m-auto">
+            <div className="col-md-6 m-auto" >
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
                     <form onSubmit={this.onSubmit}>

@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
+import './myStyles.css';
 
 // Alert Options
 const alertOptions = {
