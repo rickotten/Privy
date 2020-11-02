@@ -14,7 +14,7 @@ export class NavigationBar extends Component {
                         <Nav.Link>Pricing</Nav.Link>
                         <Nav.Link href="#profile">Profile</Nav.Link>
                         <Nav.Link>Logout</Nav.Link>
-                        <Nav.Link>Settings</Nav.Link>
+                        <Nav.Link href="#settings">Settings</Nav.Link>
                     </Nav>
                 </Navbar>
             </div>

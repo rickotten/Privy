@@ -17,7 +17,8 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
-import ArbitraryUserProfile from "./user/ArbitraryUserProfile"
+import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
+import PrivacyPage from "./privacy/PrivacyPage";
 
 // Alert Options
 const alertOptions = {
@@ -41,6 +42,7 @@ export class App extends Component {
                 <Switch>
                   <PrivateRoute exact path="/" component={HomePage} />
                   <PrivateRoute exact path="/profile" component={UserProfile} />
+                  <PrivateRoute exact path="/settings" component={PrivacyPage} />
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
