@@ -8,7 +8,7 @@ import NavigationBar from '../layout/NavigationBar';
 export class User extends Component {
     state = {
         friendUsername: "",
-        username: ""
+        username: this.props.auth.user.username
     }
 
     static propTypes = {
