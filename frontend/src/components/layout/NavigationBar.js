@@ -13,6 +13,7 @@ export class NavigationBar extends Component {
                         <Nav.Link>Features</Nav.Link>
                         <Nav.Link>Pricing</Nav.Link>
                         <Nav.Link>Logout</Nav.Link>
+                        <Nav.Link>Settings</Nav.Link>
                     </Nav>
                 </Navbar>
             </div>

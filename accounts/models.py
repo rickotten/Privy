@@ -1,13 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
 
 # Create your models here.
 
 
-# This is the custom user model (needs further developed)
+# This is the custom user model
 class User(AbstractUser):
     privFlag = False
 
@@ -33,8 +31,6 @@ class UserPost(models.Model):
     def __str__(self):
         """A string representation of the model."""
         return str(self.id)
-<<<<<<< HEAD
-=======
 
 class UserPostComment(models.Model):
     author = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
@@ -43,4 +39,3 @@ class UserPostComment(models.Model):
     
     def __str__(self):
         return f'{self.id}'
->>>>>>> 4a45da7ff011a015c64aed9b85aa2972792cca85

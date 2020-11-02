@@ -9,7 +9,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, UserPrivacySerializer
 from .models import UserPost, User
 
 
@@ -234,20 +234,6 @@ class UserPostGetAPI(generics.ListAPIView):
         user = User.objects.get(username=self.request.user.username)
         return UserPost.objects.filter(author=user)
 
-<<<<<<< HEAD
-
-
-#PrivacySettings POST request
-class UserPrivacySettings(generics.GenericAPIView):
-    serializer_class = UserPrivacySerializer
-
-    def switch_privacy(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception=True)
-        return User.objects.get(username = self.request.user.username)
-        
-        
-=======
 # UserPostUpdate PUT request
 class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
     permission_classes = [
@@ -309,4 +295,13 @@ class UserPostLikeAPI(generics.GenericAPIView):
                 "post": UserPostSerializer(post).data
             }
         )
->>>>>>> 4a45da7ff011a015c64aed9b85aa2972792cca85
+
+
+#PrivacySettings POST request
+class UserPrivacySettings(generics.GenericAPIView):
+    serializer_class = UserPrivacySerializer
+
+    def switch_privacy(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        return User.objects.get(username = self.request.user.username)

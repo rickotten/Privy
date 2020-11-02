@@ -5,6 +5,7 @@ import User from '../user/User';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 import UserPost2 from "../posts/UserPost";
+import PrivacyPage from "../privacy/PrivacyPage";
 
 export class HomePage extends Component {
     static propTypes = {
