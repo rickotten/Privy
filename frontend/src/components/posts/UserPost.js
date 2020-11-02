@@ -19,6 +19,7 @@ import PropTypes from 'prop-types'
 import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = theme => ({
     root: {
@@ -57,7 +58,13 @@ export class UserPost2 extends Component {
         
     }
 
+    onClickAvatar = (e) => {
+        e.stopPropagation();
+        this.setState({ redirect: <Redirect to={`/profile/${this.props.post.author}`} />})
+    }
+
     state = {
+        redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
             (comment, i) => (<Comment key={comment.id} authorName={comment.author.username} comment={comment.comment} />))
@@ -80,10 +87,15 @@ export class UserPost2 extends Component {
             post
         } = this.props;
 
-        const avatar = <Avatar aria-label="profile" className={classes.avatar}>
-                                {this.props.post.author.toUpperCase().charAt(0)}
-                                </Avatar>
+        const avatar = <div onClick={this.onClickAvatar}>
+                                    <Avatar aria-label="profile" className=    {classes.avatar}>
+                                                    {this.props.post.author.toUpperCase().charAt(0)}
+                                    </Avatar>
+                                </div>
 
+        if (this.state.redirect) {
+            return this.state.redirect;
+        }
         return (
             <Card className={classes.root}>
                 <CardHeader
