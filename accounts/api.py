@@ -11,7 +11,7 @@ from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer
-from .models import UserPost, User
+from .models import UserPost, User, Friend
 
 
 
@@ -235,7 +235,7 @@ class UserPostCreateAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         parser_classes = (JSONParser, FormParser, MultiPartParser, FileUploadParser)
-        
+
         userPost = serializer.save()
 
         
@@ -255,10 +255,30 @@ class UserPostCreateAPI(generics.GenericAPIView):
 class UserPostGetAPI(generics.ListAPIView):
     
     serializer_class = UserPostSerializer
-
+    
     def get_queryset(self):
         user = User.objects.get(username=self.kwargs['username'])
-        return UserPost.objects.filter(author=user)
+        return UserPost.objects.filter(author=user).order_by('id')
+
+#Used for getting all posts from a given users friends + their own
+class UserPostGetFriendsAPI(generics.ListAPIView):
+    
+    serializer_class = UserPostSerializer
+    
+    def get_queryset(self):
+        #Getting friendslist
+        user = User.objects.get(username=self.kwargs['username'])
+        friends = Friend.objects.all()
+        friendlist = friends.objects.filter(sender_friend = user) 
+
+        userposts = UserPost.objects.filter(author=user)
+
+        for x in friendlist:
+            thisUserPosts = UserPost.objects.filter(author=x)
+            for y in thisUserPosts:
+                userposts.append(y)
+
+        return userposts.order_by('id')
 
 # UserPostUpdate PUT request
 class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):

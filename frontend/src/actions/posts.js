@@ -19,6 +19,7 @@ export const create_user_post = (description, media) => (dispatch, getState)  =>
     let form_data = new FormData();
     form_data.append('description', description);
     form_data.append('image', media);
+    console.log(typeof(media));
     
     axios.post(`/api/auth/posts`, form_data, config)
         .then(res => {

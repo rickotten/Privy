@@ -24,8 +24,10 @@ export class UserPostForm extends Component {
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+
     //What is rendered for the user
     render() {
+        const { text_post, media } = this.state;
         return (
             <div className="form-group">
                 <NavigationBar/>
@@ -39,16 +41,16 @@ export class UserPostForm extends Component {
                                         type="text"
                                         name="text_post"
                                         onChange={this.onChange}
-                                        value={this.state.text_post} />
+                                        value={text_post} />
 
                                 </Form.Group>
 
                                 <Form.Group>
-                                    <Form.File id="exampleFormControlFile1" label="Want to Attach a File?" 
+                                    <Form.File label="Want to Attach a File?" 
                                     type="file"
-                                    id="media"
+                                    name="media"
                                     onChange={this.onChange}
-                                    value={this.state.media}
+                                    value={media}
                                     />
             
                                     

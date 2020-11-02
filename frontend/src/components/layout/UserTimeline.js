@@ -10,84 +10,77 @@ import axios from 'axios'
 import get_user_data from '../../actions/posts';
 
 export class UserTimeline extends Component {
-    static propTypes = {
-        get_user_data: PropTypes.func.isRequired,
-        data: PropTypes.object.isRequired
-    }
 
-    state = {
-        userPosts: null
-    }
-    
-
-        //axios.get('/api/auth/${username}') the two pages are going to have to have some kind of axios calls to get the user's posts
-
-
-    render() {
-        this.populatePosts();
-        return (
-            <div>
-                <NavigationBar/>
-                <Jumbotron>
-                    {this.userPosts}
-                    //here we need to make a timeline of friends rather than simple posts
-                </Jumbotron>
-                <User/>
-            </div>
-        )
-    }
-}
-
-const mapStateToProps = state => ({
-    posts: state.posts,
-})
-
-/*
-    static propTypes = {
-        posts: PropTypes.object.isRequired
-    }
-
-    userPosts = [];
-    
-    populatePosts = () => {
-        if (this.props.posts.postsLoading) {
-            return;
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: 'Loading...',
+            userPosts: []
         }
-        this.userPosts = [];
+    }
+
+
+    componentDidMount() {
+        this.lookUpPosts();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.username !== prevProps.match.params.username) {
+            this.lookUpPosts();
+            
+        }
+    }
+
+    lookUpPosts = () => {
+        // Code below taken from auth.js action
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
         const tempContent = {
             createdAt: "2020-01-31T12:59-0500",
             userImage: "/static/images/no-img.png",
             commentCount: 10
         };
 
-        const handle = this.props.match.params.handle;
-        
-        const { _, userPosts } = this.props.get_user_data(handle);
-        if (userPosts) {
-            userPosts.forEach(post => {
-                this.userPosts.push(<UserPost key={post.id} tempContent={tempContent} post={post}/>);
-            });
-        }
-    }
+            
+        //Getting the user posts
+        axios.get(`/api/auth/home/${this.props.match.params.username}`, config)
+            .then(res => {
+                    const localPosts = []
+                    res.data.forEach(post => {
+                        localPosts.push(<UserPost key={post.id} tempContent={tempContent} post={post}/>);
+                    })
+                    this.setState({userPosts: localPosts});
 
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+        
     render() {
-        this.populatePosts();
+
         return (
             <div>
                 <NavigationBar/>
                 <Jumbotron>
-                    {this.userPosts}
-                    //here we need to make a timeline of friends rather than simple posts
+                    {this.state.userPosts}
                 </Jumbotron>
-                <User/>
-                <UserPostForm/>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    posts: state.posts,
-})*/
+    auth: state.auth
+})
 
 export default connect(mapStateToProps)(UserTimeline)
