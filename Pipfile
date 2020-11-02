@@ -19,6 +19,7 @@ dnspython = "*"
 social-auth-app-django = "*"
 sendgrid = "*"
 python-social-auth = {extras = ["django"], version = "*"}
+pillow = "*"
 
 [requires]
 python_version = "3.8"
