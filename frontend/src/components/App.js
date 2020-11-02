@@ -45,8 +45,8 @@ export class App extends Component {
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={HomePage} />
-                  <PrivateRoute exact path="/profile" component={UserProfile} />
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
+                  <PrivateRoute exact path="/profile" component={UserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
                   <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />

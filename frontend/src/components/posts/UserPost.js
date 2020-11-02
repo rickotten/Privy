@@ -58,6 +58,7 @@ export class UserPost2 extends Component {
     }
 
     state = {
+        redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
             (comment, i) => (<Comment key={comment.id} authorName={comment.author.username} comment={comment.comment} />))
@@ -80,10 +81,15 @@ export class UserPost2 extends Component {
             post
         } = this.props;
 
-        const avatar = <Avatar aria-label="profile" className={classes.avatar}>
-                                {this.props.post.author.toUpperCase().charAt(0)}
-                                </Avatar>
+        const avatar = <a href={"#profile/" + this.props.post.author}>
+                                    <Avatar aria-label="profile" className=    {classes.avatar}>
+                                                    {this.props.post.author.toUpperCase().charAt(0)}
+                                    </Avatar>
+                                </a>
 
+        if (this.state.redirect) {
+            return this.state.redirect;
+        }
         return (
             <Card className={classes.root}>
                 <CardHeader
