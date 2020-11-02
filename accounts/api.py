@@ -268,7 +268,7 @@ class UserPostGetFriendsAPI(generics.ListAPIView):
         #Getting friendslist
         user = User.objects.get(username=self.kwargs['username'])
         friends = Friend.objects.all()
-        friendlist = friends.objects.filter(sender_friend = user) 
+        friendlist = friends.filter(sender_friend = user) 
 
         userposts = UserPost.objects.filter(author=user)
 

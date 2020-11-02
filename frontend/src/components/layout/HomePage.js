@@ -8,8 +8,9 @@ import PropTypes from 'prop-types'
 import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
 import get_user_data from '../../actions/posts';
+import { ImageTwoTone } from '@material-ui/icons';
 
-export class UserTimeline extends Component {
+export class HomePage extends Component {
 
     constructor(props) {
         super(props);
@@ -19,6 +20,9 @@ export class UserTimeline extends Component {
         }
     }
 
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    }
 
     componentDidMount() {
         this.lookUpPosts();
@@ -26,7 +30,6 @@ export class UserTimeline extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.username !== prevProps.match.params.username) {
-            console.log("HERE");
             this.lookUpPosts();
             
         }
@@ -57,7 +60,7 @@ export class UserTimeline extends Component {
 
             
         //Getting the user posts
-        axios.get(`/api/auth/home/${this.props.match.params.username}`, config)
+        axios.get(`/api/auth/home/${this.props.auth.user.username}`, config)
             .then(res => {
                     const localPosts = []
                     res.data.forEach(post => {
@@ -87,4 +90,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(UserTimeline)
+export default connect(mapStateToProps)(HomePage)
