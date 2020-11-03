@@ -149,7 +149,7 @@ class FriendRequestSerializer(serializers.Serializer):
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
-    image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}))  #serializers.ImageField(required=False)
+    image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}), required=False)  #serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
     usersLiked = UserSerializer(many=True, required=False)
     comments = UserPostCommentSerializer(many=True, required=False)
@@ -167,8 +167,15 @@ class UserPostSerializer(serializers.ModelSerializer):
         )  
 
     def create(self, validated_data):
-        userPost = UserPost.objects.create(
-            author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
+        try:
+            userPost = UserPost.objects.create(
+                author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
+        except KeyError as e:
+            logger = logging.getLogger(__name__)
+            logger.error("No image uploaded with post")
+            userPost = UserPost.objects.create(
+                author=self.context['request'].user, title=None, description=validated_data["description"])
+
 
         return userPost
 
