@@ -22,10 +22,10 @@ import Comment from './Comment';
 
 const useStyles = theme => ({
     root: {
-        width: "100%"
+        width: "35vw"
     },
     media: {
-        height: 0,
+        // height: 0,
         paddingTop: '56.25%', // 16:9
     },
     expand: {

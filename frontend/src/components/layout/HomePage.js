@@ -9,14 +9,7 @@ import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
 import get_user_data from '../../actions/posts';
 import { ImageTwoTone } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import PrivacyPage from "../privacy/PrivacyPage";
-
-const useStyles = theme => ({
-    root: {
-        width: "50%"
-    }
-})
 
 export class HomePage extends Component {
 
@@ -30,7 +23,7 @@ export class HomePage extends Component {
 
     static propTypes = {
         auth: PropTypes.object.isRequired,
-        classes: PropTypes.object.isRequired
+        auth: PropTypes.object.isRequired
     }
 
     componentDidMount() {
@@ -90,7 +83,6 @@ export class HomePage extends Component {
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
-                    classes={this.props.classes}
                 >
                     {this.state.userPosts}
                 </Grid>
@@ -109,4 +101,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(withStyles(useStyles)(HomePage))
+export default connect(mapStateToProps)(HomePage)

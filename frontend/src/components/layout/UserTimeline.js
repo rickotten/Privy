@@ -9,13 +9,6 @@ import PropTypes from 'prop-types'
 import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
 import get_user_data from '../../actions/posts';
-import { withStyles } from '@material-ui/core/styles';
-
-const useStyles = theme => ({
-    root: {
-        width: "50%"
-    }
-})
 
 export class UserTimeline extends Component {
 
@@ -83,7 +76,6 @@ export class UserTimeline extends Component {
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
-                    classes={this.props.classes}
                 >
                     {this.state.userPosts}
                 </Grid>
@@ -96,4 +88,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(withStyles(useStyles)(UserTimeline))
+export default connect(mapStateToProps)(UserTimeline)
