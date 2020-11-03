@@ -1,8 +1,13 @@
+from .models import User, UserPost, UserPostComment
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-# from django.contrib.auth.models import User
-from .models import User, UserPost, UserPostComment
 
+from .models import (User, 
+                                    UserPost, 
+                                    UserPostComment,
+                                    Friend)
+import logging
+from django import forms
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -11,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'date_joined')
+        slug_field = 'username'
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -69,7 +75,7 @@ class ForgotSerializer(serializers.Serializer):
 # User Comment Serializer
 class UserPostCommentSerializer(serializers.ModelSerializer):
     comment = serializers.CharField()
-    author = UserSerializer(required=False)
+    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
     authorId = serializers.IntegerField(write_only=True)
     postId = serializers.IntegerField(write_only=True)
 
@@ -90,13 +96,63 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
                 "comment")
         )
         return comment
+        
+# Friend Request Serializer
+class FriendRequestSerializer(serializers.Serializer):
+
+    # grab the user input
+    username = serializers.CharField()
+    friendUsername = serializers.CharField()
+
+    # access friend class
+    class Meta:
+        model = Friend
+        fields = (
+            'receiver_friend',
+            'sender_friend'
+        )
+
+    # this happens when you save a frined
+    def create(self, data):
+        
+        # create object
+        friend = Friend.objects.create(
+            receiver_friend = data.get('friendUsername'),
+            sender_friend = data.get('username')
+            )
+
+        # log friendship
+        logger = logging.getLogger(__name__)
+        logger.error("NEW FRIENDSHIP: " + friend.sender_friend + " --> " + friend.receiver_friend)
+        
+        # return object
+        return friend
+
+    
+    def validate(self, data):
+
+        # retrieve all registered users
+        users = User.objects.all()
+
+        # make sure there is a matching username
+        logger = logging.getLogger(__name__)
+        logger.error(data.get('friendUsername'))
+        for user in users:
+            if data.get('friendUsername') == user.username:
+                return data
+
+        # otherwise raise an error
+        raise serializers.ValidationError(
+            "Username not associated with any account")
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
     likesCount = serializers.IntegerField(required=False)
     description = serializers.CharField()
+    image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}), required=False)  #serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
-    usersLiked = UserSerializer(many=True, required=False)
+    # usersLiked = UserSerializer(many=True, required=False)
+    usersLiked = serializers.SlugRelatedField(many=True, read_only=True, slug_field="username")
     comments = UserPostCommentSerializer(many=True, required=False)
 
     class Meta:
@@ -104,6 +160,7 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'author',
+            'image',
             'description',
             'likesCount',
             'usersLiked',
@@ -111,8 +168,15 @@ class UserPostSerializer(serializers.ModelSerializer):
         )  
 
     def create(self, validated_data):
-        userPost = UserPost.objects.create(
-            author = self.context['request'].user, title = None, description = validated_data["description"])
+        try:
+            userPost = UserPost.objects.create(
+                author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
+        except KeyError as e:
+            logger = logging.getLogger(__name__)
+            logger.error("No image uploaded with post")
+            userPost = UserPost.objects.create(
+                author=self.context['request'].user, title=None, description=validated_data["description"])
+
 
         return userPost
 
@@ -132,5 +196,18 @@ class UserPostSerializer(serializers.ModelSerializer):
         
     #     instance.save()
     #     return instance
+
+    #User Privacy Serializer
+
+
+class UserPrivacySerializer(serializers.Serializer):
+    def setPrivacy(self):
+        user = User.objects.get(username=self.request.user.username)
+        if user.privFlag:
+            user.privFlag = False
+        else:
+            user.privFlag = True
+
+        return user.privFlag
 
         

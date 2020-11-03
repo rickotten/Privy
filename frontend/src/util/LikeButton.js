@@ -14,24 +14,15 @@ export class LikeButton extends Component {
     static propTypes = {
         post: PropTypes.object.isRequired,
         isAuthenticated: PropTypes.bool,
-        userId: PropTypes.number.isRequired,
+        currentUser: PropTypes.object.isRequired,
         like_user_post: PropTypes.func.isRequired
     }
 
     state = {
         liked: this.props.post.usersLiked.reduce(
-            (accumulator, user) => accumulator || (user.id === this.props.userId),false),
+            (accumulator, username) => accumulator || (username === this.props.currentUser.username),false),
         likesCount: this.props.post.likesCount
     }
-
-    // alreadylikedByUser() > {
-    //     for (const user in this.props.post.usersLiked) {
-    //         if (user.id === this.props.userId) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     likedScream = () => {
         return this.state.liked
@@ -39,12 +30,12 @@ export class LikeButton extends Component {
 
     likeScream = () => {
         this.setState({ liked: true, likesCount: this.state.likesCount + 1 });
-        this.props.like_user_post(this.props.userId, this.props.post.id);
+        this.props.like_user_post(this.props.currentUser.id, this.props.post.id);
     }
 
     unlikeScream = () => {
         this.setState({ liked: false, likesCount: this.state.likesCount - 1 });
-        this.props.like_user_post(this.props.userId, this.props.post.id);
+        this.props.like_user_post(this.props.currentUser.id, this.props.post.id);
     }
 
     render() {
@@ -74,7 +65,7 @@ export class LikeButton extends Component {
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    userId: state.auth.user.id
+    currentUser: state.auth.user
 })
 
 export default connect(mapStateToProps, { like_user_post })(LikeButton);
