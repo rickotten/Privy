@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button, makeStyles, Switch } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import NavigationBar from '../layout/NavigationBar'
 
 
 
@@ -10,6 +11,7 @@ export class PrivacyPage extends Component {
     render(){
         return(
             <div className="privPage">
+                <NavigationBar/>
                 <Grid container direction="column" alignItems="left" spacing = {3}>
                     <Grid item privatePage={12}>
                         <Paper>

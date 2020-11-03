@@ -9,7 +9,7 @@ import NavigationBar from '../layout/NavigationBar';
 export class UserPostForm extends Component {
     state = {
         text_post: '',
-        media: null
+        media: ""
     }
 
     static propTypes = {

@@ -75,7 +75,7 @@ class ForgotSerializer(serializers.Serializer):
 # User Comment Serializer
 class UserPostCommentSerializer(serializers.ModelSerializer):
     comment = serializers.CharField()
-    author = UserSerializer(required=False)
+    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
     authorId = serializers.IntegerField(write_only=True)
     postId = serializers.IntegerField(write_only=True)
 
@@ -151,7 +151,8 @@ class UserPostSerializer(serializers.ModelSerializer):
     description = serializers.CharField()
     image = forms.FileField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}), required=False)  #serializers.ImageField(required=False)
     author = serializers.CharField(source='author.username', read_only=True)
-    usersLiked = UserSerializer(many=True, required=False)
+    # usersLiked = UserSerializer(many=True, required=False)
+    usersLiked = serializers.SlugRelatedField(many=True, read_only=True, slug_field="username")
     comments = UserPostCommentSerializer(many=True, required=False)
 
     class Meta:

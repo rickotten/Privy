@@ -22,7 +22,6 @@ export class HomePage extends Component {
     }
 
     static propTypes = {
-        auth: PropTypes.object.isRequired,
         auth: PropTypes.object.isRequired
     }
 

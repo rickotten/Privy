@@ -61,7 +61,7 @@ export class UserPost2 extends Component {
         redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
-            (comment, i) => (<Comment key={comment.id} authorName={comment.author.username} comment={comment.comment} />))
+            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} />))
     }
 
 
