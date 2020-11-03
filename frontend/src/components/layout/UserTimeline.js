@@ -48,7 +48,6 @@ export class UserTimeline extends Component {
 
         const tempContent = {
             createdAt: "2020-01-31T12:59-0500",
-            userImage: "/static/images/no-img.png",
             commentCount: 10
         };
 

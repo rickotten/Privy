@@ -21,7 +21,6 @@ export const create_user_post = (description, media) => (dispatch, getState)  =>
     let form_data = new FormData();
     form_data.append('description', description);
     if (media) {
-        console.log(media);
         form_data.append('image', media);
     }
     

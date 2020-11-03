@@ -14,7 +14,7 @@ export class LikeButton extends Component {
     static propTypes = {
         post: PropTypes.object.isRequired,
         isAuthenticated: PropTypes.bool,
-        currentUser: PropTypes.number.isRequired,
+        currentUser: PropTypes.object.isRequired,
         like_user_post: PropTypes.func.isRequired
     }
 

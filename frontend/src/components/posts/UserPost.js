@@ -75,11 +75,11 @@ export class UserPost2 extends Component {
         const {
             classes,
             tempContent: {
-                createdAt,
-                userImage
+                createdAt
             },
             post
         } = this.props;
+        const userImage = post.image;
 
         const avatar = <a href={"#profile/" + this.props.post.author}>
                                     <Avatar aria-label="profile" className=    {classes.avatar}>
@@ -90,6 +90,11 @@ export class UserPost2 extends Component {
         if (this.state.redirect) {
             return this.state.redirect;
         }
+        const media = (userImage ? (<CardMedia
+            className={classes.media}
+            image={userImage}
+            title="Post Image"
+        />) : (<div></div>));
         return (
             <Card className={classes.root}>
                 <CardHeader
@@ -102,11 +107,7 @@ export class UserPost2 extends Component {
                     title="A Creative Title"
                     subheader={dayjs(createdAt).fromNow()}
                 />
-                <CardMedia
-                    className={classes.media}
-                    image={userImage}
-                    title="Post Image"
-                />
+                {media}
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {post.description}
@@ -132,7 +133,7 @@ export class UserPost2 extends Component {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
-                        {comments.slice().reverse()}
+                        {comments}
                     </CardContent>
                 </Collapse>
             </Card>

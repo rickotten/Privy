@@ -9,7 +9,7 @@ import NavigationBar from '../layout/NavigationBar';
 export class UserPostForm extends Component {
     state = {
         text_post: '',
-        media: ""
+        media: ''
     }
 
     static propTypes = {
@@ -23,6 +23,7 @@ export class UserPostForm extends Component {
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
+    onChangeImage = e => this.setState({ [e.target.name]: e.target.files[0] });
 
 
     //What is rendered for the user
@@ -49,8 +50,7 @@ export class UserPostForm extends Component {
                                     <Form.File label="Want to Attach a File?" 
                                     type="file"
                                     name="media"
-                                    onChange={this.onChange}
-                                    value={media}
+                                    onChange={this.onChangeImage}
                                     />
             
                                     

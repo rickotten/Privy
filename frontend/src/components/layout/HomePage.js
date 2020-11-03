@@ -54,8 +54,7 @@ export class HomePage extends Component {
         }
 
         const tempContent = {
-            createdAt: "2020-01-31T12:59-0500",
-            userImage: "/static/images/no-img.png"
+            createdAt: "2020-01-31T12:59-0500"
         };
 
             
