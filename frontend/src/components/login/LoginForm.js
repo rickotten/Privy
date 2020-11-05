@@ -16,7 +16,6 @@ export class LoginForm extends Component {
     static propTypes = {
         login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool,
-        get_user_posts: PropTypes.func.isRequired
     }
 
     onSubmit = e => {
@@ -33,12 +32,11 @@ export class LoginForm extends Component {
             fire and reduce to update the state before the state is loaded immutably into the HomePage 
             component.
             */
-            this.props.get_user_posts();
             return <Redirect to="/" />;
         }
         const { username, password } = this.state;
         return (
-            <div className="col-md-6 m-auto">
+            <div className="col-md-6 m-auto" >
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
                     <form onSubmit={this.onSubmit}>
@@ -90,4 +88,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { login, get_user_posts })(LoginForm)
+export default connect(mapStateToProps, { login})(LoginForm)

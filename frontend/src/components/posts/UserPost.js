@@ -22,10 +22,10 @@ import Comment from './Comment';
 
 const useStyles = theme => ({
     root: {
-        maxWidth: "50%"
+        width: "35vw"
     },
     media: {
-        height: 0,
+        // height: 0,
         paddingTop: '56.25%', // 16:9
     },
     expand: {
@@ -58,9 +58,10 @@ export class UserPost2 extends Component {
     }
 
     state = {
+        redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
-            (comment, i) => (<Comment key={comment.id} authorName={comment.author.username} comment={comment.comment} />))
+            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} />))
     }
 
 
@@ -74,16 +75,26 @@ export class UserPost2 extends Component {
         const {
             classes,
             tempContent: {
-                createdAt,
-                userImage
+                createdAt
             },
             post
         } = this.props;
+        const userImage = post.image;
 
-        const avatar = <Avatar aria-label="profile" className={classes.avatar}>
-                                {this.props.post.author.toUpperCase().charAt(0)}
-                                </Avatar>
+        const avatar = <a href={"#profile/" + this.props.post.author}>
+                                    <Avatar aria-label="profile" className=    {classes.avatar}>
+                                                    {this.props.post.author.toUpperCase().charAt(0)}
+                                    </Avatar>
+                                </a>
 
+        if (this.state.redirect) {
+            return this.state.redirect;
+        }
+        const media = (userImage ? (<CardMedia
+            className={classes.media}
+            image={userImage}
+            title="Post Image"
+        />) : (<div></div>));
         return (
             <Card className={classes.root}>
                 <CardHeader
@@ -96,11 +107,7 @@ export class UserPost2 extends Component {
                     title="A Creative Title"
                     subheader={dayjs(createdAt).fromNow()}
                 />
-                <CardMedia
-                    className={classes.media}
-                    image={userImage}
-                    title="Post Image"
-                />
+                {media}
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {post.description}
@@ -126,7 +133,7 @@ export class UserPost2 extends Component {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
-                        {comments.slice().reverse()}
+                        {comments}
                     </CardContent>
                 </Collapse>
             </Card>

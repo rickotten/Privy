@@ -1,5 +1,5 @@
-from django.urls import path, include, re_path
-from .api import (RegisterAPI,
+from .api import (FriendRequestAPI,
+                            RegisterAPI,
                              LoginAPI,
                             UserAPI,
                             exchange_token,
@@ -9,7 +9,9 @@ from .api import (RegisterAPI,
                             UserPostUpdateAPI,
                             UserPostCommentAPI,
                             UserPostLikeAPI,
-                            GetUserProfileAPI)
+                            GetUserProfileAPI,
+                            UserPostGetFriendsAPI)
+from django.urls import path, include, re_path
 from knox import views as knox_views
 
 urlpatterns = [
@@ -17,13 +19,15 @@ urlpatterns = [
     path("api/auth", include("knox.urls")),
     path("api/auth/register", RegisterAPI.as_view()),
     path("api/auth/login", LoginAPI.as_view()),
-    path('api/auth/user', UserAPI.as_view()),
+    path('auth/user', UserAPI.as_view()),
     path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('api/auth/forgot', ForgotAPI.as_view()),
     path('api/auth/posts', UserPostCreateAPI.as_view()),
     path('api/auth/userposts/like', UserPostLikeAPI.as_view()),
     path('api/auth/userposts/comment', UserPostCommentAPI.as_view()),
-    re_path('api/auth/userposts/(?P<pk>\d+)$', UserPostUpdateAPI.as_view()),
-    re_path('api/auth/userposts', UserPostGetAPI.as_view()),
-    path('profiles/<str:username>', GetUserProfileAPI.as_view())
-]
+    # re_path('api/auth/userposts/(?P<pk>\d+)$', UserPostUpdateAPI.as_view()),
+    path('profiles/<str:username>', GetUserProfileAPI.as_view()),
+    path('api/auth/friendRequest', FriendRequestAPI.as_view()),
+    re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
+    re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view())
+] 
