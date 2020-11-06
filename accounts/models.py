@@ -1,3 +1,4 @@
+import django
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django import forms
@@ -21,6 +22,14 @@ class UserPrivacy(User):
         else:
             return PermissionError
 
+class Page(models.Model):
+    title = models.CharField(max_length=250)
+    owner = models.ForeignKey(
+        User, related_name="owned_pages", on_delete=models.CASCADE)
+    description = models.TextField()
+    date_created = models.DateTimeField(
+        default=django.utils.timezone.now, verbose_name='date created')
+    members = models.ManyToManyField(User, related_name="subscribed_pages")
 
 class UserPost(models.Model):
 
@@ -30,7 +39,7 @@ class UserPost(models.Model):
         upload_to='postFile/',
         max_length=254, blank=True, null=True
     )
-    #image = forms.ImageField(widget=forms.FileInput(attrs={'accept':'image/*,video/*'}))
+    page = models.ForeignKey(Page, related_name="posts", on_delete=models.CASCADE, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")
