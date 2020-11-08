@@ -137,6 +137,7 @@ export class UserPost2 extends Component {
                     </CardContent>
                 </Collapse>
             </Card>
+            
         )
     }
 }

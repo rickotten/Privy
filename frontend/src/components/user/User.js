@@ -40,6 +40,7 @@ export class User extends Component {
                             name="friendUsername"
                             onChange={this.onChange}
                             value={friendUsername}
+                            size="20"
                         />
                     </div>
                     <div className="form-group">

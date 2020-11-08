@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 // MUI Icons
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -16,11 +16,12 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
+import NavigationBar from '../layout/NavigationBar';
 
 const useStyles = (theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 600,
         backgroundColor: theme.palette.background.paper,
     },
     small: {
@@ -54,8 +55,9 @@ export class UserProfile extends Component {
         const {username, profilePicture, email, bio, createdAt, postCount, friendsCount} = this.state;
         const classes = this.props.classes;
         return (
-            <div className="col-md-6 m-auto">
-                <div className="card card-body mt-5">
+            <div className="col-md-18 m-auto">
+                <NavigationBar/>
+                <div className="card card-body">
                     <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
                     <List className={classes.root}>
                         <ListItem>
@@ -109,7 +111,7 @@ export class UserProfile extends Component {
                                     <EmojiPeopleIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={friendsCount} secondary="Friend's Count" />
+                            <ListItemText primary={friendsCount} secondary="Friend Count" />
                         </ListItem>
                     </List>
                 </div>

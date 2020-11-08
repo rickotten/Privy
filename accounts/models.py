@@ -1,9 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-<<<<<<< HEAD
-=======
 from django import forms
->>>>>>> f27c589c1cbd6d1c310def4595c3b32027478509
 from django.contrib.auth.decorators import login_required
 
 # Create your models here.

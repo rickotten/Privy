@@ -17,14 +17,14 @@ export class PrivacyPage extends Component {
                         <Paper>
                             <h1>Private Page:</h1>
                             <Switch></Switch>
-                            <sub>This option will make your posts invisible to people who do not follow you</sub>
+                            <h2>This option will make your posts invisible to people who do not follow you</h2>
                         </Paper>
                     </Grid>
                     <Grid item emailPrivacy = {12}>
                         <Paper>
                             <h1>Show Email on Profile:</h1>
                             <Switch></Switch>
-                            <sub>This option will hide your email from your profile</sub>
+                            <h2>This option will hide your email from your profile</h2>
                         </Paper>
                     </Grid>
                     <Button>Save</Button>
