@@ -14,7 +14,8 @@ from .api import (FriendRequestAPI,
                             UserSearchEmailAPI,
                             UserSearchNameAPI,
                             UserSearchFOFAPI,
-                            UserSearchPostsAPI)
+                            UserSearchPostsAPI,
+                            UserSearchPagesAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -34,13 +35,13 @@ urlpatterns = [
     path('api/auth/friendRequest', FriendRequestAPI.as_view()),
     ################################################
     #To use these queries, use this example:
-    #/searchname/?search=username or /searchemail/?search=email
+    #/searchname/?search=username or /searchemail/?search=email (except for searching FoF)
     #it looks for names/emails containing the given argument
     path('searchname/', UserSearchNameAPI.as_view()),
     path('searchemail/', UserSearchEmailAPI.as_view()),
     re_path('searchfriendsoffriends/(?P<username>\w+)$', UserSearchFOFAPI.as_view()),
     path('searchposts/', UserSearchPostsAPI.as_view()),
-    #path('searchpages/', UserSearchPagesAPI.as_view()), This will be implemented once pages are implemented
+    path('searchpages/', UserSearchPagesAPI.as_view()), 
     #######################################################
     re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
     re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view())

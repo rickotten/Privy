@@ -1,5 +1,5 @@
 from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPrivacySerializer
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -423,11 +423,6 @@ class UserSearchFOFAPI(generics.ListAPIView):
 
         return friendsOfFriendsUsers.filter(username__contains=self.kwargs['username'])
         
-        
-
-    
-    
-
 #Used for getting the posts containing the query
 #Based on email
 class UserSearchPostsAPI(generics.ListAPIView):
@@ -437,8 +432,13 @@ class UserSearchPostsAPI(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     serializer_class = UserPostSerializer
 
-
-
+#Used for getting the pages based on a search
+#Based on title, description, or owner
+class UserSearchEmailAPI(generics.ListAPIView):
     
+    queryset = Page.objects.all()
+    search_fields = ['title', 'description', 'owner']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = PageSerializer
 
 ##################################################################

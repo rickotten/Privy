@@ -4,7 +4,7 @@ import { returnErrors } from './errors';
 import { 
     USER_PROFILES_GET_LOADING,
     USER_PROFILES_GET_SUCCESS,
-    USER_PROFILES_GET_FAILURE
+    USER_PROFILES_GET_FAILURE,
  } from "./types";
 
 
@@ -49,7 +49,7 @@ export const get_email_profile_data = (email) => dispatch => {
 export const get_fof_profile_data = (username) => dispatch => {
     dispatch({ type: USER_PROFILES_GET_LOADING });
 
-    axios.get('/searchfriendsoffriends/?search=${username}')
+    axios.get('/searchfriendsoffriends/${username}')
         .then(res => {
             dispatch({
                 type: USER_PROFILES_GET_SUCCESS,

@@ -3,6 +3,7 @@ import {
     USER_PROFILES_GET_SUCCESS,
     USER_PROFILES_GET_FAILURE
  } from "./types";
+ 
 const initialState = {
     profilesLoading: false,
     userProfiles: null
