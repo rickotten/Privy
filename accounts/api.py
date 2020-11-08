@@ -7,7 +7,7 @@ import random
 import logging
 from django.conf import settings
 
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, filters
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
@@ -375,3 +375,21 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
         return Response({
             "user": UserSerializer(user).data
         })
+
+#Used for getting the profile of players based on a search
+#Based on username
+class UserSearchNameAPI(generics.ListAPIView):
+    
+    queryset = User.objects.all()
+    search_fields = ['username']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserSerializer
+
+#Used for getting the profile of players based on a search
+#Based on email
+class UserSearchEmailAPI(generics.ListAPIView):
+    
+    queryset = User.objects.all()
+    search_fields = ['email']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserSerializer
