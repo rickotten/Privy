@@ -21,7 +21,7 @@ import NavigationBar from '../layout/NavigationBar';
 const useStyles = (theme) => ({
     root: {
         width: '100%',
-        maxWidth: 600,
+        maxWidth: 1200,
         backgroundColor: theme.palette.background.paper,
     },
     small: {

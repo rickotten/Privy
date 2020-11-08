@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { logout, friendRequest } from '../../actions/auth';
 import NavigationBar from '../layout/NavigationBar';
+import { Grid, makeStyles } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+
+
+const useStyles = makeStyles({
+    root: {
+      minHeight: 1000,
+    }
+    });
+
+
 
 export class Logout extends Component {
 
@@ -16,13 +26,16 @@ export class Logout extends Component {
 
     render() {
         const { isAuthenticated, user} = this.props.auth
+        const classes = makeStyles();
         return (
-            <div>
-                <NavigationBar /> 
-                <h2>Hello, you are logged in as {user['username']}</h2>
-                <h2>Are you sure you would like to log out?</h2>
-
-                <button onClick={this.props.logout} className="btn btn-info btn-sm text-light">Logout</button>
+            <div className = {classes.root}>
+                <NavigationBar/> 
+                <Grid>
+                    <Paper>
+                        <h2>See you next time, {user['username']}!</h2>
+                        <button onClick={this.props.logout} className="btn btn-info btn-sm text-light">Logout</button>
+                    </Paper>
+                </Grid>
             </div>
         )
     }
