@@ -375,8 +375,10 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
         return Response({
             "user": UserSerializer(user).data
         })
+##############################################################
+#SEARCH APIS
 
-#Used for getting the profile of players based on a search
+#Used for getting the profile of people based on a search
 #Based on username
 class UserSearchNameAPI(generics.ListAPIView):
     
@@ -385,7 +387,7 @@ class UserSearchNameAPI(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     serializer_class = UserSerializer
 
-#Used for getting the profile of players based on a search
+#Used for getting the profile of people based on a search
 #Based on email
 class UserSearchEmailAPI(generics.ListAPIView):
     
@@ -393,3 +395,50 @@ class UserSearchEmailAPI(generics.ListAPIView):
     search_fields = ['email']
     filter_backends = (filters.SearchFilter,)
     serializer_class = UserSerializer
+
+#Used for getting the profile of players based on a search
+#Based on Friends of Friends' names
+class UserSearchFOFAPI(generics.ListAPIView):
+
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        #Get list of friends of the current user
+        friendlist = Friend.objects.filter(sender_friend = self.request.user.username) 
+
+        #Empty set used for appending
+        FoF = Friend.objects.filter(sender_friend='')
+
+        #For each Friend in the list of friend, search users with the same name
+        #append it to userFriends
+        for x in friendlist:
+            FoF = FoF | Friend.objects.filter(sender_friend=x.receiver_friend)
+
+        #Empty set used for appending
+        friendsOfFriendsUsers = User.objects.filter(username='')
+
+        #Finding the users of all of the people
+        for x in FoF:
+            friendsOfFriendsUsers = friendsOfFriendsUsers | User.objects.filter(username=x.receiver_friend)
+
+        return friendsOfFriendsUsers.filter(username__contains=self.kwargs['username'])
+        
+        
+
+    
+    
+
+#Used for getting the posts containing the query
+#Based on email
+class UserSearchPostsAPI(generics.ListAPIView):
+    
+    queryset = UserPost.objects.all()
+    search_fields = ['description']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserPostSerializer
+
+
+
+    
+
+##################################################################

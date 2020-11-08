@@ -44,3 +44,21 @@ export const get_email_profile_data = (email) => dispatch => {
             })
         });
     }
+
+// GET PROFILES OF USERS WITH FRIENDS OF FRIENDS
+export const get_fof_profile_data = (username) => dispatch => {
+    dispatch({ type: USER_PROFILES_GET_LOADING });
+
+    axios.get('/searchfriendsoffriends/?search=${username}')
+        .then(res => {
+            dispatch({
+                type: USER_PROFILES_GET_SUCCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: USER_PROFILES_GET_FAILURE,
+            })
+        });
+    }
