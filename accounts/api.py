@@ -434,7 +434,7 @@ class UserSearchPostsAPI(generics.ListAPIView):
 
 #Used for getting the pages based on a search
 #Based on title, description, or owner
-class UserSearchEmailAPI(generics.ListAPIView):
+class UserSearchPagesAPI(generics.ListAPIView):
     
     queryset = Page.objects.all()
     search_fields = ['title', 'description', 'owner']
