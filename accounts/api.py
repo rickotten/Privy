@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, UserPrivacySerializer, PageSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -6,7 +6,7 @@ import random
 import logging
 from django.conf import settings
 
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, filters
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
@@ -394,3 +394,70 @@ class PageAPI(generics.GenericAPIView):
         page_id = kwargs.get('page_id')
         page = Page.objects.get(id=page_id)
         return Response(PageSerializer(page).data)
+##############################################################
+#SEARCH APIS
+
+#Used for getting the profile of people based on a search
+#Based on username
+class UserSearchNameAPI(generics.ListAPIView):
+    
+    queryset = User.objects.all()
+    search_fields = ['username']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserSerializer
+
+#Used for getting the profile of people based on a search
+#Based on email
+class UserSearchEmailAPI(generics.ListAPIView):
+    
+    queryset = User.objects.all()
+    search_fields = ['email']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserSerializer
+
+#Used for getting the profile of players based on a search
+#Based on Friends of Friends' names
+class UserSearchFOFAPI(generics.ListAPIView):
+
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        #Get list of friends of the current user
+        friendlist = Friend.objects.filter(sender_friend = self.request.user.username) 
+
+        #Empty set used for appending
+        FoF = Friend.objects.filter(sender_friend='')
+
+        #For each Friend in the list of friend, search users with the same name
+        #append it to userFriends
+        for x in friendlist:
+            FoF = FoF | Friend.objects.filter(sender_friend=x.receiver_friend)
+
+        #Empty set used for appending
+        friendsOfFriendsUsers = User.objects.filter(username='')
+
+        #Finding the users of all of the people
+        for x in FoF:
+            friendsOfFriendsUsers = friendsOfFriendsUsers | User.objects.filter(username=x.receiver_friend)
+
+        return friendsOfFriendsUsers.filter(username__contains=self.kwargs['username'])
+        
+#Used for getting the posts containing the query
+#Based on email
+class UserSearchPostsAPI(generics.ListAPIView):
+    
+    queryset = UserPost.objects.all()
+    search_fields = ['description']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = UserPostSerializer
+
+#Used for getting the pages based on a search
+#Based on title, description, or owner
+class UserSearchPagesAPI(generics.ListAPIView):
+    
+    queryset = Page.objects.all()
+    search_fields = ['title', 'description', 'owner__username']
+    filter_backends = (filters.SearchFilter,)
+    serializer_class = PageSerializer
+
+##################################################################
