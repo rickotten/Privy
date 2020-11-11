@@ -220,7 +220,7 @@ class PageSerializer(serializers.ModelSerializer):
     # Request data
     title = serializers.CharField()
     description = serializers.CharField()
-    posts = UserPostSerializer(many=True)
+    posts = UserPostSerializer(many=True, read_only=True)
     
     class Meta:
         model = Page
