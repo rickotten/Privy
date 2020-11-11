@@ -33,7 +33,7 @@ export class Logout extends Component {
                 <Grid>
                     <Paper>
                         <h2>See you next time, {user['username']}!</h2>
-                        <button onClick={this.props.logout} className="btn btn-info btn-sm text-light">Logout</button>
+                        <button style= {{fontSize:15, height:50, width:150}} onClick={this.props.logout} className="btn btn-info btn-sm text-light" aria-setsize = "6">Logout</button>
                     </Paper>
                 </Grid>
             </div>

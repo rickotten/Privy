@@ -19,6 +19,7 @@ import PropTypes from 'prop-types'
 import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
+import { Box, Slide, Slider } from '@material-ui/core';
 
 const useStyles = theme => ({
     root: {
@@ -96,48 +97,49 @@ export class UserPost2 extends Component {
             title="Post Image"
         />) : (<div></div>));
         return (
-            <Card className={classes.root}>
-                <CardHeader
-                    avatar={avatar}
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title="A Creative Title"
-                    subheader={dayjs(createdAt).fromNow()}
-                />
-                {media}
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {post.description}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing >
-
-                    <LikeButton post={post} postId={post.id} />
-
-                    <IconButton
-                        className={clsx(classes.expand, {
-                            [classes.expandOpen]: expanded,
-                        })}
-                        onClick={this.toggleCommentForm}
-                        aria-expanded={expanded}
-                        aria-label="show comments"
-                    >
-                        <CommentIcon />
-                    </IconButton>
-                    <span>{comments.length} comments</span>
-
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <Card className={classes.root}>
+                    <CardHeader
+                        avatar={avatar}
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title="A Creative Title"
+                        subheader={dayjs(createdAt).fromNow()}
+                    />
+                    {media}
                     <CardContent>
-                        <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
-                        {comments}
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {post.description}
+                        </Typography>
                     </CardContent>
-                </Collapse>
-            </Card>
-            
+                    <CardActions disableSpacing >
+
+                        <LikeButton post={post} postId={post.id} />
+
+                        <IconButton
+                            className={clsx(classes.expand, {
+                                [classes.expandOpen]: expanded,
+                            })}
+                            onClick={this.toggleCommentForm}
+                            aria-expanded={expanded}
+                            aria-label="show comments"
+                        >
+                            <CommentIcon />
+                        </IconButton>
+                        <span>{comments.length} comments</span>
+
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
+                            {comments}
+                        </CardContent>
+                    </Collapse>
+                    <br></br>
+                </Card>
+                
         )
     }
 }

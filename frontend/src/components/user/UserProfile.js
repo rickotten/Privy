@@ -17,6 +17,7 @@ import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = (theme) => ({
     root: {

@@ -60,7 +60,7 @@ export class UserPostForm extends Component {
                                         </Form.Group>
 
                                         <a href = "/">
-                                            <button type="submit" className="btn btn-info btn-sm text-light">Post</button>
+                                            <button style= {{fontSize:15, height:35, width:115}} type="submit" className="btn btn-info btn-sm text-light">Post</button>
                                         </a>
                             </form>
                         </div>

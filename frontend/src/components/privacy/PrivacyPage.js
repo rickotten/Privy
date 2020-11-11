@@ -27,7 +27,9 @@ export class PrivacyPage extends Component {
                             <h2>This option will hide your email from your profile</h2>
                         </Paper>
                     </Grid>
-                    <Button>Save</Button>
+                    
+                        <button style= {{fontSize:15, height:50, width:150}} className="btn btn-info btn-sm text-light">Save</button>
+                    
                 </Grid>
             </div>
         );
