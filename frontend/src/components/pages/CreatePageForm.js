@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Form from 'react-bootstrap/Form'
 import NavigationBar from '../layout/NavigationBar'
 
@@ -16,16 +17,41 @@ export class CreatePageForm extends Component {
 	}
 
 	static propTypes = {
-		create_page: PropTypes.func.isRequired,
 		auth: PropTypes.object.isRequired,
 	}
 
 	onSubmit = e => {
 		e.preventDefault();
-		this.props.create_page(this.state.title, this.state.description);
+		this.create_page(this.state.title, this.state.description);
 	}
 
 	onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+	create_page = (title, description) => {
+		// const config = tokenConfig(getState);
+
+		// Headers 
+		const config = {
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization': `Token ${this.props.auth.token}`
+			}
+		}
+
+		// If token, add to headers config
+		// if (token) {
+		// 	config.headers['Authorization'] = `Token ${token}`;
+		// }
+
+		const body = JSON.stringify({ title, description });
+		axios.post('/pages', body, config)
+			.then(res => {
+				console.log('Here is the page:')
+				console.log(res.data)
+			}).catch(err => {
+				console.log(err);
+			})
+	}
 
 	render() {
 		const { title, description } = this.state;
@@ -73,4 +99,4 @@ const mapStateToProps = (state) => ({
 	auth: state.auth
 })
 
-export default connect(mapStateToProps, { create_page })(CreatePageForm)
+export default connect(mapStateToProps)(CreatePageForm)
