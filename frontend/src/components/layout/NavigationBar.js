@@ -16,6 +16,8 @@ export class NavigationBar extends Component {
                         <Nav.Link href="/#/addfriend">Add Friend</Nav.Link>
                         <Nav.Link href="#settings">Settings</Nav.Link>
                         <Nav.Link href="/#/logout">Logout</Nav.Link>
+                        <Nav.Link href="/#/pages">Pages</Nav.Link>
+                        <Nav.Link href="/#/createpage">Create a Page</Nav.Link>
                     </Nav>
                 </Navbar>
             </div>
