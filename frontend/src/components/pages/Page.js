@@ -5,10 +5,7 @@ import PropTypes from 'prop-types'
 import NavigationBar from "../layout/NavigationBar"
 import UserPost2 from '../posts/UserPost'
 import Grid from '@material-ui/core/Grid';
-<<<<<<< HEAD
 import { Paper } from '@material-ui/core';
-=======
->>>>>>> pages
 
 
 export class Page extends Component {
@@ -58,7 +55,6 @@ export class Page extends Component {
 		const { title, description, dateCreated } = this.state;
 		return (
 			<div>
-<<<<<<< HEAD
 				<NavigationBar/>
 				<Grid>
 					<Paper>
@@ -69,12 +65,6 @@ export class Page extends Component {
 						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
 					</Paper>
 				</Grid>
-=======
-				<NavigationBar />
-				<h1>Title: {title}</h1>
-				<h3>Description: {description}</h3>
-				<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
->>>>>>> pages
 				<Grid container
 					direction="column"
 					justify="flex-start"

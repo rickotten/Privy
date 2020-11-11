@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { create_page } from "../../actions/pages"
+import Page from "./Page"
 
 export class CreatePageForm extends Component {
 	constructor(props) {
@@ -57,17 +58,11 @@ export class CreatePageForm extends Component {
 								/>
 							</div>
 							<div className="form-group">
-<<<<<<< HEAD
-								<form action="window.location.href='/pages/:{}'">
+								<form action="window.location.href='/pages/:${this.props.match.params.pageID}'">
 									<button type="submit" className="btn btn-primary">
 										Create
 									</button>
 								</form>
-=======
-								<button type="submit" className="btn btn-primary">
-									Create
-                            </button>
->>>>>>> pages
 							</div>
 						</form>
 					</div>
@@ -79,6 +74,7 @@ export class CreatePageForm extends Component {
 
 const mapStateToProps = (state) => ({
 	auth: state.auth
+	
 })
 
 export default connect(mapStateToProps, { create_page })(CreatePageForm)

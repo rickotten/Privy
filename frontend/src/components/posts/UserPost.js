@@ -93,26 +93,6 @@ export class UserPost2 extends Component {
             title="Post Image"
         />) : (<div></div>));
         return (
-<<<<<<< HEAD
-                <Card className={classes.root}>
-                    <CardHeader
-                        avatar={avatar}
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="A Creative Title"
-                        subheader={dayjs(createdAt).fromNow()}
-                    />
-                    {media}
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {post.description}
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing >
-=======
             <Card className={classes.root}>
                 <CardHeader
                     avatar={avatar}
@@ -131,7 +111,6 @@ export class UserPost2 extends Component {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing >
->>>>>>> pages
 
                         <LikeButton post={post} postId={post.id} />
 

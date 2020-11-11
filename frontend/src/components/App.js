@@ -24,13 +24,9 @@ import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile"
 import './myStyles.css';
 import PrivacyPage from "./privacy/PrivacyPage";
-<<<<<<< HEAD
-import Page from "./pages/Page";
-import CreatePageForm from "./pages/CreatePageForm"
-=======
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
->>>>>>> pages
+import MyPages from "./pages/MyPages"
 
 // Alert Options
 const alertOptions = {
@@ -55,7 +51,7 @@ export class App extends Component {
                   <PrivateRoute exact path="/" component={HomePage} />
                   <PrivateRoute exact path="/settings" component={PrivacyPage} />
                   <PrivateRoute exact path="/createpage" component={CreatePageForm}/>
-                  <PrivateRoute exact path="/pages" component={Page}/>
+                  <PrivateRoute exact path="/pages" component={MyPages}/>
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
                   <PrivateRoute exact path="/profile" component={UserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />

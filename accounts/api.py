@@ -11,12 +11,9 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-<<<<<<< HEAD
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, UserPrivacySerializer
 from .models import UserPost, User, Friend
-=======
 from .models import UserPost, User, Friend, Page
->>>>>>> pages
 from itertools import *
 
 
