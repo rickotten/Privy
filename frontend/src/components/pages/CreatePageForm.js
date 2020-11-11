@@ -57,9 +57,11 @@ export class CreatePageForm extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<button type="submit" className="btn btn-primary">
-									Create
-                            </button>
+								<form action="window.location.href='/pages/:{}'">
+									<button type="submit" className="btn btn-primary">
+										Create
+									</button>
+								</form>
 							</div>
 						</form>
 					</div>
