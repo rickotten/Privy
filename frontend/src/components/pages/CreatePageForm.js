@@ -32,10 +32,9 @@ export class CreatePageForm extends Component {
 		const { title, description } = this.state;
 		return (
 			<div>
-			<NavigationBar />
-				<div className="col-md-6 m-auto" >
+				<div>
 					<div className="card card-body mt-5">
-						<h2 className="text-center">Create Page</h2>
+						<h2 className="text-center">Create A New Page</h2>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
 								<label>Title</label>

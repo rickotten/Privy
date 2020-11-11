@@ -50,7 +50,6 @@ export class App extends Component {
                 <Switch>
                   <PrivateRoute exact path="/" component={HomePage} />
                   <PrivateRoute exact path="/settings" component={PrivacyPage} />
-                  <PrivateRoute exact path="/createpage" component={CreatePageForm}/>
                   <PrivateRoute exact path="/pages" component={MyPages}/>
                   <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
                   <PrivateRoute exact path="/profile" component={UserProfile} />
@@ -59,7 +58,6 @@ export class App extends Component {
                   <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />
                   <Route exact path="/users/:username" component={UserTimeline} />
                   <PrivateRoute exact path="/createpost" component={UserPostForm} />
-                  <PrivateRoute exact path="/addfriend" component={User} />
                   <PrivateRoute exact path="/logout" component={Logout} />
                   <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
                   <Route exact path="/pages/:pageID" component={Page} />

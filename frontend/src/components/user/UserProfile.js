@@ -18,6 +18,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar';
 import IconButton from '@material-ui/core/IconButton';
+import User from './User';
 
 const useStyles = (theme) => ({
     root: {
@@ -109,14 +110,18 @@ export class UserProfile extends Component {
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>
-                                    <EmojiPeopleIcon />
+                                    <EmojiPeopleIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={friendsCount} secondary="Friend Count" />
+                            <ListItemText primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>
+                <div className="card card-body">
+                    <User/>
+                </div>
             </div>
+            
         )
     }
 }

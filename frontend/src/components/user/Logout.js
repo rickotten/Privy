@@ -30,12 +30,10 @@ export class Logout extends Component {
         return (
             <div className = {classes.root}>
                 <NavigationBar/> 
-                <Grid>
-                    <Paper>
+                <div className="card card-body mt-5">
                         <h2>See you next time, {user['username']}!</h2>
-                        <button style= {{fontSize:15, height:50, width:150}} onClick={this.props.logout} className="btn btn-info btn-sm text-light" aria-setsize = "6">Logout</button>
-                    </Paper>
-                </Grid>
+                        <button style= {{fontSize:15, height:50, width:150}} onClick={this.props.logout} className="btn btn-primary" aria-setsize = "6">Logout</button>
+                </div>
             </div>
         )
     }
