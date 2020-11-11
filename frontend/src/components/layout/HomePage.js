@@ -77,9 +77,9 @@ export class HomePage extends Component {
         return (
             <div>
                 <NavigationBar />
-
+                    <div className="card card-body">
                         <UserPostForm/>
-
+                    </div>
                 <Grid container
                     direction="column"
                     justify="flex-start"

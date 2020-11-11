@@ -30,10 +30,7 @@ export class CommentForm extends Component {
             <Form onSubmit={this.onSubmit}>
                 <Form.Group controlId="commentForm">
                     <Form.Label>Comment</Form.Label>
-                    <Form.Text className="text-muted">
-                        Hello {this.props.user.username}! What would you like to say?
-                    </Form.Text>
-                    <Form.Control type="text" placeholder="Comment" onChange={this.onChange}/>
+                    <Form.Control type="text" placeholder="Type your comment..." onChange={this.onChange}/>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Post

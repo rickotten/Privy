@@ -45,23 +45,21 @@ export class UserPostForm extends Component {
                                                 type="text"
                                                 name="text_post"
                                                 onChange={this.onChange}
-                                                value={text_post} />
+                                                value={text_post} 
+                                                style={{height: 40}}/>
 
                                         </Form.Group>
 
                                         <Form.Group>
-                                            <Form.File label="Want to Attach a File?" 
+                                            <Form.File label="Attach a File:" 
                                             type="file"
                                             name="media"
                                             onChange={this.onChangeImage}
-                                            />
-                    
-                                            
+                                            />                   
                                         </Form.Group>
-
-                                        <a href = "/">
-                                            <button style= {{fontSize:15, height:35, width:115}} type="submit" className="btn btn-primary">Post</button>
-                                        </a>
+                                <a href = "/">
+                                    <button style= {{fontSize:15, height:35, width:115}} type="submit" className="btn btn-primary">Post</button>
+                                </a>
                             </form>
                         </div>
                         </Paper>

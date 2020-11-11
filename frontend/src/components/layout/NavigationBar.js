@@ -13,11 +13,11 @@ export class NavigationBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="/#/">Home</Nav.Link>
                         <Nav.Link href="/#/profile">Profile</Nav.Link>
-                        <Nav.Link href="/#/settings">Settings</Nav.Link>
                         <Nav.Link href="/#/pages">Pages</Nav.Link>
                     </Nav>
-                    <Nav>
-                        <Nav.Link href="/#/logout" className="justify-content-end">Logout</Nav.Link>
+                    <Nav className="justify-content-end">
+                        <Nav.Link href="/#/settings">Settings</Nav.Link>
+                        <Nav.Link href="/#/logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar>
             </div>

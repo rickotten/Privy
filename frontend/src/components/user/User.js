@@ -31,7 +31,7 @@ export class User extends Component {
             <div>              
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <h2>Follow a user</h2>
+                        <h2>Follow a friend</h2>
                         <label>Username</label>
                         <input
                             type="text"
@@ -40,6 +40,7 @@ export class User extends Component {
                             onChange={this.onChange}
                             value={friendUsername}
                             size="20"
+                            style={{width: 250}}
                         />
                     </div>
                     <div className="form-group">

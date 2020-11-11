@@ -93,7 +93,7 @@ export class UserPost2 extends Component {
             title="Post Image"
         />) : (<div></div>));
         return (
-            <Card className={classes.root}>
+            <Card className={classes.root} style={{paddingbottom: 20}}>
                 <CardHeader
                     avatar={avatar}
                     action={
@@ -110,7 +110,7 @@ export class UserPost2 extends Component {
                         {post.description}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing >
+                <CardActions disableSpacing>
 
                         <LikeButton post={post} postId={post.id} />
 
@@ -133,7 +133,6 @@ export class UserPost2 extends Component {
                             {comments}
                         </CardContent>
                     </Collapse>
-                    <br></br>
                 </Card>
                 
         )

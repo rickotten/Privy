@@ -15,18 +15,14 @@ export class PrivacyPage extends Component {
                 <div className="card card-body mt-5">
                     <Grid container direction="column" alignItems="left" spacing = {3}>
                         <Grid item privatePage={12}>
-                            <Paper>
                                 <h1>Private Page:</h1>
+                                <h3>This option will make your posts invisible to people who do not follow you</h3>
                                 <Switch></Switch>
-                                <h2>This option will make your posts invisible to people who do not follow you</h2>
-                            </Paper>
                         </Grid>
                         <Grid item emailPrivacy = {12}>
-                            <Paper>
                                 <h1>Show Email on Profile:</h1>
+                                <h3>This option will hide your email from your profile</h3>
                                 <Switch></Switch>
-                                <h2>This option will hide your email from your profile</h2>
-                            </Paper>
                         </Grid>
                         <button style= {{fontSize:15, height:45, width:105}} type="submit" className="btn btn-primary">
 							Save
