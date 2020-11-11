@@ -48,7 +48,6 @@ const useStyles = theme => ({
 export class UserPost2 extends Component {
 
     static propTypes = {
-        tempContent: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
         post: PropTypes.object.isRequired
     }
@@ -75,9 +74,6 @@ export class UserPost2 extends Component {
         const { expanded, comments } = this.state;
         const {
             classes,
-            tempContent: {
-                createdAt
-            },
             post
         } = this.props;
         const userImage = post.image;
@@ -97,6 +93,7 @@ export class UserPost2 extends Component {
             title="Post Image"
         />) : (<div></div>));
         return (
+<<<<<<< HEAD
                 <Card className={classes.root}>
                     <CardHeader
                         avatar={avatar}
@@ -115,6 +112,26 @@ export class UserPost2 extends Component {
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing >
+=======
+            <Card className={classes.root}>
+                <CardHeader
+                    avatar={avatar}
+                    action={
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                    title="A Creative Title"
+                    subheader={dayjs("2020-01-31T12:59-0500").fromNow()}
+                />
+                {media}
+                <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {post.description}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing >
+>>>>>>> pages
 
                         <LikeButton post={post} postId={post.id} />
 

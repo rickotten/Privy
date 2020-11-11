@@ -21,4 +21,8 @@ export const create_page = (title, description) => (dispatch, getState) => {
 				type: CREATE_PAGE_FAILURE
 			})
 		})
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> pages

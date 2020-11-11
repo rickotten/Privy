@@ -1,5 +1,4 @@
-from .serializers import FriendRequestSerializer, UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPrivacySerializer
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, UserPrivacySerializer, PageSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -12,8 +11,12 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
+<<<<<<< HEAD
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, UserPrivacySerializer
 from .models import UserPost, User, Friend
+=======
+from .models import UserPost, User, Friend, Page
+>>>>>>> pages
 from itertools import *
 
 
@@ -376,3 +379,23 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
         return Response({
             "user": UserSerializer(user).data
         })
+
+# Get Page API
+class PageAPI(generics.GenericAPIView):
+    # This permission class allows public access to GET requests but
+    # only authenticated access to POST requests
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = PageSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        page = serializer.save()
+
+        return Response(serializer.data)
+
+    def get(self, request, **kwargs):
+        page_id = kwargs.get('page_id')
+        page = Page.objects.get(id=page_id)
+        return Response(PageSerializer(page).data)
