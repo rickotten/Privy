@@ -7,7 +7,7 @@ body {
 }
 
 .linkColor {
-    color: yellow;
+    color: red;
 }
 
 .card {
@@ -22,18 +22,16 @@ body {
 .center {
     margin: auto;
     width: 50%;
-    /*border: 3px solid green;
-    padding: 10px;*/
   }
 
   .key {
       opacity: 0%;
-      transition: transform 1s ease-in-out;
+      transition: transform 1s ease-out;
   }
 
   .parent:hover .key {
       transform: translateX(50%);
-      animation: fade-in 1s;
+      animation: fade-in 2s;
   }
 
   @keyframes fade-in {
@@ -44,13 +42,6 @@ body {
     100% {
         opacity: 1;
     }
-    
-    /*from {
-          opacity: 0;
-      }
-      to {
-          opacity: 1;
-      }*/
   }
 
 .thumbnail {
