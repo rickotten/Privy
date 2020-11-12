@@ -12,30 +12,58 @@ export class LandingPage extends Component {
                     <div className="caption"><h1 className="bigText"> P R I V Y</h1></div>
                 </div>
                 <div className="card blackText">
-                    <h1 >We've got you on lock</h1>
-                    <ul>
-                        <li>Your data is in our secure database</li>
-                        <li>Don't feel fressured to used your real name</li>
-                        <li>You can use Google or Facebook login</li>
-                    </ul>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <img src="..\static\images\lock.png" alt="lock" width="90%" height="90%"></img>
+                            </div>
+                            <div className="col-sm-9">
+                                <h1 className="display-3">We've got you on lock</h1>
+                                <ul>
+                                    <li><h2>Your data is in our secure database</h2></li>
+                                    <li><h2>Don't feel fressured to used your real name</h2></li>
+                                    <li><h2>You can use Google or Facebook login</h2></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div className="card blackText">
-                    <h1>Privacy is our number 1 concern</h1>
-                    <ul>
-                        <li>We will never sell your data</li>
-                        <li>Cusotmize your privacy settings</li>
-                        <li>Our ads never colect your information</li>
-                    </ul>
+
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-9">
+                                <h1 className="display-3">Privacy is our #1 concern</h1>
+                                <ul>
+                                    <li><h2>We will never sell your data</h2></li>
+                                    <li><h2>Cusotmize your privacy settings</h2></li>
+                                    <li><h2>Our ads never colect your information</h2></li>
+                                </ul>
+                            </div>
+                            <div className="col-sm-3">
+                                <img src="..\static\images\incognito.png" alt="incognito" width="90%" height="90%"></img>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div className="card blackText">
-                    <h1>Get started, it's free</h1>
-                    <ul>
-                        <li>Connect with your friends</li>
-                        <li>Share your pictures</li>
-                        <li>Take a poll</li>
-                    </ul>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <img src="..\static\images\free.png" alt="free" width="90%" height="90%"></img>
+                            </div>
+                            <div className="col-sm-9">
+                                <h1 className="display-3">Get started, it's free</h1>
+                                <ul>
+                                    <li><h2>Connect with your friends</h2></li>
+                                    <li><h2>Share your pictures</h2></li>
+                                    <li><h2>Take a poll</h2></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div class="d-flex justify-content-center">
