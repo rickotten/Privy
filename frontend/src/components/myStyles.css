@@ -6,6 +6,10 @@ body {
     color: black;
 }
 
+.linkColor {
+    color: yellow;
+}
+
 .card {
     background-color: lightskyblue;
 }

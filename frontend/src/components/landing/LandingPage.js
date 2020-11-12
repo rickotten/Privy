@@ -5,12 +5,20 @@ export class LandingPage extends Component {
 
     render() {
         return (
-            <div className="landingPage parent">
+            <div className="landingPage">
                 <h1 className="display-1 text-center">Welcome to</h1>
-                <div className="thumbnail">
+                <div className="thumbnail parent">
                     <img className="key" src="..\static\images\key.png" alt="yellow key" width="50%" height="500%"></img>
                     <div className="caption"><h1 className="bigText"> P R I V Y</h1></div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-success btn-lg">Sign me up!</button>
+                </div>
+                <br/>
+                <div class="d-flex justify-content-center">
+                    <Link className="linkColor">Already have an account?</Link>
+                </div>
+                <br/>
                 <div className="card blackText">
                     <div className="container">
                         <div className="row">
@@ -38,7 +46,7 @@ export class LandingPage extends Component {
                                 <ul>
                                     <li><h2>We will never sell your data</h2></li>
                                     <li><h2>Cusotmize your privacy settings</h2></li>
-                                    <li><h2>Our ads never colect your information</h2></li>
+                                    <li><h2>Our ads never collect your information</h2></li>
                                 </ul>
                             </div>
                             <div className="col-sm-3">
@@ -59,19 +67,13 @@ export class LandingPage extends Component {
                                 <ul>
                                     <li><h2>Connect with your friends</h2></li>
                                     <li><h2>Share your pictures</h2></li>
-                                    <li><h2>Take a poll</h2></li>
+                                    <li><h2>Take a poll of your connections</h2></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br />
-                <div class="d-flex justify-content-center">
-                    <button type="submit" className="btn btn-primary">Sign me up!</button>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <Link>Already have an account?</Link>
-                </div>
             </div>
         )
     }
