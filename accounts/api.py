@@ -380,19 +380,10 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
 
 #Used for getting the profile of people based on a search
 #Based on username
-class UserSearchNameAPI(generics.ListAPIView):
+class UserSearchAPI(generics.ListAPIView):
     
     queryset = User.objects.all()
-    search_fields = ['username']
-    filter_backends = (filters.SearchFilter,)
-    serializer_class = UserSerializer
-
-#Used for getting the profile of people based on a search
-#Based on email
-class UserSearchEmailAPI(generics.ListAPIView):
-    
-    queryset = User.objects.all()
-    search_fields = ['email']
+    search_fields = ['username', 'email']
     filter_backends = (filters.SearchFilter,)
     serializer_class = UserSerializer
 

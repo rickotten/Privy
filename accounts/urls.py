@@ -11,8 +11,7 @@ from .api import (FriendRequestAPI,
                             UserPostLikeAPI,
                             GetUserProfileAPI,
                             UserPostGetFriendsAPI,
-                            UserSearchEmailAPI,
-                            UserSearchNameAPI,
+                            UserSearchAPI,
                             UserSearchFOFAPI,
                             UserSearchPostsAPI,
                             UserSearchPagesAPI)
@@ -37,8 +36,7 @@ urlpatterns = [
     #To use these queries, use this example:
     #/searchname/?search=username or /searchemail/?search=email (except for searching FoF)
     #it looks for names/emails containing the given argument
-    path('searchname/', UserSearchNameAPI.as_view()),
-    path('searchemail/', UserSearchEmailAPI.as_view()),
+    path('searchuser/', UserSearchAPI.as_view()),
     re_path('searchfriendsoffriends/(?P<username>\w+)$', UserSearchFOFAPI.as_view()),
     path('searchposts/', UserSearchPostsAPI.as_view()),
     path('searchpages/', UserSearchPagesAPI.as_view()), 

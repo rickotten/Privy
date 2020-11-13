@@ -7,31 +7,11 @@ import {
     USER_PROFILES_GET_FAILURE,
  } from "./types";
 
-
-
-//// GET PROFILES OF USERS WITH SIMILAR NAMES
-export const get_name_profile_data = (username) => dispatch => {
+// GET PROFILES OF USERS WITH SIMILAR EMAILS OR NAMES
+export const get_user_profile_data = (words) => dispatch => {
     dispatch({ type: USER_PROFILES_GET_LOADING });
 
-    axios.get('/searchname/?search=${username}')
-        .then(res => {
-            dispatch({
-                type: USER_PROFILES_GET_SUCCESS,
-                payload: res.data
-            });
-        }).catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch({
-                type: USER_PROFILES_GET_FAILURE,
-            })
-        });
-    }
-
-// GET PROFILES OF USERS WITH SIMILAR EMAILS
-export const get_email_profile_data = (email) => dispatch => {
-    dispatch({ type: USER_PROFILES_GET_LOADING });
-
-    axios.get('/searchemail/?search=${username}')
+    axios.get('/searchuser/?search=${words}')
         .then(res => {
             dispatch({
                 type: USER_PROFILES_GET_SUCCESS,
