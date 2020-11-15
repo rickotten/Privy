@@ -19,6 +19,7 @@ import PropTypes from 'prop-types'
 import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
+import { Box, Slide, Slider } from '@material-ui/core';
 
 const useStyles = theme => ({
     root: {
@@ -92,7 +93,7 @@ export class UserPost2 extends Component {
             title="Post Image"
         />) : (<div></div>));
         return (
-            <Card className={classes.root}>
+            <Card className={classes.root} style={{paddingbottom: 20}}>
                 <CardHeader
                     avatar={avatar}
                     action={
@@ -109,30 +110,31 @@ export class UserPost2 extends Component {
                         {post.description}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing >
+                <CardActions disableSpacing>
 
-                    <LikeButton post={post} postId={post.id} />
+                        <LikeButton post={post} postId={post.id} />
 
-                    <IconButton
-                        className={clsx(classes.expand, {
-                            [classes.expandOpen]: expanded,
-                        })}
-                        onClick={this.toggleCommentForm}
-                        aria-expanded={expanded}
-                        aria-label="show comments"
-                    >
-                        <CommentIcon />
-                    </IconButton>
-                    <span>{comments.length} comments</span>
+                        <IconButton
+                            className={clsx(classes.expand, {
+                                [classes.expandOpen]: expanded,
+                            })}
+                            onClick={this.toggleCommentForm}
+                            aria-expanded={expanded}
+                            aria-label="show comments"
+                        >
+                            <CommentIcon />
+                        </IconButton>
+                        <span>{comments.length} comments</span>
 
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
-                        {comments}
-                    </CardContent>
-                </Collapse>
-            </Card>
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
+                            {comments}
+                        </CardContent>
+                    </Collapse>
+                </Card>
+                
         )
     }
 }

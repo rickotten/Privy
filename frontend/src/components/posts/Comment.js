@@ -18,6 +18,18 @@ export class Comment extends Component {
     render() {
         const avatar = <Avatar> {this.props.authorName.toUpperCase().charAt(0)}</Avatar>
         return (
+
+            <div className="comment card-body" padding="20px">
+                <main style={{display: "table"}}>
+                    {avatar}
+                    {this.props.authorName}
+                </main>
+                <div>
+                    <Typography>{this.props.comment}</Typography>
+                </div>
+            </div>
+
+            /*
             <Card>
                 <CardHeader 
                     avatar={avatar}
@@ -29,7 +41,7 @@ export class Comment extends Component {
                     </Typography>
                 </CardContent>
             </Card>
-            
+            */
         )
 
         // return (

@@ -150,7 +150,7 @@ export class ArbitraryUserProfile extends Component {
                                     <EmojiPeopleIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={friendsCount} secondary="Friend's Count" />
+                            <ListItemText primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>

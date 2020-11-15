@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form'
 import { create_user_post} from '../../actions/posts';
 import NavigationBar from '../layout/NavigationBar';
+import { Grid } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+
 
 export class UserPostForm extends Component {
     state = {
@@ -30,37 +33,37 @@ export class UserPostForm extends Component {
     render() {
         const { text_post, media } = this.state;
         return (
-            <div className="form-group">
-                <NavigationBar/>
-                    <h2 className="text-center">Create a Post</h2>
-                    <form onSubmit={this.onSubmit}>
-                        {/* The text for the user's post */}
+            <Grid>
+                <Paper>
+                    <div className="form-group">
+                            <form onSubmit={this.onSubmit}>
+                                {/* The text for the user's post */}
 
-                                <Form.Group controlId="exampleForm.ControlInput1">
-                                    
-                                    <Form.Control type="text" placeholder="What do you want to say?"
-                                        type="text"
-                                        name="text_post"
-                                        onChange={this.onChange}
-                                        value={text_post} />
+                                        <Form.Group controlId="exampleForm.ControlInput1">
+                                            
+                                            <Form.Control type="text" placeholder="What do you want to say?"
+                                                type="text"
+                                                name="text_post"
+                                                onChange={this.onChange}
+                                                value={text_post} 
+                                                style={{height: 40}}/>
 
-                                </Form.Group>
+                                        </Form.Group>
 
-                                <Form.Group>
-                                    <Form.File label="Want to Attach a File?" 
-                                    type="file"
-                                    name="media"
-                                    onChange={this.onChangeImage}
-                                    />
-            
-                                    
-                                </Form.Group>
-
+                                        <Form.Group>
+                                            <Form.File label="Attach a File:" 
+                                            type="file"
+                                            name="media"
+                                            onChange={this.onChangeImage}
+                                            />                   
+                                        </Form.Group>
                                 <a href = "/">
-                                    <button type="submit" className="btn btn-info btn-sm text-light">Create Post</button>
+                                    <button style= {{fontSize:15, height:35, width:115}} type="submit" className="btn btn-primary">Post</button>
                                 </a>
-                    </form>
-                </div>
+                            </form>
+                        </div>
+                        </Paper>
+                </Grid>
         )
     }
 }

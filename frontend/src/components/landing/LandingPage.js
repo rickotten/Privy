@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
+
 
 export class LandingPage extends Component {
 
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+    }
+
     render() {
+        if (this.props.isAuthenticated) {
+            /* 
+            Update state before the HomePage component loads. That way, it is guranateed this action will 
+            fire and reduce to update the state before the state is loaded immutably into the HomePage 
+            component.
+            */
+            return <Redirect to="/" />;
+        }
         return (
             <div className="landingPage">
                 <h1 className="display-1 text-center">Welcome to</h1>
@@ -85,4 +101,8 @@ export class LandingPage extends Component {
     }
 }
 
-export default LandingPage;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps)(LandingPage);

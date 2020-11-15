@@ -1,5 +1,5 @@
 body {
-    background-color: peachpuff;
+    background-color: rgb(217, 255, 249);
 }
 
 .blackText {
@@ -59,4 +59,7 @@ body {
 
 .bigText {
     font-size: 1000%;
+}
+.comment {
+    background-color: whitesmoke;
 }

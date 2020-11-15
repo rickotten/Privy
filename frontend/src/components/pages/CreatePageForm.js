@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { create_page } from "../../actions/pages"
+import Page from "./Page"
 
 export class CreatePageForm extends Component {
 	constructor(props) {
@@ -57,10 +58,9 @@ export class CreatePageForm extends Component {
 		const { title, description } = this.state;
 		return (
 			<div>
-			<NavigationBar />
-				<div className="col-md-6 m-auto" >
+				<div>
 					<div className="card card-body mt-5">
-						<h2 className="text-center">Create Page</h2>
+						<h2 className="text-center">Create A New Page</h2>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
 								<label>Title</label>
@@ -83,9 +83,11 @@ export class CreatePageForm extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<button type="submit" className="btn btn-primary">
-									Create
-                            </button>
+								<form action="window.location.href='/pages/:${this.props.match.params.pageID}'">
+									<button type="submit" className="btn btn-primary">
+										Create
+									</button>
+								</form>
 							</div>
 						</form>
 					</div>

@@ -28,18 +28,19 @@ export class User extends Component {
     render() {
         const { isAuthenticated, user, friendUsername } = this.props.auth
         return (
-            <div>
-                <NavigationBar />
-                
+            <div>              
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Friend's username</label>
+                        <h2>Follow a friend</h2>
+                        <label>Username</label>
                         <input
                             type="text"
                             className="form-control"
                             name="friendUsername"
                             onChange={this.onChange}
                             value={friendUsername}
+                            size="20"
+                            style={{width: 250}}
                         />
                     </div>
                     <div className="form-group">
