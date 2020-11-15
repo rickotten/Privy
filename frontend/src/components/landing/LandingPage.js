@@ -14,15 +14,17 @@ export class LandingPage extends Component {
                 <div className="font-italic text-center">
                     <h3>The Social Network That Cares About Your Privacy</h3>
                 </div>
-                <br/>
+                <br />
                 <div class="d-flex justify-content-center">
-                    <button type="submit" className="btn btn-success btn-lg">Sign me up!</button>
+                    <form>
+                    <button className="btn btn-success btn-lg" formaction="/register">Sign me up!</button>
+                    </form>
                 </div>
-                <br/>
+                <br />
                 <div class="d-flex justify-content-center">
-                    <Link className="linkColor">Already have an account?</Link>
+                    <Link className="linkColor" to="/login">Already have an account?</Link>
                 </div>
-                <br/>
+                <br />
                 <div className="card blackText">
                     <div className="container">
                         <div className="row">
