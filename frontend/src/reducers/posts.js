@@ -5,7 +5,9 @@ import {
     CLEAR_USERS_POSTS,
     UPDATE_USER_POST_SUCCESS,
     CREATE_USER_POST_SUCCESS,
-    CREATE_USER_POST_FAILURE
+    CREATE_USER_POST_FAILURE,
+    CREATE_PAGE_SUCCESS,
+    CREATE_PAGE_FAILURE
  } from "../actions/types";
 
 const initialState = {
@@ -60,6 +62,8 @@ export default function (state = initialState, action) {
                 postsLoading: false
             }
             
+        case CREATE_PAGE_SUCCESS:
+        case CREATE_PAGE_FAILURE:
         default:
             return state
 

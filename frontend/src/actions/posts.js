@@ -132,3 +132,21 @@ export const get_user_data = (username) => dispatch => {
             })
         });
     }
+
+// GET POSTS CONTAINING SOME WORDS
+export const get_search_posts_data = (desc) => dispatch => {
+    dispatch({ type: USER_PROFILES_GET_LOADING });
+
+    axios.get('/searchposts/?search=${desc}')
+        .then(res => {
+            dispatch({
+                type: USER_POSTS_GET_SUCESS,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: USER_POSTS_GET_FAILURE,
+            })
+        });
+    }

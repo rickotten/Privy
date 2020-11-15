@@ -46,18 +46,13 @@ export class UserTimeline extends Component {
             config.headers['Authorization'] = `Token ${token}`;
         }
 
-        const tempContent = {
-            createdAt: "2020-01-31T12:59-0500",
-            commentCount: 10
-        };
-
             
         //Getting the user posts
         axios.get(`/api/auth/${this.props.match.params.username}`, config)
             .then(res => {
                     const localPosts = []
                     res.data.forEach(post => {
-                        localPosts.push(<Grid key={post.id} item><UserPost2 key={post.id} tempContent={tempContent} post={post} /></Grid>);
+                        localPosts.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
                     })
                     this.setState({userPosts: localPosts});
 

@@ -5,7 +5,8 @@ from rest_framework import serializers
 from .models import (User, 
                                     UserPost, 
                                     UserPostComment,
-                                    Friend)
+                                    Friend,
+                                    Page)
 import logging
 from django import forms
 
@@ -154,6 +155,8 @@ class UserPostSerializer(serializers.ModelSerializer):
     # usersLiked = UserSerializer(many=True, required=False)
     usersLiked = serializers.SlugRelatedField(many=True, read_only=True, slug_field="username")
     comments = UserPostCommentSerializer(many=True, required=False)
+    pageId = serializers.IntegerField(write_only=True, required=False)
+    page = serializers.SlugRelatedField(read_only=True, slug_field="id")
 
     class Meta:
         model = UserPost
@@ -164,18 +167,26 @@ class UserPostSerializer(serializers.ModelSerializer):
             'description',
             'likesCount',
             'usersLiked',
-            "comments"
+            "comments",
+            "page",
+            "pageId"
         )  
 
     def create(self, validated_data):
         try:
+            page = None
+            if "pageId" in validated_data:
+                page = Page.objects.get(id=validated_data["pageId"])
             userPost = UserPost.objects.create(
-                author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"])
+                author = self.context['request'].user, image = validated_data["image"], title = None, description = validated_data["description"], page=page)
         except KeyError as e:
+            page = None
+            if "pageId" in validated_data:
+                page = Page.objects.get(id=validated_data["pageId"])
             logger = logging.getLogger(__name__)
             logger.error("No image uploaded with post")
             userPost = UserPost.objects.create(
-                author=self.context['request'].user, title=None, description=validated_data["description"])
+                author=self.context['request'].user, title=None, description=validated_data["description"], page=page)
 
 
         return userPost
@@ -199,6 +210,34 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     #User Privacy Serializer
 
+class PageSerializer(serializers.ModelSerializer):
+    members = serializers.SlugRelatedField(
+        read_only=True, slug_field="username", many=True
+    )
+    owner = serializers.SlugRelatedField(
+        read_only=True, slug_field="username")
+
+    # Request data
+    title = serializers.CharField()
+    description = serializers.CharField()
+    posts = UserPostSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Page
+        fields = (
+            'id',
+            'title',
+            'owner',
+            'description',
+            'posts',
+            'date_created',
+            'members'
+        )
+        read_only_fields = ['date_created', 'members', 'posts']
+
+    def create(self, validated_data):
+        page = Page.objects.create(owner=self.context['request'].user, title=validated_data['title'], description=validated_data['description'])
+        return page
 
 class UserPrivacySerializer(serializers.Serializer):
     def setPrivacy(self):
@@ -209,5 +248,3 @@ class UserPrivacySerializer(serializers.Serializer):
             user.privFlag = True
 
         return user.privFlag
-
-        
