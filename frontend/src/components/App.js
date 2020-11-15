@@ -57,7 +57,7 @@ export class App extends Component {
                   <PrivateRoute exact path="/createpost" component={UserPostForm} />
                   <PrivateRoute exact path="/addfriend" component={User} />
                   <PrivateRoute exact path="/logout" component={Logout} />
-                  <PrivateRoute exact path="/landing" component={LandingPage} />
+                  <Route exact path="/landing" component={LandingPage} />
                 </Switch>
               </div>
             </Fragment>

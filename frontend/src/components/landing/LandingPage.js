@@ -17,7 +17,7 @@ export class LandingPage extends Component {
                 <br />
                 <div class="d-flex justify-content-center">
                     <form>
-                    <button className="btn btn-success btn-lg" formaction="/register">Sign me up!</button>
+                    <button className="btn btn-success btn-lg" formaction="#/register">Sign me up!</button>
                     </form>
                 </div>
                 <br />
