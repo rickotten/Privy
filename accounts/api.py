@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -7,6 +7,7 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status, filters
+from rest_framework.exceptions import ParseError
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
@@ -382,7 +383,20 @@ class UpdateProfilePictureAPI(generics.GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        pass
+        try:
+            newPicture = self.request.data['image']
+        except KeyError:
+            raise ParseError('Request has no resource file attached')
+        user = self.request.user
+
+        try:
+            profile = user.profile
+        except:
+            profile = UserProfile.objects.create(user=user)
+
+        profile.profile_picture = newPicture
+        profile.save()
+        return Response(UserProfileSerializer(profile, context=self.get_serializer_context()).data)
 
 # Get Page API
 class PageAPI(generics.GenericAPIView):

@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, related_name="profile", on_delete=models.CASCADE, primary_key=True)
     profile_picture = models.ImageField(
-        upload_to='postFile/',
+        upload_to='profileFile/',
         max_length=254, blank=True, null=True
     )
 
