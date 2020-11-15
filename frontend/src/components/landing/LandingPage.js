@@ -11,6 +11,10 @@ export class LandingPage extends Component {
                     <img className="key" src="..\static\images\key.png" alt="yellow key" width="50%" height="500%"></img>
                     <div className="caption"><h1 className="bigText"> P R I V Y</h1></div>
                 </div>
+                <div className="font-italic text-center">
+                    <h3>The Social Network That Cares About Your Privacy</h3>
+                </div>
+                <br/>
                 <div class="d-flex justify-content-center">
                     <button type="submit" className="btn btn-success btn-lg">Sign me up!</button>
                 </div>

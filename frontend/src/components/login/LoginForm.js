@@ -74,10 +74,7 @@ export class LoginForm extends Component {
                                     Forgot your username or password? <Link className="linkColor" to="/forgot">Forgot</Link>
                                 </p>
                                 <p className="text-center">
-                                    <GoogleOAuth />
-                                </p>
-                                <p className="text-center">
-                                    <FacebookOAuth />
+                                    <GoogleOAuth /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <FacebookOAuth />
                                 </p>
                             </form>
                         </div>
