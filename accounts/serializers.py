@@ -1,4 +1,4 @@
-from .models import User, UserPost, UserPostComment
+from .models import User, UserPost, UserPostComment, UserProfile
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -10,13 +10,24 @@ from .models import (User,
 import logging
 from django import forms
 
+# UserProfile Serializer
+class UserProfileSerializer(serializers.ModelSerializer):
+    # serializers.
+    profile_picture = forms.FileField(widget=forms.FileInput(
+        attrs={'accept': 'image/*,video/*'}), required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = ('profile_picture',)
+
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     username= serializers.CharField(required=False)
+    profile = UserProfileSerializer(read_only=True, default=None)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'date_joined')
+        fields = ('id', 'username', 'email', 'date_joined', 'profile' )
         slug_field = 'username'
 
 # Register Serializer
@@ -29,6 +40,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'], validated_data['email'], validated_data['password'])
+        UserProfile.objects.create(user=user)
 
         return user
 

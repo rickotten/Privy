@@ -11,6 +11,13 @@ from django.contrib.auth.decorators import login_required
 class User(AbstractUser):
     privFlag = False
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User, related_name="profile", on_delete=models.CASCADE, primary_key=True)
+    profile_picture = models.ImageField(
+        upload_to='postFile/',
+        max_length=254, blank=True, null=True
+    )
 
 # Model for user privacy page
 

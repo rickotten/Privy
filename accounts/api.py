@@ -11,7 +11,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page
+from .models import UserPost, User, Friend, Page, UserProfile
 from itertools import *
 
 
@@ -111,6 +111,7 @@ def exchange_token(request, backend):
             # get and populate a user object for any properly enabled/configured backend
             # which python-social-auth can handle.
             user = request.backend.do_auth(serializer.validated_data['access_token'])
+            UserProfile.objects.create(user=user)
         except HTTPError as e:
             # An HTTPError bubbled up from the request to the social auth provider.
             # This happens, at least in Google's case, every time you send a malformed
@@ -374,6 +375,14 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
         return Response({
             "user": UserSerializer(user).data
         })
+
+# POST Update User Profile Picture
+class UpdateProfilePictureAPI(generics.GenericAPIView):
+    permission_classes= [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 # Get Page API
 class PageAPI(generics.GenericAPIView):
