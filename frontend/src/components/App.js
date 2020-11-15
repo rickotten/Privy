@@ -21,13 +21,15 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
-import ArbitraryUserProfile from "./user/ArbitraryUserProfile"
+import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
 import './myStyles.css';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
 import LandingPage from "./landing/LandingPage";
 import MyPages from "./pages/MyPages"
+import SearchFormExample from "./searches/SearchFormExample";
+import SearchResultsExample from "./searches/SearchResultsExample";
 
 // Alert Options
 const alertOptions = {
@@ -63,6 +65,8 @@ export class App extends Component {
                   <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
                   <Route exact path="/pages/:pageID" component={Page} />
                   <Route exact path="/landing" component={LandingPage} />
+                  <Route exact path="/postsearch" component={SearchFormExample} />
+                  <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
                 </Switch>
               </div>
             </Fragment>
