@@ -26,6 +26,7 @@ import './myStyles.css';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
+import LandingPage from "./landing/LandingPage";
 
 // Alert Options
 const alertOptions = {
@@ -60,6 +61,7 @@ export class App extends Component {
                   <PrivateRoute exact path="/logout" component={Logout} />
                   <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
                   <Route exact path="/pages/:pageID" component={Page} />
+                  <Route exact path="/landing" component={LandingPage} />
                 </Switch>
               </div>
             </Fragment>
