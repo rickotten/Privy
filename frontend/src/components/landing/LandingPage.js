@@ -31,13 +31,13 @@ export class LandingPage extends Component {
                     <h3>The Social Network That Cares About Your Privacy</h3>
                 </div>
                 <br />
-                <div class="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                     <form>
-                    <button className="btn btn-success btn-lg" formaction="#/register">Sign me up!</button>
+                    <button className="btn btn-success btn-lg" formAction="#/register">Sign me up!</button>
                     </form>
                 </div>
                 <br />
-                <div class="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                     <Link className="linkColor" to="/login">Already have an account?</Link>
                 </div>
                 <br />
