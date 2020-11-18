@@ -60,9 +60,7 @@ export class UserProfile extends Component {
             <div className="col-md-18 m-auto">
                 <NavigationBar/>
                 <div className="card card-body">
-                    <div className="card card-body">
-                        <User/>
-                    </div>
+                    
                     <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
                     <List className={classes.root}>
                         <ListItem>
