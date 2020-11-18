@@ -11,8 +11,6 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, UserPrivacySerializer
-from .models import UserPost, User, Friend
 from .models import UserPost, User, Friend, Page
 from itertools import *
 
@@ -401,19 +399,10 @@ class PageAPI(generics.GenericAPIView):
 
 #Used for getting the profile of people based on a search
 #Based on username
-class UserSearchNameAPI(generics.ListAPIView):
+class UserSearchAPI(generics.ListAPIView):
     
     queryset = User.objects.all()
-    search_fields = ['username']
-    filter_backends = (filters.SearchFilter,)
-    serializer_class = UserSerializer
-
-#Used for getting the profile of people based on a search
-#Based on email
-class UserSearchEmailAPI(generics.ListAPIView):
-    
-    queryset = User.objects.all()
-    search_fields = ['email']
+    search_fields = ['username', 'email']
     filter_backends = (filters.SearchFilter,)
     serializer_class = UserSerializer
 
