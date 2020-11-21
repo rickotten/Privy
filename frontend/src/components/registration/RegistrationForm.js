@@ -45,7 +45,7 @@ export class RegistrationForm extends Component {
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
-                    <h2 className="text-center">Register</h2>
+                    <h2 className="text-center">Register for Privy!</h2>
                     <form onSubmit={this.onSubmit}>
                         {/* email, username, password*/}
                         <div className="form-group">
@@ -138,16 +138,15 @@ export class RegistrationForm extends Component {
                                 <input type="answer" className="form-control" id="answer3Input" />
                             </div>
                         </div>
-
-                        <button type="submit" className="btn btn-primary">Register!</button>
-                        <p>
-                            Already have an account? <Link to="/login">Login</Link>
+                        <div className="text-center">
+                        <button type="submit" className="btn btn-success btn-lg btn-primary">Register!</button>
+                        </div>
+                        <br/>
+                        <p className="text-center">
+                            Already have an account? <Link className="linkColor" to="/login">Login</Link>
                         </p>
-                        <p>
-                        <GoogleOAuth/>
-                        </p>
-                        <p>
-                            <FacebookOAuth/>
+                        <p className="text-center">
+                        <GoogleOAuth /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <FacebookOAuth />
                         </p>
                     </form>
                 </div>

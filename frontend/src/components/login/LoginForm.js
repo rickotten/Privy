@@ -65,7 +65,7 @@ export class LoginForm extends Component {
                                 <div className="form-group text-center">
                                     <button type="submit" className="btn btn-success btn-lg">
                                         Login!
-                            </button>
+                                    </button>
                                 </div>
                                 <p>
                                     Don't have an account? <Link className="linkColor" to="/register">Register</Link>
@@ -80,9 +80,9 @@ export class LoginForm extends Component {
                         </div>
                     </div>
                     <div className="col-md-6">
-                        <br/>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
+                        <br />
                         <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
                     </div>
                 </div>
