@@ -43,112 +43,127 @@ export class RegistrationForm extends Component {
         }
         const { username, email, password, password2 } = this.state;
         return (
-            <div className="col-md-6 m-auto">
-                <div className="card card-body mt-5">
-                    <h2 className="text-center">Register for Privy!</h2>
-                    <form onSubmit={this.onSubmit}>
-                        {/* email, username, password*/}
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="email"
-                                onChange={this.onChange}
-                                value={email}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="username"
-                                onChange={this.onChange}
-                                value={username}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                onChange={this.onChange}
-                                value={password}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Confirm Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password2"
-                                onChange={this.onChange}
-                                value={password2}
-                            />
-                        </div>
-
-                        {/* security questions */}
-                        <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Security Question 1
-                        </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                <a className="dropdown-item" href="#">What city were you born in?</a>
-                                <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                <a className="dropdown-item" href="#">What is your favorite food?</a>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="answer1Input">Answer 1</label>
-                                <input type="answer" className="form-control" id="answer1Input" />
-                            </div>
-                        </div>
-                        <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Security Question 2
-                        </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                <a className="dropdown-item" href="#">What city were you born in?</a>
-                                <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                <a className="dropdown-item" href="#">What is your favorite food?</a>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="answer2Input">Answer 2</label>
-                                <input type="answer" className="form-control" id="answer2Input" />
-                            </div>
-                        </div>
-                        <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Security Question 3
-                        </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                <a className="dropdown-item" href="#">What city were you born in?</a>
-                                <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                <a className="dropdown-item" href="#">What is your favorite food?</a>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="answer3Input">Answer 3</label>
-                                <input type="answer" className="form-control" id="answer3Input" />
-                            </div>
-                        </div>
-                        <div className="text-center">
-                        <button type="submit" className="btn btn-success btn-lg btn-primary">Register!</button>
-                        </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6" >
                         <br/>
-                        <p className="text-center">
-                            Already have an account? <Link className="linkColor" to="/login">Login</Link>
-                        </p>
-                        <p className="text-center">
-                        <GoogleOAuth /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <FacebookOAuth />
-                        </p>
-                    </form>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <img src="..\static\images\register_icon.png" alt="register icon" width="100%" height="40%"></img>
+                    </div>
+                    <div className="col-md-6" >
+                        <div className="card card-body mt-5">
+                            <h2 className="text-center">Register for Privy!</h2>
+                            <form onSubmit={this.onSubmit}>
+                                {/* email, username, password*/}
+                                <div className="form-group">
+                                    <label>Email</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="email"
+                                        onChange={this.onChange}
+                                        value={email}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Username</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="username"
+                                        onChange={this.onChange}
+                                        value={username}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        name="password"
+                                        onChange={this.onChange}
+                                        value={password}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Confirm Password</label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        name="password2"
+                                        onChange={this.onChange}
+                                        value={password2}
+                                    />
+                                </div>
+
+                                {/* security questions */}
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Security Question 1
+                        </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
+                                        <a className="dropdown-item" href="#">What city were you born in?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite movie?</a>
+                                        <a className="dropdown-item" href="#">What year did you finish high school?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="answer1Input">Answer 1</label>
+                                        <input type="answer" className="form-control" id="answer1Input" />
+                                    </div>
+                                </div>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Security Question 2
+                        </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
+                                        <a className="dropdown-item" href="#">What city were you born in?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite movie?</a>
+                                        <a className="dropdown-item" href="#">What year did you finish high school?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="answer2Input">Answer 2</label>
+                                        <input type="answer" className="form-control" id="answer2Input" />
+                                    </div>
+                                </div>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Security Question 3
+                        </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
+                                        <a className="dropdown-item" href="#">What city were you born in?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite movie?</a>
+                                        <a className="dropdown-item" href="#">What year did you finish high school?</a>
+                                        <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="answer3Input">Answer 3</label>
+                                        <input type="answer" className="form-control" id="answer3Input" />
+                                    </div>
+                                </div>
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-success btn-lg btn-primary">Register!</button>
+                                </div>
+                                <br />
+                                <p className="text-center">
+                                    Already have an account? <Link className="linkColor" to="/login">Login</Link>
+                                </p>
+                                <p className="text-center">
+                                    <GoogleOAuth /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <FacebookOAuth />
+                                </p>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
