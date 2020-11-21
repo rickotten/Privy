@@ -57,13 +57,13 @@ export class Page extends Component {
 			<div>
 				<NavigationBar/>
 				<Grid>
-					<Paper>
-						<h1>{title}</h1>
-					</Paper>
-					<Paper>
-						<h3>{description}</h3>
-						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
-					</Paper>
+					<div className="card card-body">
+						<Paper>
+							<h1 className="textColor">{title}</h1>
+							<h3 className="textColor">{description}</h3>
+							<h4 className="textColor">Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
+						</Paper>
+					</div>
 				</Grid>
 				<Grid container
 					direction="column"

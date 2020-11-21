@@ -23,6 +23,7 @@ import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
 import './myStyles.css';
+import './darkMode.css';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"

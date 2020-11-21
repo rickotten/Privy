@@ -36,12 +36,12 @@ export class UserPostForm extends Component {
             <Grid>
                 <Paper>
                     <div className="form-group">
-                            <form onSubmit={this.onSubmit}>
+                            <form className="cardBackground" onSubmit={this.onSubmit}>
                                 {/* The text for the user's post */}
 
                                         <Form.Group controlId="exampleForm.ControlInput1">
                                             
-                                            <Form.Control type="text" placeholder="What do you want to say?"
+                                            <Form.Control className="textField" type="text" placeholder="What do you want to say?"
                                                 type="text"
                                                 name="text_post"
                                                 onChange={this.onChange}
@@ -52,6 +52,7 @@ export class UserPostForm extends Component {
 
                                         <Form.Group>
                                             <Form.File label="Attach a File:" 
+                                            className="textColor"
                                             type="file"
                                             name="media"
                                             onChange={this.onChangeImage}

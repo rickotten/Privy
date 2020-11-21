@@ -17,11 +17,12 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
+import NavigationBar from "../layout/NavigationBar"
 
 const useStyles = (theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 1200,
         backgroundColor: theme.palette.background.paper,
     },
     small: {
@@ -92,69 +93,75 @@ export class ArbitraryUserProfile extends Component {
     }
 
     render() {
-        const { username, profilePicture, email, bio, createdAt, postCount, friendsCount } = this.state;
+        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount} = this.state;
         const classes = this.props.classes;
+
         return (
-            <div className="col-md-6 m-auto">
-                <div className="card card-body mt-5">
+            <div className="col-md-18 m-auto">
+                <NavigationBar/>
+                <div className="card card-body">
+                    
                     <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
-                    <List className={classes.root}>
-                        <ListItem>
+                    <button style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">Follow</button>
+                    <List className="profileInfo">
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
-                                    <FaceIcon />
+                                    <FaceIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={username} secondary="Username" />
+                            <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
-                                    <NoteIcon />
+                                    <NoteIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={bio} secondary="Bio" />
+                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={email} secondary="User Email" />
+                            <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={createdAt} secondary="Member since" />
+                            <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <PostAddIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={postCount} secondary="Number of Posts" />
+                            <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
-                                    <EmojiPeopleIcon />
+                                    <EmojiPeopleIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={friendsCount} secondary="Followers" />
+                            <ListItemText className="textColor" primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>
+                
             </div>
+            
         )
     }
 }

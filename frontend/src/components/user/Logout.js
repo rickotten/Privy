@@ -31,7 +31,7 @@ export class Logout extends Component {
             <div className = {classes.root}>
                 <NavigationBar/> 
                 <div className="card card-body mt-5">
-                        <h2>See you next time, {user['username']}!</h2>
+                        <h2 className="textColor">See you next time, {user['username']}!</h2>
                         <button style= {{fontSize:15, height:50, width:150}} onClick={this.props.logout} className="btn btn-primary" aria-setsize = "6">Logout</button>
                 </div>
             </div>

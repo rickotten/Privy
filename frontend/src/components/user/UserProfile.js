@@ -62,59 +62,59 @@ export class UserProfile extends Component {
                 <div className="card card-body">
                     
                     <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
-                    <List className={classes.root}>
-                        <ListItem>
+                    <List className="profileInfo">
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <FaceIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={username} secondary="Username" />
+                            <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <NoteIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={bio} secondary="Bio" />
+                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={email} secondary="User Email" />
+                            <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={createdAt} secondary="Member since" />
+                            <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <PostAddIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={postCount} secondary="Number of Posts" />
+                            <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <EmojiPeopleIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={friendsCount} secondary="Followers" />
+                            <ListItemText className="textColor" primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>
