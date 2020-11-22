@@ -20,7 +20,6 @@ import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar';
 import IconButton from '@material-ui/core/IconButton';
-import User from './User';
 
 const useStyles = (theme) => ({
     root: {
@@ -94,9 +93,6 @@ export class UserProfile extends Component {
             <div className="col-md-18 m-auto">
                 <NavigationBar/>
                 <div className="card card-body">
-                    <div className="card card-body">
-                        <User/>
-                    </div>
                     <input
                         name="uploadMedia"
                         accept="image/*"
