@@ -15,7 +15,8 @@ from .api import (FriendRequestAPI,
                             UserSearchAPI,
                             UserSearchFOFAPI,
                             UserSearchPostsAPI,
-                            UserSearchPagesAPI)
+                            UserSearchPagesAPI,
+                            UpdateProfilePictureAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -31,6 +32,7 @@ urlpatterns = [
     path('api/auth/userposts/like', UserPostLikeAPI.as_view()),
     path('api/auth/userposts/comment', UserPostCommentAPI.as_view()),
     # re_path('api/auth/userposts/(?P<pk>\d+)$', UserPostUpdateAPI.as_view()),
+    path('updateProfilePicture', UpdateProfilePictureAPI.as_view()),
     path('profiles/<str:username>', GetUserProfileAPI.as_view()),
     path('api/auth/friendRequest', FriendRequestAPI.as_view()),
     ################################################

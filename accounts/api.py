@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -7,11 +7,12 @@ import logging
 from django.conf import settings
 
 from rest_framework import generics, permissions, status, filters
+from rest_framework.exceptions import ParseError
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, FileUploadParser
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page
+from .models import UserPost, User, Friend, Page, UserProfile
 from itertools import *
 
 
@@ -111,6 +112,7 @@ def exchange_token(request, backend):
             # get and populate a user object for any properly enabled/configured backend
             # which python-social-auth can handle.
             user = request.backend.do_auth(serializer.validated_data['access_token'])
+            UserProfile.objects.create(user=user)
         except HTTPError as e:
             # An HTTPError bubbled up from the request to the social auth provider.
             # This happens, at least in Google's case, every time you send a malformed
@@ -374,6 +376,27 @@ class GetUserProfileAPI(generics.RetrieveAPIView):
         return Response({
             "user": UserSerializer(user).data
         })
+
+# POST Update User Profile Picture
+class UpdateProfilePictureAPI(generics.GenericAPIView):
+    permission_classes= [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            newPicture = self.request.data['image']
+        except KeyError:
+            raise ParseError('Request has no resource file attached')
+        user = self.request.user
+
+        try:
+            profile = user.profile
+        except:
+            profile = UserProfile.objects.create(user=user)
+
+        profile.profile_picture = newPicture
+        profile.save()
+        return Response(UserProfileSerializer(profile, context=self.get_serializer_context()).data)
 
 # Get Page API
 class PageAPI(generics.GenericAPIView):
