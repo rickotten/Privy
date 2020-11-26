@@ -19,6 +19,13 @@ class UserProfile(models.Model):
         max_length=254, blank=True, null=True
     )
 
+class UserSettings(models.Model):
+    user = models.OneToOneField(
+        User, related_name="settings", on_delete=models.CASCADE, primary_key=True)
+    private_profile = models.BooleanField(default=False)
+    show_email_on_profile = models.BooleanField(default=True)
+    dark_mode = models.BooleanField(default=False)
+
 # Model for user privacy page
 
 class UserPrivacy(User):
