@@ -27,10 +27,10 @@ export class CommentForm extends Component {
 
     render() {
         return (
-            <Form onSubmit={this.onSubmit}>
+            <Form className = "post" onSubmit={this.onSubmit}>
                 <Form.Group controlId="commentForm">
-                    <Form.Label>Comment</Form.Label>
-                    <Form.Control type="text" placeholder="Type your comment..." onChange={this.onChange}/>
+                    <Form.Label className="textColor">Comment</Form.Label>
+                    <Form.Control className="textField" type="text" placeholder="Type your comment..." onChange={this.onChange}/>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Post

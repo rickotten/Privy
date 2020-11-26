@@ -12,7 +12,7 @@ export class MyPages extends Component {
                 <NavigationBar/>
                 <CreatePageForm/>
                 <div className="card card-body mt-5">
-                    <h1 className="text-center">My Pages</h1>
+                    <h1 className="centeredText">My Pages</h1>
                     <Grid>
                         <Grid>
                             <Paper>

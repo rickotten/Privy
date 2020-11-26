@@ -31,6 +31,7 @@ export class SearchFormExample extends Component {
                         {/* The text for the user's post */}
 
                                 <Form.Group>
+                                    
                                     <Form.Control className = "textField" type="text" placeholder="Search posts..."
                                         type="text"
                                         name="search_text"

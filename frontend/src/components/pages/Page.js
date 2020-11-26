@@ -56,7 +56,7 @@ export class Page extends Component {
 		return (
 			<div>
 				<NavigationBar/>
-				<Grid>
+				<Grid className="card">
 					<div className="card card-body">
 						<Paper>
 							<h1 className="textColor">{title}</h1>

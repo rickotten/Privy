@@ -10,11 +10,14 @@ body {
     color: white;
 }
 
-.textField {
-    background-color: rgb(104, 104, 104);
+.post {
+    background-color: rgb(84, 84, 84);
 }
 
 
+.textField {
+    background-color: rgb(104, 104, 104);
+}
 
 .profileInfo {
     width: '100%';
@@ -84,5 +87,11 @@ body {
     font-size: 1000%;
 }
 .comment {
-    background-color: whitesmoke;
+    background-color: rgb(130,130,130);
+}
+
+.centeredText {
+    text-align: center;
+    color: white;
+
 }

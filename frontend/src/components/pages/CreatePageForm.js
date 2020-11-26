@@ -61,7 +61,7 @@ export class CreatePageForm extends Component {
 			<div>
 				<div>
 					<div className="card card-body mt-5">
-						<h2 className="text-center" color="White">Create A New Page</h2>
+						<h2 className="centeredText">Create A New Page</h2>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
 								<label className="textColor">Title</label>

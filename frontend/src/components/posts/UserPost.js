@@ -94,7 +94,7 @@ export class UserPost2 extends Component {
         />) : (<div></div>));
         return (
             <Card className={classes.root} style={{paddingbottom: 20}}>
-                <CardHeader
+                <CardHeader className="post"
                     avatar={avatar}
                     action={
                         <IconButton aria-label="settings">
@@ -105,12 +105,12 @@ export class UserPost2 extends Component {
                     subheader={dayjs("2020-01-31T12:59-0500").fromNow()}
                 />
                 {media}
-                <CardContent>
+                <CardContent className="post">
                     <Typography variant="body2" color="textSecondary" component="p">
                         {post.description}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
+                <CardActions disableSpacing className="post">
 
                         <LikeButton post={post} postId={post.id} />
 
@@ -128,7 +128,7 @@ export class UserPost2 extends Component {
 
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <CardContent>
+                        <CardContent className="post">
                             <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
                             {comments}
                         </CardContent>
