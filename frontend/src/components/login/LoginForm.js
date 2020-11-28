@@ -38,7 +38,10 @@ export class LoginForm extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6" >
+                    <div className="col-md-6 m-auto">
+                        <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
+                    </div>
+                    <div className="col-md-6 m-auto" >
                         <div className="card card-body mt-5">
                             <h2 className="text-center">Login to Privy!</h2>
                             <form onSubmit={this.onSubmit}>
@@ -78,12 +81,6 @@ export class LoginForm extends Component {
                                 </p>
                             </form>
                         </div>
-                    </div>
-                    <div className="col-md-6">
-                        <br />
-                        <br />
-                        <br />
-                        <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
                     </div>
                 </div>
             </div>

@@ -45,18 +45,10 @@ export class RegistrationForm extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6" >
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <img src="..\static\images\register_icon.png" alt="register icon" width="100%" height="40%"></img>
+                    <div className="col-md-6 m-auto">
+                        <img src="..\static\images\register_icon.png" alt="register icon" width="110%" height="60%"></img>
                     </div>
-                    <div className="col-md-6" >
+                    <div className="col-md-6 m-auto">
                         <div className="card card-body mt-5">
                             <h2 className="text-center">Register for Privy!</h2>
                             <form onSubmit={this.onSubmit}>

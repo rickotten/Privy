@@ -51,7 +51,7 @@ export class LandingPage extends Component {
                                 <h1 className="display-3">We've got you on lock</h1>
                                 <ul>
                                     <li><h2>Your data is in our secure database</h2></li>
-                                    <li><h2>Don't feel fressured to used your real name</h2></li>
+                                    <li><h2>Don't feel pressured to used your real name</h2></li>
                                     <li><h2>You can use Google or Facebook login</h2></li>
                                 </ul>
                             </div>
@@ -67,7 +67,7 @@ export class LandingPage extends Component {
                                 <h1 className="display-3">Privacy is our #1 concern</h1>
                                 <ul>
                                     <li><h2>We will never sell your data</h2></li>
-                                    <li><h2>Cusotmize your privacy settings</h2></li>
+                                    <li><h2>Customize your privacy settings</h2></li>
                                     <li><h2>Our ads never collect your information</h2></li>
                                 </ul>
                             </div>

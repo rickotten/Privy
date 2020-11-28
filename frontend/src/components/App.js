@@ -58,7 +58,7 @@ export class App extends Component {
                   <PrivateRoute exact path="/profile" component={UserProfile} />
                   <Route exact path="/register" component={RegistrationForm} />
                   <Route exact path="/login" component={LoginForm} />
-                  <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />
+                  <Route exact path="/forgot" component={ForgotCredentialsForm} />
                   <Route exact path="/users/:username" component={UserTimeline} />
                   <PrivateRoute exact path="/createpost" component={UserPostForm} />
                   <PrivateRoute exact path="/logout" component={Logout} />
