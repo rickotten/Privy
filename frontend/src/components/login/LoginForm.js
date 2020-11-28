@@ -36,7 +36,7 @@ export class LoginForm extends Component {
         }
         const { username, password } = this.state;
         return (
-            <div className="container">
+            <div className="container noBackgroundPattern">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>

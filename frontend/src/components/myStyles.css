@@ -1,5 +1,10 @@
 body {
     background-color: rgb(217, 255, 249);
+    background-image: url("../../static/images/key_pattern.png");
+}
+
+.noBackgroundPattern {
+    background-color: rgb(217, 255, 249);
 }
 
 .blackText {

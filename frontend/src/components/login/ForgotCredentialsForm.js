@@ -27,7 +27,7 @@ export class ForogtCredentialsForm extends Component {
     render() {
         const { email, answer1, answer2, answer3 } = this.state;
         return (
-            <div className="containter">
+            <div className="containter noBackgroundPattern">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <img src="..\static\images\forgot_icon.png" alt="login outhouse" width="80%" height="80%"></img>

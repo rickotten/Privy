@@ -43,7 +43,7 @@ export class RegistrationForm extends Component {
         }
         const { username, email, password, password2 } = this.state;
         return (
-            <div className="container">
+            <div className="container noBackgroundPattern">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <img src="..\static\images\register_icon.png" alt="register icon" width="110%" height="60%"></img>
