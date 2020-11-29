@@ -39,7 +39,7 @@ export class PrivacyPage extends Component {
                         <Grid container direction="column" alignItems="flex-start" spacing = {3}>
                             <Grid item>
                                     <h1>Dark Mode:</h1>
-                                    <h3>Enable this option for dark mode Privy!</h3>
+                                <h3>This option will give Privy a darker overlay</h3>
                                     <Switch
                                         name="dark_mode"
                                         onChange={this.onChange}
