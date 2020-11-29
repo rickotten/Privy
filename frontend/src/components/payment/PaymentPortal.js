@@ -21,8 +21,34 @@ export class PaymentPortal extends Component {
             return <Redirect to="/" />;
         }
         return (
-            <div>
-                <h1>PAYMENT</h1>
+            <div className="container paymentPage">
+                <div className="text-center">
+                    <h1 className="display-1">PAYMENT</h1>
+                </div>
+                <div className="text-center">
+                    <img src="..\static\images\dollar.jpg" alt="dollar" width="90%" height="90%"></img>
+                </div>
+                <div>
+                    <br/><br/><br/>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <form>
+                    <div class="form-group form-group-lg">
+                            <input type="text" className="form-control input-lg text-center" id="inputPayment" placeholder="Dollar Amount" />
+                            </div>
+                    </form>
+                </div>
+                <div>
+                    <br/><br/><br/>
+                </div>
+                <div className="d-flex justify-content-center">
+                    <form>
+                        <button className="btn btn-success btn-lg" formaction="#/register">Send Money!</button>
+                    </form>
+                </div>
+                <div>
+                    <br/><br/><br/>
+                </div>
             </div>
         )
     }

@@ -24,6 +24,11 @@ body {
     color: white;
 }
 
+.paymentPage {
+    background-color: green;
+    color: white;
+}
+
 .center {
     margin: auto;
     width: 50%;
