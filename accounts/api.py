@@ -417,6 +417,16 @@ class PageAPI(generics.GenericAPIView):
         page_id = kwargs.get('page_id')
         page = Page.objects.get(id=page_id)
         return Response(PageSerializer(page).data)
+
+class GetUserPagesAPI(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PageSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        pages_owned = user.owned_pages.all()
+        subscribed_pages = user.subscribed_pages.all()
+        return (pages_owned | subscribed_pages)
 ##############################################################
 #SEARCH APIS
 
