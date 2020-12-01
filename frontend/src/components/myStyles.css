@@ -4,7 +4,7 @@ body {
 }
 
 .noBackgroundPattern {
-    background-color: rgb(217, 255, 249);
+    background-color: lightskyblue;
 }
 
 .blackText {
@@ -16,7 +16,8 @@ body {
 }
 
 .card {
-    background-color: lightskyblue;
+    /*background-color: lightskyblue;*/
+    background-color: rgb(217, 255, 249);
 }
 
 .landingPage {
@@ -27,6 +28,11 @@ body {
 .paymentPage {
     background-color: green;
     color: white;
+}
+
+.bigInput {
+    height: 70px;
+    font-size: xx-large;
 }
 
 .center {
@@ -70,6 +76,11 @@ body {
 .bigText {
     font-size: 1000%;
 }
+
+.mediumText {
+    font-size: 150%;
+}
+
 .comment {
     background-color: whitesmoke;
 }
