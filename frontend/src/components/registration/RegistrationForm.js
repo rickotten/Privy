@@ -49,7 +49,7 @@ export class RegistrationForm extends Component {
                         <img src="..\static\images\register_icon.png" alt="register icon" width="110%" height="60%"></img>
                     </div>
                     <div className="col-md-6 m-auto">
-                        <div className="card card-body mt-5">
+                        <div className="lightBlueCard card-body mt-5">
                             <h2 className="text-center">Register for Privy!</h2>
                             <form onSubmit={this.onSubmit}>
                                 {/* email, username, password*/}

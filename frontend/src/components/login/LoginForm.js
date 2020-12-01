@@ -49,7 +49,7 @@ export class LoginForm extends Component {
                         <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
                     </div>
                     <div className="col-md-6 m-auto" >
-                        <div className="card card-body mt-5">
+                        <div className="lightBlueCard card-body mt-5">
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label className="mediumText">Username</label>

@@ -33,7 +33,7 @@ export class ForogtCredentialsForm extends Component {
                         <img src="..\static\images\forgot_icon.png" alt="login outhouse" width="80%" height="80%"></img>
                     </div>
                     <div className="col-md-6 m-auto">
-                        <div className="card card-body mt-5">
+                        <div className="lightBlueCard card-body mt-5">
                             <h2 className="text-center">Forgot Credentials</h2>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">

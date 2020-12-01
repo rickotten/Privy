@@ -38,7 +38,7 @@ export class LandingPage extends Component {
                 </div>
                 <br />
                 <div class="d-flex justify-content-center">
-                    <Link className="linkColor" to="/login">Already have an account?</Link>
+                    <Link className="linkColor mediumText" to="/login">Already have an account?</Link>
                 </div>
                 <br />
                 <div className="card blackText">

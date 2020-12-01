@@ -15,9 +15,12 @@ body {
     color: red;
 }
 
-.card {
-    /*background-color: lightskyblue;*/
+.lightBlueCard {
     background-color: rgb(217, 255, 249);
+}
+
+.card {
+    background-color: lightskyblue;
 }
 
 .landingPage {
