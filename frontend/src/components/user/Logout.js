@@ -9,9 +9,9 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     root: {
-      minHeight: 1000,
+        minHeight: 1000,
     }
-    });
+});
 
 
 
@@ -25,14 +25,18 @@ export class Logout extends Component {
 
 
     render() {
-        const { isAuthenticated, user} = this.props.auth
+        const { isAuthenticated, user } = this.props.auth
         const classes = makeStyles();
         return (
-            <div className = {classes.root}>
-                <NavigationBar/> 
-                <div className="card card-body mt-5">
-                        <h2>See you next time, {user['username']}!</h2>
-                        <button style= {{fontSize:15, height:50, width:150}} onClick={this.props.logout} className="btn btn-primary" aria-setsize = "6">Logout</button>
+            <div className={classes.root}>
+                <NavigationBar />
+                <div className="card card-body">
+                    <div className="text-center m-auto">
+                        <h2>Are you sure you want to leave, {user['username']}?</h2>
+                        <img src="..\static\images\leaving_icon.png" alt="leaving" width="40%" height="40%"></img>
+                        <br />
+                        <button style={{ fontSize: 15, height: 50, width: 150 }} onClick={this.props.logout} className="btn btn-danger" aria-setsize="6">Yes, Logout</button>
+                    </div>
                 </div>
             </div>
         )
@@ -43,4 +47,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { logout})(Logout)
+export default connect(mapStateToProps, { logout })(Logout)
