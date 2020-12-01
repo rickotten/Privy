@@ -49,6 +49,7 @@ export class CreatePageForm extends Component {
 			.then(res => {
 				console.log('Here is the page:')
 				console.log(res.data)
+				window.location.href=`#/pages/${res.data.id}`
 			}).catch(err => {
 				console.log(err);
 			})
@@ -83,11 +84,9 @@ export class CreatePageForm extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<form action="window.location.href='/pages/:${this.props.match.params.pageID}'">
-									<button type="submit" className="btn btn-primary">
-										Create
-									</button>
-								</form>
+								<button type="submit" className="btn btn-primary">
+									Create
+								</button>
 							</div>
 						</form>
 					</div>

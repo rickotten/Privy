@@ -16,7 +16,7 @@ export class MyPages extends Component {
                     <Grid>
                         <Grid>
                             <Paper>
-                                <h3>Add user's pages here</h3>
+                                <h3>You're not subscribed to any pages!</h3>
                             </Paper>
                         </Grid>
                     </Grid>

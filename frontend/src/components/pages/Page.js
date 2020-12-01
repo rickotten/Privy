@@ -15,7 +15,7 @@ export class Page extends Component {
 		this.state = {
 			title: "Loading...",
 			description: "Loading...",
-			dateCreated: "11/9/2020",
+			dateCreated: "Loading",
 			posts: []
 		}
 	}
@@ -74,7 +74,9 @@ export class Page extends Component {
 					justify="flex-start"
 					alignItems="flex-start"
 				>
-					{this.state.posts.reverse()}
+					<Paper>
+						{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
+					</Paper>
 				</Grid>
 			</div>
 		)

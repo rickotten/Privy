@@ -84,6 +84,7 @@ export class HomePage extends Component {
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
+                    spacing={3}
                 >
                     {this.state.userPosts}
                 </Grid>
