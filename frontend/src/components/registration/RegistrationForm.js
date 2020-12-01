@@ -46,7 +46,7 @@ export class RegistrationForm extends Component {
             <div className="container noBackgroundPattern">
                 <div className="row">
                     <div className="text-center m-auto">
-                        <h1 className="display-1">Register for Privy!</h1>
+                        <h1 className="display-1 customHeading">Register for Privy!</h1>
                     </div>
                 </div>
                 <div className="row">

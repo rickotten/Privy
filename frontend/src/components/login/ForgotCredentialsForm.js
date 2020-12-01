@@ -29,12 +29,16 @@ export class ForogtCredentialsForm extends Component {
         return (
             <div className="containter noBackgroundPattern">
                 <div className="row">
-                    <div className="col-md-6 m-auto">
-                        <img src="..\static\images\forgot_icon.png" alt="login outhouse" width="80%" height="80%"></img>
+                    <div className="text-center m-auto">
+                        <h1 className="display-1 customHeading">Forgot Credentials</h1>
                     </div>
-                    <div className="col-md-6 m-auto">
+                </div>
+                <div className="row">
+                    <div className="col-md-5 m-auto">
+                        <img src="..\static\images\forgot_icon.png" alt="login outhouse" width="100%" height="100%"></img>
+                    </div>
+                    <div className="col-md-5 m-auto">
                         <div className="lightBlueCard card-body mt-5">
-                            <h2 className="text-center">Forgot Credentials</h2>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label>Email</label>
@@ -80,10 +84,16 @@ export class ForogtCredentialsForm extends Component {
                                     <button type="submit" className="btn btn-success btn-lg btn-primary">
                                         Email one-time password
                                     </button>
+                                    <p className="mediumText">
+                                        <Link className="linkColor" to="/login">Back to Login</Link>
+                                    </p>
                                 </div>
                             </form>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <br /><br />
                 </div>
             </div>
         )

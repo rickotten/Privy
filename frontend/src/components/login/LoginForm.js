@@ -37,10 +37,9 @@ export class LoginForm extends Component {
         const { username, password } = this.state;
         return (
             <div className="container noBackgroundPattern">
-                <br /><br />
                 <div className="row">
                     <div className="text-center m-auto">
-                        <h1 className="display-1">Login to Privy!</h1>
+                        <h1 className="display-1 customHeading">Login to Privy!</h1>
                     </div>
                 </div>
                 <br /><br />

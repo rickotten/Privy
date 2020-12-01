@@ -26,7 +26,7 @@ export class PaymentPortal extends Component {
                     <h1 className="display-1">PAYMENT</h1>
                 </div>
                 <div>
-                    <br /><br /><br />
+                    <br />
                 </div>
                 <div className="d-flex justify-content-center">
                     <form>
@@ -36,9 +36,6 @@ export class PaymentPortal extends Component {
                         </div>
                     </form>
                 </div>
-                <div>
-                    <br /><br /><br />
-                </div>
                 <div className="d-flex justify-content-center">
                     <form>
                         <button className="btn btn-success btn-lg">Send Money!</button>
@@ -47,13 +44,13 @@ export class PaymentPortal extends Component {
                     </form>
                 </div>
                 <div>
-                    <br /><br /><br />
+                    <br />
                 </div>
                 <div className="text-center">
                     <img src="..\static\images\dollar.jpg" alt="dollar" width="90%" height="90%"></img>
                 </div>
                 <div>
-                    <br /><br /><br />
+                    <br /><br />
                 </div>
             </div>
         )
