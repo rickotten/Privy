@@ -1,10 +1,59 @@
-import { Grid, Paper } from "@material-ui/core";
+import axios from 'axios'
+import { Grid, Paper, CircularProgress } from "@material-ui/core";
+import { connect } from "react-redux";
 import React, { Component } from 'react';
 import NavigationBar from "../layout/NavigationBar";
 import CreatePageForm from "./CreatePageForm";
+import PropTypes from 'prop-types'
 
 
 export class MyPages extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            pages: <CircularProgress/>
+        }
+    }
+
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    }
+
+    componentDidMount() {
+        this.getUserPages()
+    }
+
+    getUserPages = () => {
+        // Code below taken from auth.js action
+        const token = this.props.auth.token;
+        // Headers
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
+        axios.get('/userpages', config)
+            .then(res => {
+                const localPages = []
+                res.data.forEach(page => {
+                    localPages.push(
+                    <a href={`#/pages/${page.id}`}><h2>{page.title}</h2></a>
+                    )
+                })
+                if (localPages.length === 0) {
+                    this.setState({ pages: <h2>You're not subscribed to any pages!</h2>})
+                } else {
+                    this.setState({ pages: localPages})
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+    }
 
     render() {
         return(
@@ -16,7 +65,7 @@ export class MyPages extends Component {
                     <Grid>
                         <Grid>
                             <Paper>
-                                <h3>You're not subscribed to any pages!</h3>
+                                {this.state.pages}
                             </Paper>
                         </Grid>
                     </Grid>
@@ -26,4 +75,8 @@ export class MyPages extends Component {
     }
 }
 
-export default MyPages
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(MyPages)

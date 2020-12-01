@@ -251,6 +251,15 @@ class PageSerializer(serializers.ModelSerializer):
         page = Page.objects.create(owner=self.context['request'].user, title=validated_data['title'], description=validated_data['description'])
         return page
 
+# The difference between this serializer and the regular page serializer is that this serializer only returns the page id and the title.
+class TinyPageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Page
+        fields = (
+            'id',
+            'title'
+        )
+
 class UserPrivacySerializer(serializers.Serializer):
     def setPrivacy(self):
         user = User.objects.get(username=self.request.user.username)

@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer, TinyPageSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -420,7 +420,7 @@ class PageAPI(generics.GenericAPIView):
 
 class GetUserPagesAPI(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PageSerializer
+    serializer_class = TinyPageSerializer
 
     def get_queryset(self):
         user = self.request.user
