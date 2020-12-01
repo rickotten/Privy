@@ -87,3 +87,15 @@ body {
 .comment {
     background-color: whitesmoke;
 }
+
+.questionButton {
+    width: 100%;
+    padding-right: 70%;
+  }
+  
+.questionInput {
+    width: 70%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
