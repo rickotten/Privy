@@ -28,6 +28,9 @@ export class Alerts extends Component {
             if (message.pageCreateSuccess) {
                 alert.success(message.pageCreateSuccess);
             }
+            if (message.postCreateSuccess) {
+                alert.success(message.postCreateSuccess);
+            }
         }
     }
 

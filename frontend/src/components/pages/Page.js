@@ -6,6 +6,7 @@ import NavigationBar from "../layout/NavigationBar"
 import UserPost2 from '../posts/UserPost'
 import Grid from '@material-ui/core/Grid';
 import { Paper } from '@material-ui/core';
+import UserPostForm from '../posts/UserPostForm';
 
 
 export class Page extends Component {
@@ -56,6 +57,9 @@ export class Page extends Component {
 		return (
 			<div>
 				<NavigationBar/>
+				<div className="card card-body">
+					<UserPostForm page_id={this.props.match.params.pageID}/>
+				</div>
 				<Grid>
 					<Paper>
 						<h1>{title}</h1>
@@ -70,7 +74,7 @@ export class Page extends Component {
 					justify="flex-start"
 					alignItems="flex-start"
 				>
-					{this.state.posts}
+					{this.state.posts.reverse()}
 				</Grid>
 			</div>
 		)
