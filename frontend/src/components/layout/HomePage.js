@@ -10,6 +10,7 @@ import axios from 'axios'
 import get_user_data from '../../actions/posts';
 import { ImageTwoTone } from '@material-ui/icons';
 import PrivacyPage from "../privacy/PrivacyPage";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class HomePage extends Component {
 
@@ -17,7 +18,7 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             username: 'Loading...',
-            userPosts: []
+            userPosts: <CircularProgress />
         }
     }
 

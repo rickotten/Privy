@@ -56,6 +56,8 @@ class UserPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")
+    date_created = models.DateTimeField(
+        default=django.utils.timezone.now, verbose_name='date created')
 
     def __str__(self):
         """A string representation of the model."""

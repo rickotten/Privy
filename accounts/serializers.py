@@ -101,6 +101,7 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(read_only=True, slug_field="username")
     authorId = serializers.IntegerField(write_only=True)
     postId = serializers.IntegerField(write_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = UserPostComment
@@ -109,8 +110,17 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
             'author',
             'comment',
             'postId',
-            'authorId'
+            'authorId',
+            'profile_picture'
         )
+
+    def get_profile_picture(self, comment):
+        request = self.context.get('request')
+        try:
+            picture_url = comment.author.profile.profile_picture.url
+            return request.build_absolute_uri(picture_url)
+        except:
+            return None
 
     def create(self, validated_data):
         relatedPost = UserPost.objects.get(id=validated_data.get("postId"))
@@ -179,6 +189,8 @@ class UserPostSerializer(serializers.ModelSerializer):
     comments = UserPostCommentSerializer(many=True, required=False)
     pageId = serializers.IntegerField(write_only=True, required=False)
     page = serializers.SlugRelatedField(read_only=True, slug_field="id")
+    date_created = serializers.DateTimeField(read_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = UserPost
@@ -191,8 +203,19 @@ class UserPostSerializer(serializers.ModelSerializer):
             'usersLiked',
             "comments",
             "page",
-            "pageId"
+            "pageId",
+            "date_created",
+            "profile_picture"
         )  
+        read_only_fields = ["profile_picture"]
+
+    def get_profile_picture(self, post):
+        request = self.context.get('request')
+        try:
+            picture_url = post.author.profile.profile_picture.url
+            return request.build_absolute_uri(picture_url)
+        except:
+            return None
 
     def create(self, validated_data):
         try:
