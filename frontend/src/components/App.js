@@ -22,8 +22,7 @@ import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
-import './myStyles.css';
-import './darkMode.css';
+import { THEME } from './enum';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
@@ -37,6 +36,25 @@ const alertOptions = {
   timeout: 3000,
   position: "top center",
 };
+
+
+const LightTheme = React.lazy(() => import('./myStyles.css'));
+const DarkTheme = React.lazy(() => import('./darkMode.css'))
+
+const ThemeSelect = ({ children }) => {
+
+  const currentTheme = localStorage.getItem('THEME');
+  return (
+    <>
+    <React.Suspense fallback={<></>}>
+      {(currentTheme === THEME.LIGHT) && <LightTheme/>}
+      {(currentTheme === THEME.DARK) && <DarkTheme/>}
+    </React.Suspense>
+    {children}
+    </>
+  )
+}
+
 
 export class App extends Component {
   componentDidMount() {
@@ -78,4 +96,11 @@ export class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+<ThemeSelect>
+  <App/>
+</ThemeSelect>, 
+  
+  document.getElementById("app")
+  
+  );
