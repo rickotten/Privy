@@ -85,7 +85,8 @@ export class ArbitraryUserProfile extends Component {
                 this.setState({
                     username: res.data.user.username,
                     email: res.data.user.email,
-                    createdAt: dayjs(res.data.user.date_joined).format("dddd, MMMM D YYYY")
+                    createdAt: dayjs(res.data.user.date_joined).format("dddd, MMMM D YYYY"),
+                    profilePicture: res.data.user.profile.profile_picture || "/static/images/penguin.jpg"
                 })
             }).catch(err => {
                 console.log(err);
