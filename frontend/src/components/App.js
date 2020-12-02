@@ -22,7 +22,7 @@ import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
-import { THEME } from './enum';
+// import { THEME } from './enum';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
@@ -37,18 +37,21 @@ const alertOptions = {
   position: "top center",
 };
 
+const LIGHT = "light";
+const DARK = "dark";
 
 const LightTheme = React.lazy(() => import('./myStyles.css'));
 const DarkTheme = React.lazy(() => import('./darkMode.css'))
 
 const ThemeSelect = ({ children }) => {
 
-  const currentTheme = localStorage.getItem('THEME');
+  // const currentTheme = localStorage.getItem('THEME');
+  const currentTheme = DARK; // You will want to change this eventually
   return (
     <>
     <React.Suspense fallback={<></>}>
-      {(currentTheme === THEME.LIGHT) && <LightTheme/>}
-      {(currentTheme === THEME.DARK) && <DarkTheme/>}
+      {(currentTheme === LIGHT) && <LightTheme/>}
+      {(currentTheme === DARK) && <DarkTheme/>}
     </React.Suspense>
     {children}
     </>
