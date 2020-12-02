@@ -105,11 +105,11 @@ export class RegistrationForm extends Component {
                                             Security Question 1
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                            <a className="dropdown-item" href="#">What city were you born in?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                            <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                            <a className="dropdown-item" >What is you mother's maiden name?</a>
+                                            <a className="dropdown-item" >What city were you born in?</a>
+                                            <a className="dropdown-item" >What is your favorite movie?</a>
+                                            <a className="dropdown-item" >What year did you finish high school?</a>
+                                            <a className="dropdown-item" >What is your favorite food?</a>
                                         </div>
                                         <input type="answer" className="form-control questionInput" id="answer1Input" placeholder="Answer 1" />
                                     </div>
@@ -120,11 +120,11 @@ export class RegistrationForm extends Component {
                                             Security Question 2
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                            <a className="dropdown-item" href="#">What city were you born in?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                            <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                            <a className="dropdown-item" >What is you mother's maiden name?</a>
+                                            <a className="dropdown-item" >What city were you born in?</a>
+                                            <a className="dropdown-item" >What is your favorite movie?</a>
+                                            <a className="dropdown-item" >What year did you finish high school?</a>
+                                            <a className="dropdown-item" >What is your favorite food?</a>
                                         </div>
                                         <input type="answer" className="form-control questionInput" id="answer1Input" placeholder="Answer 2" />
                                     </div>
@@ -135,11 +135,11 @@ export class RegistrationForm extends Component {
                                             Security Question 3
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a className="dropdown-item" href="#">What is you mother's maiden name?</a>
-                                            <a className="dropdown-item" href="#">What city were you born in?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite movie?</a>
-                                            <a className="dropdown-item" href="#">What year did you finish high school?</a>
-                                            <a className="dropdown-item" href="#">What is your favorite food?</a>
+                                            <a className="dropdown-item" >What is you mother's maiden name?</a>
+                                            <a className="dropdown-item" >What city were you born in?</a>
+                                            <a className="dropdown-item" >What is your favorite movie?</a>
+                                            <a className="dropdown-item" >What year did you finish high school?</a>
+                                            <a className="dropdown-item" >What is your favorite food?</a>
                                         </div>
                                         <input type="answer" className="form-control questionInput" id="answer1Input" placeholder="Answer 3" />
                                     </div>
