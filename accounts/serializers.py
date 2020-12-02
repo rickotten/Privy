@@ -6,7 +6,8 @@ from .models import (User,
                                     UserPost, 
                                     UserPostComment,
                                     Friend,
-                                    Page)
+                                    Page,
+                                    UserSettings)
 import logging
 from django import forms
 
@@ -20,14 +21,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('profile_picture',)
 
+class UserSettingsSerializer(serializers.ModelSerializer):
+    show_email_on_profile = serializers.BooleanField()
+    dark_mode = serializers.BooleanField()
+
+    class Meta:
+        model = UserSettings
+        fields = ('show_email_on_profile', 'dark_mode',)
+
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     username= serializers.CharField(required=False)
     profile = UserProfileSerializer(read_only=True, default=None)
+    settings = UserSettingsSerializer(read_only=True, default=None)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'date_joined', 'profile' )
+        fields = ('id', 'username', 'email', 'date_joined', 'profile', 'settings' )
         slug_field = 'username'
 
 # Register Serializer

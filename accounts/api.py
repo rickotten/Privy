@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer, UserSettingsSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -12,7 +12,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page, UserProfile
+from .models import UserPost, User, Friend, Page, UserProfile, UserSettings
 from itertools import *
 
 
@@ -35,6 +35,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        UserSettings.objects.create(user=user)
         return Response(
             {
                 "user": UserSerializer(
@@ -53,6 +54,10 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        try:
+            settings = user.settings
+        except:
+            UserSettings.objects.create(user=user)
         return Response(
             {
                 "user": UserSerializer(
@@ -475,3 +480,17 @@ class UserSearchPagesAPI(generics.ListAPIView):
     serializer_class = PageSerializer
 
 ##################################################################
+# USER SETTINGS : Only a PUT request is needed (to update the model). We use a GET request for other users when viewing the user's profile
+##################################################################
+class UserSettingsUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSettingsSerializer
+
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        user_settings = UserSettings.objects.get(user=user)
+        user_settings.show_email_on_profile = request.data['show_email_on_profile']
+        user_settings.dark_mode = request.data['dark_mode']
+        user_settings.save()
+        return Response(UserSerializer(user).data)
+
