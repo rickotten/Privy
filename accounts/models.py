@@ -19,6 +19,12 @@ class UserProfile(models.Model):
         max_length=254, blank=True, null=True
     )
 
+class UserSettings(models.Model):
+    user = models.OneToOneField(
+        User, related_name="settings", on_delete=models.CASCADE, primary_key=True)
+    show_email_on_profile = models.BooleanField(default=True)
+    dark_mode = models.BooleanField(default=False)
+
 # Model for user privacy page
 
 class UserPrivacy(User):
@@ -50,6 +56,8 @@ class UserPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")
+    date_created = models.DateTimeField(
+        default=django.utils.timezone.now, verbose_name='date created')
 
     def __str__(self):
         """A string representation of the model."""

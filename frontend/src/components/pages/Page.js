@@ -63,7 +63,7 @@ export class Page extends Component {
 	}
 
 	render() {
-		const { title, description, dateCreated } = this.state;
+		const { title, description, dateCreated, owner } = this.state;
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
 		return (
 			<div>
@@ -77,6 +77,7 @@ export class Page extends Component {
 					<Paper>
 						<h3>{description}</h3>
 						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
+						<h4>By: {owner}</h4>
 						{subscribeButton}
 					</Paper>
 				<br></br>

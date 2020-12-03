@@ -37,6 +37,9 @@ export class Alerts extends Component {
             if (message.pageSubscribeFailure) {
                 alert.error(message.pageSubscribeFailure)
             }
+            if (message.settingsSaved) {
+                alert.success(message.settingsSaved);
+            }
         }
     }
 

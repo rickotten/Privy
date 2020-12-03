@@ -1,10 +1,14 @@
 import axios from 'axios';
-import { returnErrors } from './errors';
+import { createMessage, returnErrors } from './errors';
+import { tokenConfig } from "./auth";
 
 import { 
     USER_PROFILES_GET_LOADING,
     USER_PROFILES_GET_SUCCESS,
     USER_PROFILES_GET_FAILURE,
+    SETTINGS_UPDATE_FAILURE,
+    SETTINGS_UPDATE_SUCCESS,
+    SETTINGS_UPDATE_PROCESSING
  } from "./types";
 
 // GET PROFILES OF USERS WITH SIMILAR EMAILS OR NAMES
@@ -42,3 +46,25 @@ export const get_fof_profile_data = (username) => dispatch => {
             })
         });
     }
+
+// SAVE NEW USER SETTINGS
+export const save_user_settings = (show_email_on_profile, dark_mode) => (dispatch, getState) => {
+    dispatch({
+        type: SETTINGS_UPDATE_PROCESSING
+    })
+    const config = tokenConfig(getState);
+    const body = JSON.stringify({ show_email_on_profile, dark_mode });
+
+    axios.put('/updateUserSettings', body, config)
+        .then(res => {
+            dispatch(createMessage({ settingsSaved: "Settings Saved!" }));
+            dispatch({
+                type: SETTINGS_UPDATE_SUCCESS
+            })
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: SETTINGS_UPDATE_FAILURE
+            })
+        })
+}

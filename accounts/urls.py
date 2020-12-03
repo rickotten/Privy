@@ -18,7 +18,8 @@ from .api import (FriendRequestAPI,
                             UserSearchPagesAPI,
                             UpdateProfilePictureAPI,
                             GetUserPagesAPI,
-                            TogglePageSubscriptionAPI)
+                            TogglePageSubscriptionAPI,
+                            UserSettingsUpdateAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -51,5 +52,7 @@ urlpatterns = [
     path('pages', PageAPI.as_view()),
     path('pages/togglesubscribed/<int:page_id>', TogglePageSubscriptionAPI.as_view()),
     path('pages/<int:page_id>', PageAPI.as_view()),
-    path('userpages', GetUserPagesAPI.as_view())
+    path('userpages', GetUserPagesAPI.as_view()),
+    path('pages/<int:page_id>', PageAPI.as_view()),
+    path('updateUserSettings', UserSettingsUpdateAPI.as_view()),
 ]

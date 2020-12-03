@@ -51,7 +51,8 @@ export class ArbitraryUserProfile extends Component {
             bio: "Here's a simple bio",
             createdAt: "Loading...",
             postCount: 5,
-            friendsCount: 10
+            friendsCount: 10,
+            showEmail: true
         }
     }
 
@@ -85,7 +86,8 @@ export class ArbitraryUserProfile extends Component {
                     username: res.data.user.username,
                     email: res.data.user.email,
                     createdAt: dayjs(res.data.user.date_joined).format("dddd, MMMM D YYYY"),
-                    profilePicture: res.data.user.profile.profile_picture || "/static/images/penguin.jpg"
+                    profilePicture: res.data.user.profile ? res.data.user.profile.profile_picture : "/static/images/penguin.jpg",
+                    showEmail: res.data.user.settings ? res.data.user.settings.show_email_on_profile : true
                 })
             }).catch(err => {
                 console.log(err);
@@ -95,10 +97,18 @@ export class ArbitraryUserProfile extends Component {
     render() {
         const { username, profilePicture, email, bio, createdAt, postCount, friendsCount } = this.state;
         const classes = this.props.classes;
+        const emailElem = this.state.showEmail ? (<ListItem>
+            <ListItemAvatar>
+                <Avatar>
+                    <AlternateEmailIcon />
+                </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={email} secondary="User Email" />
+        </ListItem>) : <div></div>
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
-                    <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
+                    <Avatar alt="R" className={classes.profilePicture} src={profilePicture} />
                     <List className={classes.root}>
                         <ListItem>
                             <ListItemAvatar>
@@ -118,14 +128,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText primary={bio} secondary="Bio" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AlternateEmailIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={email} secondary="User Email" />
-                        </ListItem>
+                        {emailElem}
                         <Divider variant="inset" component="li" />
                         <ListItem>
                             <ListItemAvatar>

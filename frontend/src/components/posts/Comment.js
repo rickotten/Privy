@@ -12,11 +12,14 @@ import { withStyles } from '@material-ui/core/styles';
 export class Comment extends Component {
     static propTypes = {
         authorName: PropTypes.string.isRequired,
-        comment: PropTypes.string.isRequired
+        comment: PropTypes.string.isRequired,
+        picture: PropTypes.string
     }
 
     render() {
-        const avatar = <Avatar> {this.props.authorName.toUpperCase().charAt(0)}</Avatar>
+        const avatar = <a href={"#profile/" + this.props.authorName}>
+            <Avatar alt={this.props.authorName.toUpperCase().charAt(0)} src={this.props.picture}/>
+                                </a>
         return (
 
             <div className="comment card-body" padding="20px">

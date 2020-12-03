@@ -36,14 +36,22 @@ export class LoginForm extends Component {
         }
         const { username, password } = this.state;
         return (
-            <div className="container">
+            <div className="container noBackgroundPattern">
                 <div className="row">
-                    <div className="col-md-6" >
-                        <div className="card card-body mt-5">
-                            <h2 className="text-center">Login to Privy!</h2>
+                    <div className="text-center m-auto">
+                        <h1 className="display-1 customHeading">Login to Privy!</h1>
+                    </div>
+                </div>
+                <br /><br />
+                <div className="row">
+                    <div className="col-md-6 m-auto">
+                        <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
+                    </div>
+                    <div className="col-md-6 m-auto" >
+                        <div className="lightBlueCard card-body mt-5">
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
-                                    <label>Username</label>
+                                    <label className="mediumText">Username</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -53,7 +61,7 @@ export class LoginForm extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Password</label>
+                                    <label className="mediumText">Password</label>
                                     <input
                                         type="password"
                                         className="form-control"
@@ -65,12 +73,12 @@ export class LoginForm extends Component {
                                 <div className="form-group text-center">
                                     <button type="submit" className="btn btn-success btn-lg">
                                         Login!
-                            </button>
+                                    </button>
                                 </div>
-                                <p>
+                                <p className="mediumText">
                                     Don't have an account? <Link className="linkColor" to="/register">Register</Link>
                                 </p>
-                                <p>
+                                <p className="mediumText">
                                     Forgot your username or password? <Link className="linkColor" to="/forgot">Forgot</Link>
                                 </p>
                                 <p className="text-center">
@@ -79,12 +87,9 @@ export class LoginForm extends Component {
                             </form>
                         </div>
                     </div>
-                    <div className="col-md-6">
-                        <br/>
-                        <br/>
-                        <br/>
-                        <img src="..\static\images\loginOuthouse.png" alt="login outhouse" width="80%" height="80%"></img>
-                    </div>
+                </div>
+                <div>
+                    <br /><br /><br />
                 </div>
             </div>
         )
