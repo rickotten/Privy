@@ -19,7 +19,7 @@ import PropTypes from 'prop-types'
 import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
-import { Box, Slide, Slider } from '@material-ui/core';
+import ShareButton from './util/ShareButton';
 
 const useStyles = theme => ({
     root: {
@@ -98,9 +98,7 @@ export class UserPost2 extends Component {
                 <CardHeader
                     avatar={avatar}
                     action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
+                            <ShareButton/>
                     }
                     title={"Via " + post.author}
                     subheader={dayjs(created_on).fromNow()}
@@ -135,7 +133,6 @@ export class UserPost2 extends Component {
                         </CardContent>
                     </Collapse>
                 </Card>
-                
         )
     }
 }
