@@ -42,7 +42,7 @@ export class MyPages extends Component {
                 const localPages = []
                 res.data.forEach(page => {
                     localPages.push(
-                    <a href={`#/pages/${page.id}`}><h2>{page.title}</h2></a>
+                    <a key={page.id} href={`#/pages/${page.id}`}><h2>{page.title}</h2></a>
                     )
                 })
                 if (localPages.length === 0) {

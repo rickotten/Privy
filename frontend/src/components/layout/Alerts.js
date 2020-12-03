@@ -31,6 +31,12 @@ export class Alerts extends Component {
             if (message.postCreateSuccess) {
                 alert.success(message.postCreateSuccess);
             }
+            if (message.pageSubscribeSuccess) {
+                alert.success(message.pageSubscribeSuccess);
+            }
+            if (message.pageSubscribeFailure) {
+                alert.error(message.pageSubscribeFailure)
+            }
         }
     }
 

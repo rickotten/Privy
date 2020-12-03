@@ -418,6 +418,18 @@ class PageAPI(generics.GenericAPIView):
         page = Page.objects.get(id=page_id)
         return Response(PageSerializer(page).data)
 
+# Subscribe to Page API
+class TogglePageSubscriptionAPI(generics.GenericAPIView):
+    def get(self, request, **kwargs):
+        user = self.request.user
+        page = Page.objects.get(id=kwargs.get('page_id'))
+        if page in user.subscribed_pages.all():
+            user.subscribed_pages.remove(page)
+            return Response("unsubscribed")
+        else:
+            user.subscribed_pages.add(page)
+            return Response("subscribed")
+
 class GetUserPagesAPI(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = TinyPageSerializer

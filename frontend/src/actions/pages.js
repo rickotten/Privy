@@ -26,6 +26,17 @@ export const create_page = (title, description) => (dispatch, getState) => {
 			})
 		})
 }
+
+export const toggle_subscribe = (page_id) => (dispatch, getState) => {
+    const config = tokenConfig(getState);
+    axios.get(`pages/togglesubscribed/${page_id}`, config)
+        .then(res => {
+            dispatch(createMessage({ pageSubscribeSuccess: `Successfully ${res.data}!`}))
+        }).catch(err => {
+            console.log(err);
+            dispatch(createMessage({ pageSubscribeFailure: "Failed to subscribe/unsubscribe"}))
+        })
+}
  
  // GET PAGES FROM SEARCH
 export const get_page_data = (words) => dispatch => {
