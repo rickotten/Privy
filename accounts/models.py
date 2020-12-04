@@ -78,3 +78,29 @@ class Friend(models.Model):
 
     # username of user who is sending the friend request
     sender_friend = models.CharField(max_length=250)
+
+#Messages between users. Its a collection of members and messages
+class Conversation(models.Model):
+    members = models.ManyToManyField(User, related_name="conversations")
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        """A string representation of the model."""
+        return str(self.id)
+
+#Messages between users to be used in a Conversation
+#Requires a conversation to send to
+#Read flag will be false until read
+class Message(models.Model):
+
+    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+    messageContent = models.TextField()
+    conversation = models.ForeignKey(Conversation, related_name="messages", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        """A string representation of the model."""
+        return str(self.messageContent)
+
+
+
+

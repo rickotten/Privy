@@ -7,7 +7,9 @@ from .models import (User,
                                     UserPostComment,
                                     Friend,
                                     Page,
-                                    UserSettings)
+                                    UserSettings,
+                                    Message,
+                                    Conversation)
 import logging
 from django import forms
 
@@ -302,3 +304,44 @@ class UserPrivacySerializer(serializers.Serializer):
             user.privFlag = True
 
         return user.privFlag
+
+#Message serializer
+class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.CharField(source='sender.username', read_only=True)
+    messageContent = serializers.CharField()
+
+    class Meta:
+        model = Message
+        fields = (
+            'sender',
+            'messageContent'
+        )
+        read_only_fields = ['sender']
+
+    def create(self, validated_data):
+        msg = Message.objects.create(
+            sender=self.request.user, messageContent=validated_data["messageContent"])
+        return msg
+
+#Conversation Serializer
+class ConversationSerializer(serializers.ModelSerializer):
+
+    members = serializers.SlugRelatedField(
+        read_only=True, slug_field="username", many=True
+    )
+    messages = MessageSerializer(many=True)
+    read = serializers.BooleanField()
+
+    class Meta:
+        model = Conversation
+        fields = (
+            'id',
+            'members',
+            'messages',
+            'read'
+        )
+
+    def create(self, validated_data):
+        convo = Conversation.objects.create(
+            members=validated_data["members"], messages=validated_data["messages"])
+        return convo
