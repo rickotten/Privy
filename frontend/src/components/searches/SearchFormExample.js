@@ -9,6 +9,7 @@ import NavigationBar from '../layout/NavigationBar';
 export class SearchFormExample extends Component {
     state = {
         search_text: '',
+        category: ''
     }
 
     static propTypes = {
@@ -37,6 +38,15 @@ export class SearchFormExample extends Component {
                                     <Form.Control type="text" placeholder="What do you want to search posts for?"
                                         type="text"
                                         name="search_text"
+                                        onChange={this.onChange}/>
+
+                                </Form.Group>
+
+                                <Form.Group>
+                                    
+                                    <Form.Control type="text" placeholder="What do you want to search posts for?"
+                                        type="text"
+                                        name="category"
                                         onChange={this.onChange}/>
 
                                 </Form.Group>
