@@ -12,17 +12,20 @@ export class ShareButton extends Component {
 	}
 
 	static propTypes = {
-		user: PropTypes.object.isRequired
+		currentUser: PropTypes.object.isRequired,
+		postAuthor: PropTypes.string.isRequired
+	}
+
+	handleClick = (event) => {
+		this.setState({ anchorEl: event.currentTarget })
+	}
+
+	handleClose = () => {
+		this.setState({ anchorEl: null })
 	}
 
 	render() {
-		const handleClick = (event) => {
-			this.setState({ anchorEl: event.currentTarget })
-		};
-
-		const handleClose = () => {
-			this.setState({ anchorEl: null })
-		};
+		const { currentUser, postAuthor } = this.props
 
 		return (
 			<div>
@@ -34,11 +37,11 @@ export class ShareButton extends Component {
 					anchorEl={this.state.anchorEl}
 					keepMounted
 					open={Boolean(this.state.anchorEl)}
-					onClose={handleClose}
+					onClose={this.handleClose}
 				>
-					<MenuItem onClick={handleClose}>Profile</MenuItem>
-					<MenuItem onClick={handleClose}>Share</MenuItem>
-					<MenuItem onClick={handleClose}>Logout</MenuItem>
+					<a href={`#/profile/${postAuthor}`}><MenuItem onClick={this.handleClose}>Profile</MenuItem></a>
+					<MenuItem onClick={this.handleClose}>Share</MenuItem>
+					<MenuItem onClick={this.handleClose}>Logout</MenuItem>
 				</Menu>
 			</div>
 		);
@@ -46,7 +49,7 @@ export class ShareButton extends Component {
 }
 
 const mapStateToProps = state => ({
-	user: state.auth.user
+	currentUser: state.auth.user
 })
 
 export default connect(mapStateToProps)(ShareButton)

@@ -98,7 +98,7 @@ export class UserPost2 extends Component {
                 <CardHeader
                     avatar={avatar}
                     action={
-                            <ShareButton/>
+                            <ShareButton postAuthor={post.author}/>
                     }
                     title={"Via " + post.author}
                     subheader={dayjs(created_on).fromNow()}
