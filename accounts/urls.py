@@ -18,7 +18,8 @@ from .api import (FriendRequestAPI,
                             UserSearchPagesAPI,
                             ConversationsAPI,
                             AddToConversationAPI,
-                            CreateConvoAPI)
+                            CreateConvoAPI,
+                            AddUserToConversationAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -51,5 +52,6 @@ urlpatterns = [
     path('pages/<int:page_id>', PageAPI.as_view()),
     path('createconvo', CreateConvoAPI.as_view()),
     path('sendmessage/<int:convo_id>', AddToConversationAPI.as_view()),
+    path('addtogroup/<int:convo_id>/<str:username>', AddUserToConversationAPI.as_view()),
     path('getconvos', ConversationsAPI.as_view())
 ]

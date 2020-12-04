@@ -451,10 +451,8 @@ class UserSearchPagesAPI(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     serializer_class = PageSerializer
 
-##################################################################
-#MESSAGING
-
 #Used for getting all conversations pertaining to the user
+#Flips read receipt
 class ConversationsAPI(generics.ListAPIView):
     # Must be authenticated to access messages
     permission_classes = [permissions.IsAuthenticated]
@@ -471,6 +469,7 @@ class ConversationsAPI(generics.ListAPIView):
 
         return convo
 
+#Used for adding a single message to a conversation
 class AddToConversationAPI(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -484,6 +483,21 @@ class AddToConversationAPI(generics.ListAPIView):
 
         return Response("Message sent")
 
+#Used to add a user to an existing conversation
+class AddUserToConversationAPI(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get(self, request, *args, **kwargs):
+        convo = Conversation.objects.get(id=self.kwargs['convo_id'])
+
+        u = User.objects.get(username=self.kwargs['username'])
+        convo.members.add(u)
+
+        return Response("Member added")
+
+#Initial creating of a conversation
 class CreateConvoAPI(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
