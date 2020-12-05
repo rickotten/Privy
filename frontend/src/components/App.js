@@ -31,6 +31,7 @@ import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
 import PaymentPortal from "./payment/PaymentPortal";
+import { Marketplace } from "./payment/Marketplace";
 
 // Alert Options
 const alertOptions = {
@@ -67,6 +68,7 @@ export class App extends Component {
                   <Route exact path="/pages/:pageID" component={Page} />
                   <Route exact path="/landing" component={LandingPage} />
                   <Route exact path="/payment" component={PaymentPortal} />
+                  <Route exact path="/marketplace" component={Marketplace} />
                   <Route exact path="/postsearch" component={SearchFormExample} />
                   <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
                 </Switch>

@@ -33,6 +33,11 @@ body {
     color: white;
 }
 
+.marketPage {
+    background-color: navy;
+    color: white;
+}
+
 .bigInput {
     height: 70px;
     font-size: xx-large;
