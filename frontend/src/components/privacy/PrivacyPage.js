@@ -4,7 +4,7 @@ import { Button, makeStyles, Switch } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import NavigationBar from '../layout/NavigationBar'
 import { connect } from 'react-redux'
-import { save_user_settings } from "../../actions/users";
+import { save_user_settings } from "../../actions/auth";
 import PropTypes from 'prop-types'
 
 

@@ -27,6 +27,8 @@ export class HomePage extends Component {
     }
 
     componentDidMount() {
+        // Hackey method to set the dark_mode theme.
+        localStorage.setItem('DARK_THEME', this.props.auth.user.settings.dark_mode);
         this.lookUpPosts();
     }
 
