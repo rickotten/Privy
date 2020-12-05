@@ -58,26 +58,6 @@ export const get_user_posts = () => (dispatch, getState) => {
         });
 }
 
-// // PUT REQUEST UPDATE USER POST
-// export const update_user_post = (post) => (dispatch, getState) => {
-//     const config = tokenConfig(getState);
-//     const body = JSON.stringify(post);
-
-//     axios.put(`/api/auth/userposts/${post.id}`, body, config)
-//         .then(res => {
-//             dispatch({
-//                 type: UPDATE_USER_POST_SUCCESS,
-//                 payload: res.data
-//             })
-//         }).catch(err => {
-//             dispatch(returnErrors(err.response.data, err.response.status));
-//             dispatch({
-//                 type: UPDATE_USER_POST_FAILURE,
-//             })
-//         });
-    
-// }
-
 // LIKE USER POST
 export const like_user_post = (userId, postId) => (dispatch, getState) => {
     const config = tokenConfig(getState);

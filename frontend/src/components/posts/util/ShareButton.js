@@ -1,3 +1,4 @@
+import axios from 'axios';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -5,6 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createMessage } from "../../../actions/errors";
 
 export class ShareButton extends Component {
 	state = {
@@ -13,7 +15,10 @@ export class ShareButton extends Component {
 
 	static propTypes = {
 		currentUser: PropTypes.object.isRequired,
-		postAuthor: PropTypes.string.isRequired
+		postAuthor: PropTypes.string.isRequired,
+		token: PropTypes.string.isRequired,
+		createAlert: PropTypes.func.isRequired,
+		post_id: PropTypes.number.isRequired
 	}
 
 	handleClick = (event) => {
@@ -24,12 +29,37 @@ export class ShareButton extends Component {
 		this.setState({ anchorEl: null })
 	}
 
+	deletePost = (post_id) => () => {
+		const token = this.props.token;
+		const config = {
+			headers: {
+				'Content-type': 'application/json'
+			}
+		}
+		// If token, add to headers config
+		if (token) {
+			config.headers['Authorization'] = `Token ${token}`;
+		}
+
+		axios.delete(`/posts/${post_id}`, config)
+			.then(res => {
+				this.props.createAlert("Deleted Post! Reload page")
+				// window.location.reload()
+			}).catch(err => {
+				this.props.createAlert("Can't delete!")
+				console.log(err);
+			})
+
+	}
+
 	render() {
-		const { currentUser, postAuthor } = this.props
+		const { currentUser, postAuthor, post_id } = this.props
+
+		const deleteButton = (currentUser.username === postAuthor) ? (<MenuItem onClick={this.deletePost(post_id)}>Delete</MenuItem>) : undefined
 
 		return (
 			<div>
-				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
 					<MoreVertIcon />
 				</IconButton>
 				<Menu
@@ -41,7 +71,7 @@ export class ShareButton extends Component {
 				>
 					<a href={`#/profile/${postAuthor}`}><MenuItem onClick={this.handleClose}>Profile</MenuItem></a>
 					<MenuItem onClick={this.handleClose}>Share</MenuItem>
-					<MenuItem onClick={this.handleClose}>Logout</MenuItem>
+					{deleteButton}
 				</Menu>
 			</div>
 		);
@@ -49,7 +79,12 @@ export class ShareButton extends Component {
 }
 
 const mapStateToProps = state => ({
-	currentUser: state.auth.user
+	currentUser: state.auth.user,
+	token: state.auth.token
 })
 
-export default connect(mapStateToProps)(ShareButton)
+const mapDispatchToProps = dispatch => ({
+	createAlert: (message) => { dispatch(createMessage({postDeleteSuccess: message}))}
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShareButton)
