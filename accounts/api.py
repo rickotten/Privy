@@ -250,7 +250,20 @@ class UserPostCreateAPI(generics.GenericAPIView):
             }
         )
 
-    
+class UserPostAPI(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+
+    def get(self, request, *args, **kwargs):
+        post = UserPost.objects.get(id=kwargs['post_id'])
+        return Response(UserPostSerializer(post).data)
+
+    def delete(self, request, *args, **kwargs):
+        post = UserPost.objects.get(id=kwargs['post_id'])
+        if request.user == post.author:
+            post.delete()
+            return Response()
+        else:
+            return Response("Unauthorized User", status=403)
 
 #UserPost GET request 
 #Used for getting all posts from a user through the URL
