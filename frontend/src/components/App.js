@@ -16,6 +16,7 @@ import UserTimeline from "./layout/UserTimeline"
 import UserPostForm from "./posts/UserPostForm"
 import User from "./user/User"
 import Logout from "./user/Logout"
+import { UserPostView} from './posts/UserPostView';
 
 import { Provider } from 'react-redux';
 import store from '../store';
@@ -67,6 +68,7 @@ export class App extends Component {
                   <Route exact path="/landing" component={LandingPage} />
                   <Route exact path="/postsearch" component={SearchFormExample} />
                   <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
+                  <Route exact path="/posts/:post_id" component={UserPostView} />
                 </Switch>
               </div>
             </Fragment>

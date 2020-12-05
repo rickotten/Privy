@@ -70,7 +70,7 @@ export class ShareButton extends Component {
 					onClose={this.handleClose}
 				>
 					<a href={`#/profile/${postAuthor}`}><MenuItem onClick={this.handleClose}>Profile</MenuItem></a>
-					<MenuItem onClick={this.handleClose}>Share</MenuItem>
+					<a href={`#/posts/${post_id}` }><MenuItem onClick={this.handleClose}>Share</MenuItem></a>
 					{deleteButton}
 				</Menu>
 			</div>

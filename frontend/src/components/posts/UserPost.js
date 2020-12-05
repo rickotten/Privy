@@ -23,7 +23,7 @@ import ShareButton from './util/ShareButton';
 
 const useStyles = theme => ({
     root: {
-        width: "35vw"
+        width: "67.75vw"
     },
     media: {
         // height: 0,
