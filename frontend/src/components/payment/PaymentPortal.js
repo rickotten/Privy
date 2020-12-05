@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
+import NavigationBar from '../layout/NavigationBar';
 
 
 export class PaymentPortal extends Component {
