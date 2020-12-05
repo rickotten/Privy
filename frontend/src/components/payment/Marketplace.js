@@ -31,29 +31,29 @@ export class Marketplace extends Component {
                     </div>
                     <div className="row m-auto text-center">
                         <div className="col-md-4">
-                            <img src="..\static\images\sweater.jpg" alt="sweater" width="90%" height="90%"></img>
+                            <h1 className="customHeading">Sweater</h1>
+                            <img src="..\static\images\sweater.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
                                 <button className="btn btn-success btn-lg" formAction="#/payment">bid now!</button>
                             </form>
                         </div>
                         <div className="col-md-4">
-                            <img src="..\static\images\beachball.jpg" alt="sweater" width="90%" height="90%"></img>
+                        <h1 className="customHeading">Beachball</h1>
+                            <img src="..\static\images\beachball.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
                                 <button className="btn btn-success btn-lg" formAction="#/payment">bid now!</button>
                             </form>
                         </div>
                         <div className="col-md-4">
-                            <img src="..\static\images\lawnmower.jpg" alt="sweater" width="90%" height="90%"></img>
+                            <h1 className="customHeading">Lawnmower</h1>
+                            <img src="..\static\images\lawnmower.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
                                 <button className="btn btn-success btn-lg"  formAction="#/payment">bid now!</button>
                             </form>
                         </div>
-                    </div>
-                    <div className="row">
-                        <br/><br/><br/>
                     </div>
                 </div>
             </div>
