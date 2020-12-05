@@ -17,12 +17,14 @@ import UserPostForm from "./posts/UserPostForm"
 import User from "./user/User"
 import Logout from "./user/Logout"
 
+import './darkMode.css'
+
+
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
-// import { THEME } from './enum';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
@@ -100,9 +102,8 @@ export class App extends Component {
 }
 
 ReactDOM.render(
-<ThemeSelect>
   <App/>
-</ThemeSelect>, 
+, 
   
   document.getElementById("app")
   
