@@ -70,6 +70,22 @@ export class Chat extends Component {
 			})
 	}
 
+	sendMessage = (conversation_id, message) => {
+		const { token } = this.props;
+		const config = {
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization': `Token ${token}`
+			}
+		}
+		axios.post(`/sendmessage/${conversation_id}`, { "message": message}, config)
+			.then(res => {
+				console.log("message sent")
+			}).catch(err => {
+				console.log(err);
+			})
+	}
+
 	render() {
 		const { conversations, loading } = this.state;
 		if (conversations === null) {
@@ -87,7 +103,7 @@ export class Chat extends Component {
 			return (
 				<div>
 					<NavigationBar/>
-					<ChatComponent conversations={conversations} currentUser={this.props.currentUser} loading={loading} />
+					<ChatComponent conversations={conversations} currentUser={this.props.currentUser} loading={loading} sendMessage={this.sendMessage}/>
 				</div>
 			)
 		}
@@ -108,7 +124,8 @@ export class Chat extends Component {
 export function ChatComponent({
 	conversations,
 	currentUser,
-	loading
+	loading,
+	sendMessage
 }) {
 
 	const [currentConversation, setCurrentConversation] = React.useState(conversations[0]);
@@ -117,12 +134,13 @@ export function ChatComponent({
 		setCurrentConversation(conversations[0])
 	}, [conversations])
 
-	const onMessageSend = (message) => {
+	const onMessageSend = (id) => (message) => {
 		const formatted_message = {
 			"sender": currentUser.username,
 			"messageContent": message
 		}
 
+		sendMessage(id, message);
 		setCurrentConversation(
 			{...currentConversation,
 				messages: [
@@ -133,7 +151,7 @@ export function ChatComponent({
 	}
 		return (
 			<div style={{justifyContent: 'center', display: 'flex'}}>
-					<Paper style={{ minWidth: '30%' }}>
+					<Paper style={{ minWidth: '40%' }}>
 						<ChatList>
 							{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
 						</ChatList>
@@ -233,7 +251,7 @@ function CustomMessageList ({
 				}
 			})}
 			</MessageList>
-			<TextComposer onSend={onMessageSend} >
+			<TextComposer onSend={onMessageSend(id)} >
 				<Row align="center">
 					<Fill>
 						<TextInput />
