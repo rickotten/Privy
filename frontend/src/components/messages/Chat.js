@@ -21,7 +21,6 @@ import {
 	Row,
 	Fill,
 	Fit,
-	IconButton,
 	SendIcon,
 	SendButton,
 	EmojiIcon,
@@ -32,8 +31,11 @@ import {
 	Bubble,
 } from '@livechat/ui-kit'
 import { AvatarGroup } from '@material-ui/lab';
-import { Avatar, Paper, CircularProgress } from "@material-ui/core";
+import { Avatar, Paper, CircularProgress, IconButton } from "@material-ui/core";
 import { CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types'
 
 import NavigationBar from '../layout/NavigationBar'
@@ -161,12 +163,104 @@ export function ChatComponent({
 		);
 }
 
+// Agent Bar. (Top of message list with group chat members)
+function CustomAgentBar ({
+	members
+}) {
+	const [expanded, setExpanded] = React.useState(false)
+
+	const avatar = (
+	<AvatarGroup max={3}>
+		{members.map(member => (
+			<Avatar alt={member.username} src={member.avatar_url} />
+		))}
+	</AvatarGroup>
+	)
+
+	const expandFriendAdd = () => {
+		setExpanded(!expanded)
+	}
+	return (
+		<AgentBar>
+			<Row flexFill>
+				<Column>
+					{avatar}
+				</Column>
+				<Column flexFill>
+					<Title>{members.reduce((accum, current) => (accum + current.username + ", "), "Messages with ").slice(0, -2)}</Title>
+					<Subtitle >
+						
+						<Row>
+						Add Friends!
+						<IconButton onClick={expandFriendAdd}
+							size={'small'}>
+							<AddBoxIcon />
+						</IconButton>
+							{expanded ? <AddFriendsField/> : <></>}
+						</Row>
+						
+					</Subtitle>
+				</Column>
+			</Row>
+		</AgentBar>
+	)
+}
+
+function AddFriendsField() {
+	const [friendUsername, setFriendUsername] = React.useState("")
+	const friends = [
+		"friend1",
+		"friend2",
+		"friend3",
+		"friend4",
+	]
+	const submit = (event) => {
+		event.preventDefault();
+		console.log(friendUsername)
+		console.log("submit")
+	}
+
+	return (
+		<form onSubmit={submit}>
+			<Autocomplete
+				onChange={(event, value) => setFriendUsername(value)}
+				size="small"
+				options={friends}
+				getOptionLabel={(option) => option}
+				style={{ width: 300 }}
+				renderInput={(params) => <TextField {...params} onChange={(e) => setFriendUsername(e.target.value)} label="Type in username and hit enter	" size="small"
+				variant="outlined" />}/>
+		</form>
+
+		// <form onSubmit={submit}>
+		// <Autocomplete
+		// 	size="small"
+		// 	onSubmit={submit}
+		// 	options={friends}
+		// 	getOptionLabel={(option) => option}
+		// 	style={{ width: 300 }}
+		// 	renderInput={(params) => <TextField {...params} label="Type in username and hit enter	" size="small"
+		// 	value={friendUsername}
+		// 	onChange={e => {
+		// 		setFriendUsername(e.target.value);
+		// 		console.log(e.target.value);
+		// 	}}
+		// 	variant="outlined" />}
+		// />
+		// </form>
+	);
+}
+
 // Side bar with chats
 function CustomChatListItem ({
 	conversation,
 	setCurrentConversation
 }) {
-	const [hover, setHover] = React.useState(false);
+	const [hover, setHover] = React.useState(conversation.read);
+
+	React.useEffect(() => {
+		setHover(conversation.read)
+	}, [conversation])
 
 	const { id, members, messages, read } = conversation
 	return (
@@ -220,7 +314,8 @@ function CustomMessageList ({
 		avatars[member.username] = member.avatar_url
 	})
 	return (
-		<div style={{ borderLeft: '1px solid grey', minWidth: '60%', height: 400 }}>
+		<div style={{ borderLeft: '1px solid grey', minWidth: '60%', height:400 }}>
+			<CustomAgentBar members={members}/>
 			<MessageList active>
 			{messages.map((message) => {
 				if (currentUsername === message.sender) {
