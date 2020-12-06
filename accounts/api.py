@@ -544,6 +544,7 @@ class ConversationsAPI(generics.ListAPIView):
             if conv.messages.count() > 0:
                 if conv.messages.reverse()[0].sender.username != self.request.user.username:
                     conv.read = True
+                    conv.save()
 
         return convo
 
