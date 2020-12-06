@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import {
@@ -37,57 +38,6 @@ import PropTypes from 'prop-types'
 
 import NavigationBar from '../layout/NavigationBar'
 
-const mockConvos = [
-	{
-		"id": 1,
-		"members": [
-			{
-				"username": "user",
-				"avatar_url": "http://localhost:8000/media/profileFile/pig_FQgWgSD.jpg"
-			},
-			{
-				"username": "ninja",
-				"avatar_url": "http://localhost:8000/media/profileFile/zebra.jpg"
-			}
-		],
-		"messages": [
-			{
-				"sender": "user",
-				"messageContent": "hello world how are you i am doing finasdfasdfasdfasdfe thank you for asking oh guess you didn't :("
-			},
-			{
-				"sender": "ninja",
-				"messageContent": "hello world how are you i am doing finasdfasdfasdfasdfe thank you for asking oh guess you didn't :("
-			}
-		],
-		"read": false
-	},
-	{
-		"id": 2,
-		"members": [
-			{
-				"username": "user",
-				"avatar_url": "http://localhost:8000/media/profileFile/pig_FQgWgSD.jpg"
-			},
-			{
-				"username": "ninja",
-				"avatar_url": "http://localhost:8000/media/profileFile/zebra.jpg"
-			}
-		],
-		"messages": [
-			{
-				"sender": "ninja",
-				"messageContent": "hello world how are you i am doing finasdfasdfasdfasdfe thank you for asking oh guess you didn't :("
-			},
-			{
-				"sender": "user",
-				"messageContent": "hello world how are you i am doing finasdfasdfasdfasdfe thank you for asking oh guess you didn't :("
-			}
-		],
-		"read": true
-	}
-]
-
 export class Chat extends Component {
 	static propTypes = {
 		token: PropTypes.string.isRequired,
@@ -95,69 +45,102 @@ export class Chat extends Component {
 	}
 
 	state = {
-		conversations: true
+		conversations: null,
+		loading: true
+	}
+
+	componentDidMount() {
+		this.getConversations();
+	}
+
+	getConversations = () => {
+		const { token } = this.props;
+		const config = {
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization': `Token ${token}`
+			}
+		}
+
+		axios.get(`/getconvos`, config)
+			.then(res => {
+				this.setState({ conversations: res.data, loading: false })
+			}).catch(err => {
+				console.log(err)
+			})
 	}
 
 	render() {
-		const { conversations } = this.state;
-		return (
-			<ChatComponent currentUser={this.props.currentUser} loading={conversations === null}/>
-		)
+		const { conversations, loading } = this.state;
+		if (conversations === null) {
+			return (
+			<div>
+				<NavigationBar/>
+				<Paper style={{ minWidth: '100%' }}>
+					<CircularProgress />
+					<h2>Loading your messages</h2>
+				</Paper>
+			</div>
+			)
+		}
+		else if (conversations.length > 0) {
+			return (
+				<div>
+					<NavigationBar/>
+					<ChatComponent conversations={conversations} currentUser={this.props.currentUser} loading={loading} />
+				</div>
+			)
+		}
+		else {
+			return (
+				<div>
+					<NavigationBar/>
+					<Paper>
+						<h1>No messages yet!</h1>
+					</Paper>
+				</div>
+			)
+		}
 	}
 }
 
 
 export function ChatComponent({
+	conversations,
 	currentUser,
 	loading
 }) {
-	const [currentConversation, setCurrentConversation] = React.useState(mockConvos[0]);
+
+	const [currentConversation, setCurrentConversation] = React.useState(conversations[0]);
+
+	React.useEffect(() => {
+		setCurrentConversation(conversations[0])
+	}, [conversations])
 
 	const onMessageSend = (message) => {
 		const formatted_message = {
 			"sender": currentUser.username,
 			"messageContent": message
 		}
-		
+
 		setCurrentConversation(
 			{...currentConversation,
 				messages: [
 					...currentConversation.messages,
 					formatted_message
 				]
-			}
-			);
+			});
 	}
-
-	const comp = (
-		<div>
-			<NavigationBar />
-			<div>
-				<Paper style={{display: 'flex'}}>
-					<div style={{ minWidth: '30%' }}>
-						<ChatList>
-							{mockConvos.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
-						</ChatList>
-					</div>
-					<CustomMessageList conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend}/>
-				</Paper>
-			</div>
-		</div>
-	)
-
-	if (loading) {
 		return (
-			<div>
-				<Paper style={{minWidth: '100%'}}>
-					<NavigationBar/>
-					<CircularProgress/>
-					<h2>Loading your messages</h2>
-				</Paper>
+			<div style={{justifyContent: 'center', display: 'flex'}}>
+					<Paper style={{ minWidth: '30%' }}>
+						<ChatList>
+							{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
+						</ChatList>
+					</Paper>
+					<CustomMessageList conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
 			</div>
-		)
-	} else {
-		return comp;
-	}
+		);
 }
 
 // Side bar with chats
@@ -250,7 +233,7 @@ function CustomMessageList ({
 				}
 			})}
 			</MessageList>
-			<TextComposer onSend={onMessageSend}>
+			<TextComposer onSend={onMessageSend} >
 				<Row align="center">
 					<Fill>
 						<TextInput />
