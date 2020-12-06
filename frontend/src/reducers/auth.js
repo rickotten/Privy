@@ -14,6 +14,7 @@ import {
     FACEBOOK_OAUTH_SUCCESS,
     FORGOT_SUCCESS,
     FORGOT_FAIL,
+    SETTINGS_UPDATE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,11 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
+                user: action.payload
+            }
+        case SETTINGS_UPDATE_SUCCESS:
+            return {
+                ...state,
                 user: action.payload
             }
         
