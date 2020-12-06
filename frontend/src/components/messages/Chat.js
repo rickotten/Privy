@@ -94,16 +94,22 @@ export class Chat extends Component {
 		currentUser: PropTypes.object.isRequired
 	}
 
+	state = {
+		conversations: true
+	}
+
 	render() {
+		const { conversations } = this.state;
 		return (
-			<ChatComponent currentUser={this.props.currentUser}/>
+			<ChatComponent currentUser={this.props.currentUser} loading={conversations === null}/>
 		)
 	}
 }
 
 
 export function ChatComponent({
-	currentUser
+	currentUser,
+	loading
 }) {
 	const [currentConversation, setCurrentConversation] = React.useState(mockConvos[0]);
 
@@ -123,7 +129,7 @@ export function ChatComponent({
 			);
 	}
 
-	return (
+	const comp = (
 		<div>
 			<NavigationBar />
 			<div>
@@ -138,6 +144,20 @@ export function ChatComponent({
 			</div>
 		</div>
 	)
+
+	if (loading) {
+		return (
+			<div>
+				<Paper style={{minWidth: '100%'}}>
+					<NavigationBar/>
+					<CircularProgress/>
+					<h2>Loading your messages</h2>
+				</Paper>
+			</div>
+		)
+	} else {
+		return comp;
+	}
 }
 
 // Side bar with chats
