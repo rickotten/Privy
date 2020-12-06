@@ -179,7 +179,7 @@ function CustomChatListItem ({
 				 >
 				<AvatarGroup max={3}>
 					{members.map(member => (
-						<Avatar alt={member.username} src={member.avatar_url}/>
+						<Avatar alt={member.username} src={member.avatar_url} />
 					))}
 				</AvatarGroup>
 				<Column>
@@ -240,7 +240,7 @@ function CustomMessageList ({
 							onlyFirstWithMeta
 						>
 							<Message authorName={message.sender}>
-								<Bubble isOwn={false} style={{ maxWidth: '70%' }}>
+								<Bubble isOwn={false} style={{ minWidth: 80, maxWidth: '70%' }}>
 									<MessageText>
 										{message.messageContent}
 									</MessageText>
