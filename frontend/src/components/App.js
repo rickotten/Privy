@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Provider as AlertProvider } from 'react-alert';
@@ -23,7 +22,6 @@ import store from '../store';
 import { loadUser } from '../actions/auth';
 import UserProfile from "./user/UserProfile";
 import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
-import './myStyles.css';
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
@@ -31,6 +29,8 @@ import LandingPage from "./landing/LandingPage";
 import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
+import PaymentPortal from "./payment/PaymentPortal";
+import ThemeSelector from "./themes/ThemeSelector";
 
 // Alert Options
 const alertOptions = {
@@ -38,7 +38,7 @@ const alertOptions = {
   position: "top center",
 };
 
-export class App extends Component {
+export default class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
   }
@@ -46,37 +46,39 @@ export class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router>
-            <Fragment>
-              <Alerts />
-              <div className="container">
-                <Switch>
-                  <PrivateRoute exact path="/" component={HomePage} />
-                  <PrivateRoute exact path="/settings" component={PrivacyPage} />
-                  <PrivateRoute exact path="/pages" component={MyPages}/>
-                  <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
-                  <PrivateRoute exact path="/profile" component={UserProfile} />
-                  <Route exact path="/register" component={RegistrationForm} />
-                  <Route exact path="/login" component={LoginForm} />
-                  <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />
-                  <Route exact path="/users/:username" component={UserTimeline} />
-                  <PrivateRoute exact path="/createpost" component={UserPostForm} />
-                  <PrivateRoute exact path="/logout" component={Logout} />
-                  <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
-                  <Route exact path="/pages/:pageID" component={Page} />
-                  <Route exact path="/landing" component={LandingPage} />
-                  <Route exact path="/postsearch" component={SearchFormExample} />
-                  <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
-                  <Route exact path="/posts/:post_id" component={UserPostView} />
-                </Switch>
-              </div>
-            </Fragment>
-          </Router>
-        </AlertProvider>
+        <ThemeSelector>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <Router>
+              <Fragment>
+                <Alerts />
+                <div className="container">
+                  <Switch>
+                    <PrivateRoute exact path="/" component={HomePage} />
+                    <PrivateRoute exact path="/settings" component={PrivacyPage} />
+                    <PrivateRoute exact path="/pages" component={MyPages}/>
+                    <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
+                    <PrivateRoute exact path="/profile" component={UserProfile} />
+                    <Route exact path="/register" component={RegistrationForm} />
+                    <Route exact path="/login" component={LoginForm} />
+                    <Route exact path="/forgot" component={ForgotCredentialsForm} />
+                    <Route exact path="/users/:username" component={UserTimeline} />
+                    <PrivateRoute exact path="/createpost" component={UserPostForm} />
+                    <PrivateRoute exact path="/logout" component={Logout} />
+                    <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
+                    <Route exact path="/pages/:pageID" component={Page} />
+                    <Route exact path="/landing" component={LandingPage} />
+                    <Route exact path="/payment" component={PaymentPortal} />
+                    <Route exact path="/postsearch" component={SearchFormExample} />
+                    <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
+                    <Route exact path="/posts/:post_id" component={UserPostView} />
+                  </Switch>
+                </div>
+              </Fragment>
+            </Router>
+          </AlertProvider>
+        </ThemeSelector>
       </Provider>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));

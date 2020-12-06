@@ -17,7 +17,14 @@ from .api import (FriendRequestAPI,
                             UserSearchPostsAPI,
                             UserSearchPagesAPI,
                             UpdateProfilePictureAPI,
-                            UserPostAPI)
+                            UserPostAPI,
+                            GetUserPagesAPI,
+                            TogglePageSubscriptionAPI,
+                            UserSettingsUpdateAPI,
+                            ConversationsAPI,
+                            AddToConversationAPI,
+                            CreateConvoAPI,
+                            AddUserToConversationAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -48,6 +55,14 @@ urlpatterns = [
     re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
     re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view()),
     path('pages', PageAPI.as_view()),
+    path('posts/<int:post_id>', UserPostAPI.as_view()),
+    path('pages/togglesubscribed/<int:page_id>', TogglePageSubscriptionAPI.as_view()),
     path('pages/<int:page_id>', PageAPI.as_view()),
-    path('posts/<int:post_id>', UserPostAPI.as_view())
+    path('userpages', GetUserPagesAPI.as_view()),
+    path('pages/<int:page_id>', PageAPI.as_view()),
+    path('updateUserSettings', UserSettingsUpdateAPI.as_view()),
+    path('createconvo', CreateConvoAPI.as_view()),
+    path('sendmessage/<int:convo_id>', AddToConversationAPI.as_view()),
+    path('addtogroup/<int:convo_id>/<str:username>', AddUserToConversationAPI.as_view()),
+    path('getconvos', ConversationsAPI.as_view())
 ]

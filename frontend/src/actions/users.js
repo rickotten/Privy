@@ -1,10 +1,14 @@
 import axios from 'axios';
-import { returnErrors } from './errors';
+import { createMessage, returnErrors } from './errors';
+import { tokenConfig } from "./auth";
 
 import { 
     USER_PROFILES_GET_LOADING,
     USER_PROFILES_GET_SUCCESS,
     USER_PROFILES_GET_FAILURE,
+    SETTINGS_UPDATE_FAILURE,
+    SETTINGS_UPDATE_SUCCESS,
+    SETTINGS_UPDATE_PROCESSING
  } from "./types";
 
 // GET PROFILES OF USERS WITH SIMILAR EMAILS OR NAMES
@@ -42,3 +46,4 @@ export const get_fof_profile_data = (username) => dispatch => {
             })
         });
     }
+
