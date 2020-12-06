@@ -542,7 +542,7 @@ class ConversationsAPI(generics.ListAPIView):
 
         for conv in convo:
             if conv.messages.count() > 0:
-                if conv.messages.reverse()[0].sender.username != self.request.user.username:
+                if conv.messages.order_by('-id')[0].sender.username != self.request.user.username:
                     conv.read = True
                     conv.save()
 
@@ -559,6 +559,8 @@ class AddToConversationAPI(generics.ListAPIView):
         message = request.data["message"] 
 
         Message.objects.create(sender=self.request.user, messageContent=message, conversation=convo)
+        convo.read = False
+        convo.save()
 
         return Response("Message sent")
 
