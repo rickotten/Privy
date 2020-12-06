@@ -13,14 +13,6 @@ export class PaymentPortal extends Component {
     }
 
     render() {
-        if (this.props.isAuthenticated) {
-            /* 
-            Update state before the HomePage component loads. That way, it is guranateed this action will 
-            fire and reduce to update the state before the state is loaded immutably into the HomePage 
-            component.
-            */
-            return <Redirect to="/" />;
-        }
         return (
             <div>
                 <NavigationBar />
