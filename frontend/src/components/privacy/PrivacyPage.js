@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button, makeStyles, Switch } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -27,39 +27,50 @@ export class PrivacyPage extends Component {
         this.props.save_user_settings(this.state.show_email_on_profile, this.state.dark_mode);
     }
     onChange = e => {
-        this.setState({ [e.target.name]: e.target.checked})
+        this.setState({ [e.target.name]: e.target.checked })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <NavigationBar/>
+                <NavigationBar />
                 <div className="card card-body mt-5">
-                    <form onSubmit={this.onSubmit}>
-                        <Grid container direction="column" alignItems="flex-start" spacing = {3}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-8">
+                                <form onSubmit={this.onSubmit}>
+                                    <Grid container direction="column" alignItems="flex-start" spacing={3}>
+                                        <Grid item>
+                                            <h1>Dark Mode:</h1>
+                                            <h3>This option will give Privy a darker overlay</h3>
+                                            <Switch
+                                                name="dark_mode"
+                                                onChange={this.onChange}
+                                                checked={this.state.dark_mode}
+                                            />
+                                        </Grid>
                             <Grid item>
-                                    <h1>Dark Mode:</h1>
-                                <h3>This option will give Privy a darker overlay</h3>
-                                    <Switch
-                                        name="dark_mode"
-                                        onChange={this.onChange}
-                                        checked={this.state.dark_mode}
-                                    />
-                            </Grid>
-                            <Grid item>
-                                    <h1>Show Email on Profile:</h1>
-                                    <h3>This option will hide your email from your profile</h3>
-                                    <Switch
-                                        name="show_email_on_profile"
-                                        onChange={this.onChange}
-                                        checked={this.state.show_email_on_profile}
-                                    />
-                            </Grid>
-                            <button style= {{fontSize:15, height:45, width:105}} type="submit" className="btn btn-primary">
-                                Save
-                            </button>
-                        </Grid>
-                    </form>
+                                            <h1>Show Email on Profile:</h1>
+                                            <h3>This option will hide your email from your profile</h3>
+                                            <Switch
+                                                name="show_email_on_profile"
+                                                onChange={this.onChange}
+                                                checked={this.state.show_email_on_profile}
+                                            />
+                                        </Grid>
+                                        <div className="text-center m-auto">
+                                            <button style={{ fontSize: 15, height: 45, width: 105 }} type="submit" className="btn btn-primary btn-success">
+                                                Save
+                                        </button>
+                                        </div>
+                                    </Grid>
+                                </form>
+                            </div>
+                            <div className="col-md-4 m-auto">
+                                <img src="..\static\images\gears_icon.png" alt="gears" width="90%" height="90%"></img>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
