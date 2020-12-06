@@ -31,6 +31,7 @@ import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
 import PaymentPortal from "./payment/PaymentPortal";
 import ThemeSelector from "./themes/ThemeSelector";
+import { Marketplace } from "./payment/Marketplace";
 
 // Alert Options
 const alertOptions = {
@@ -67,7 +68,8 @@ export default class App extends Component {
                     <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
                     <Route exact path="/pages/:pageID" component={Page} />
                     <Route exact path="/landing" component={LandingPage} />
-                    <Route exact path="/payment" component={PaymentPortal} />
+                    <PrivateRoute exact path="/payment" component={PaymentPortal} />
+                    <PrivateRoute exact path="/marketplace" component={Marketplace} />
                     <Route exact path="/postsearch" component={SearchFormExample} />
                     <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
                     <Route exact path="/posts/:post_id" component={UserPostView} />
