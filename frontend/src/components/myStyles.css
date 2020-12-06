@@ -3,6 +3,11 @@ body {
     background-image: url("../../static/images/key_pattern.png");
 }
 
+.linedPaper {
+    background-color: pink;
+    background-image: url("../../static/images/notebook.png");
+}
+
 .noBackgroundPattern {
     background-color: lightskyblue;
 }
@@ -103,4 +108,14 @@ body {
 .customHeading {
     color: rgb(241, 196, 15);
     background-color: black;
+}
+
+.centerB {
+    margin: 0 auto !important;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
