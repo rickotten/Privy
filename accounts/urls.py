@@ -54,8 +54,10 @@ urlpatterns = [
     path('searchposts/', UserSearchPostsAPI.as_view()),
     path('searchpages/', UserSearchPagesAPI.as_view()),
     #######################################################
-    re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
-    re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view()),
+    # re_path('api/auth/home/(?P<username>\w+)$', UserPostGetFriendsAPI.as_view()),
+    path('api/auth/home/<str:username>', UserPostGetFriendsAPI.as_view()),
+    # re_path('api/auth/(?P<username>\w+)$', UserPostGetAPI.as_view()),
+    path('api/auth/<str:username>', UserPostGetAPI.as_view()),
     path('pages', PageAPI.as_view()),
     path('posts/<int:post_id>', UserPostAPI.as_view()),
     path('pages/togglesubscribed/<int:page_id>', TogglePageSubscriptionAPI.as_view()),
