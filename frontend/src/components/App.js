@@ -16,6 +16,10 @@ import UserPostForm from "./posts/UserPostForm"
 import Logout from "./user/Logout"
 import { UserPostView} from './posts/UserPostView';
 
+// import './darkMode.css'
+import('./myStyles.css')
+
+
 import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
@@ -28,6 +32,9 @@ import LandingPage from "./landing/LandingPage";
 import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
+import SearchUsers from "./searches/SearchUsers";
+import SearchPages from "./searches/SearchPages";
+
 import PaymentPortal from "./payment/PaymentPortal";
 import ThemeSelector from "./themes/ThemeSelector";
 import Chat from './messages/Chat';
@@ -77,6 +84,8 @@ export default class App extends Component {
                         <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
                         <Route exact path="/posts/:post_id" component={UserPostView} />
                         <PrivateRoute exact path="/messages" component={Chat} />
+                        <Route exact path="/searchusers/:terms" component={SearchUsers} />
+                        <Route exact path="/searchpages/:terms" component={SearchPages}/>
                       </Switch>
                     </div>
                   </Fragment>

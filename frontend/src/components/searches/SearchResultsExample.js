@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import NavigationBar from '../layout/NavigationBar';
 import UserPost2 from '../posts/UserPost';
 import Grid from '@material-ui/core/Grid';
-import { Jumbotron } from "react-bootstrap";
-import User from '../user/User';
 import { connect } from "react-redux";
-import PropTypes from 'prop-types'
-import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
-import get_user_data from '../../actions/posts';
 
 export class SearchResultsExample extends Component {
 
@@ -23,6 +18,12 @@ export class SearchResultsExample extends Component {
 
     componentDidMount() {
         this.lookUpPosts()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.lookUpPosts();
+        }
     }
     
     lookUpPosts = () => {
@@ -64,7 +65,7 @@ export class SearchResultsExample extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.userPosts}
+                    {this.state.userPosts.length > 0 ? this.state.userPosts : <h1>No results!</h1>}
                 </Grid>
             </div>
         )

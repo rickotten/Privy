@@ -95,7 +95,7 @@ export class UserPost2 extends Component {
         const created_on = this.props.post.date_created ? this.props.post.date_created : "2020-01-31T12:59-0500";
         return (
             <Card className={classes.root} style={{paddingbottom: 20}}>
-                <CardHeader
+                <CardHeader className="post"
                     avatar={avatar}
                     action={
                             <ShareButton postAuthor={post.author} post_id={post.id}/>
@@ -104,12 +104,12 @@ export class UserPost2 extends Component {
                     subheader={dayjs(created_on).fromNow()}
                 />
                 {media}
-                <CardContent>
+                <CardContent className="post">
                     <Typography variant="body2" color="textSecondary" component="p">
                         {post.description}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
+                <CardActions disableSpacing className="post">
 
                         <LikeButton post={post} postId={post.id} />
 
@@ -127,7 +127,7 @@ export class UserPost2 extends Component {
 
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <CardContent>
+                        <CardContent className="post">
                             <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
                             {comments}
                         </CardContent>

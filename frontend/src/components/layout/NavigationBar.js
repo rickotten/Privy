@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
+import SearchForm from "../searches/SearchFormExample"
 
 export class NavigationBar extends Component {
 
@@ -16,6 +17,9 @@ export class NavigationBar extends Component {
                         <Nav.Link href="/#/pages">Pages</Nav.Link>
                         <Nav.Link href="/#/messages">Messages</Nav.Link>
                         <Nav.Link href="/#/marketplace">Market</Nav.Link>
+                    </Nav>
+                    <Nav className="justify-content-start">
+                        <SearchForm/>
                     </Nav>
                     <Nav className="justify-content-end">
                         <Nav.Link href="/#/settings">Settings</Nav.Link>

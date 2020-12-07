@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { create_page } from "../../actions/pages"
 import Page from "./Page"
+import { hexToRgb } from '@material-ui/core';
 
 export class CreatePageForm extends Component {
 	constructor(props) {
@@ -61,10 +62,10 @@ export class CreatePageForm extends Component {
 			<div>
 				<div>
 					<div className="card card-body mt-5">
-						<h2 className="text-center">Create A New Page</h2>
+						<h2 className="centeredText">Create A New Page</h2>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
-								<label>Title</label>
+								<label className="textColor">Title</label>
 								<input
 									type="text"
 									className="form-control"
@@ -74,7 +75,7 @@ export class CreatePageForm extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<label>Description</label>
+								<label className="textColor">Description</label>
 								<input
 									type="text"
 									className="form-control"
