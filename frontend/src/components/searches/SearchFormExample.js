@@ -11,7 +11,7 @@ import { Col, Row } from "react-bootstrap";
 export class SearchFormExample extends Component {
     state = {
         search_text: '',
-        selection: 'Users'
+        selection: ''
     }
 
     static propTypes = {
@@ -30,22 +30,21 @@ export class SearchFormExample extends Component {
     //What is rendered for the user
 
     render() {
-        const search_text = this.state;
-        var url = "";
         switch (this.state.selection) {
             case 'Users':
-                url = "/#/searchusers/" + this.state.search_text;
+                var url = "/#/searchusers/" + this.state.search_text;
                 break;
 
             case 'Posts':
-                url = "/#/searchposts/" + this.state.search_text;
+                var url = "/#/searchposts/" + this.state.search_text;
                 break;
 
             case 'Pages':
-                url = "/#/searchpages/" + this.state.search_text;
+                var url = "/#/searchpages/" + this.state.search_text;
                 break;
 
             default:
+                var url = "/#/searchpages/" + this.state.search_text;
                 break;
         }
         return (
@@ -54,12 +53,10 @@ export class SearchFormExample extends Component {
                         {/* The text for the user's post */}
                             <Row>
                                 <Col>
-                                    <DropdownButton 
-                                        title="Search..."
-                                    >
-                                            <DropdownItem name="selection" onSelect={this.onSelect} value="Users">Users</DropdownItem>
-                                            <DropdownItem name="selection" onSelect={this.onSelect} value="Posts">Posts</DropdownItem>
-                                            <DropdownItem name="selection" onSelect={this.onSelect} value="Pages">Pages</DropdownItem>
+                                    <DropdownButton title="Search...">
+                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Users">Users</DropdownItem>
+                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Posts">Posts</DropdownItem>
+                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Pages">Pages</DropdownItem>
                                     </DropdownButton>
                                 </Col>
                                 <Col>

@@ -58,7 +58,7 @@ export class SearchUsers extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.userPosts}
+                    {this.state.pages}
                 </Grid>
             </div>
         )

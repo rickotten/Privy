@@ -32,6 +32,8 @@ import LandingPage from "./landing/LandingPage";
 import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
+import SearchUsers from "./searches/SearchUsers";
+
 
 // Alert Options
 const alertOptions = {
@@ -59,6 +61,14 @@ const ThemeSelect = ({ children }) => {
     </>
   )
 }
+
+
+
+//<Route exact path="/searchpages/:terms" component={}/>
+//^^^ Route for searching pages- need SearchPages.js first
+
+
+
 
 
 export class App extends Component {
@@ -91,6 +101,7 @@ export class App extends Component {
                   <Route exact path="/landing" component={LandingPage} />
                   <Route exact path="/postsearch" component={SearchFormExample} />
                   <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
+                  <Route exact path="/searchusers/:terms" component={SearchUsers} />
                 </Switch>
               </div>
             </Fragment>
