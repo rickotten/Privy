@@ -574,7 +574,7 @@ class AddUserToConversationAPI(generics.ListAPIView):
         u = User.objects.get(username=self.kwargs['username'])
         convo.members.add(u)
 
-        return Response("Member added")
+        return Response(ConversationSerializer(convo, context=self.get_serializer_context()).data)
 
 #Initial creating of a conversation
 class CreateConvoAPI(generics.ListAPIView):

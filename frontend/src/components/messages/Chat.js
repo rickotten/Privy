@@ -33,6 +33,7 @@ import {
 import { AvatarGroup } from '@material-ui/lab';
 import { Avatar, Paper, CircularProgress, IconButton } from "@material-ui/core";
 import { CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
+import CancelIcon from '@material-ui/icons/Cancel';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -74,6 +75,25 @@ export class Chat extends Component {
 			})
 	}
 
+	createConversation = (recipients, message) => {
+		const { token } = this.props;
+		const config = {
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization': `Token ${token}`
+			}
+		}
+		const body = JSON.stringify({recipients, message})
+		axios.post('/createconvo', body, config)
+			.then(res => {
+				this.setState({
+					conversations: [...this.state.conversations, res.data]
+				})
+			}).catch(err => {
+				console.log(err)
+			})
+	}
+
 	sendMessage = (conversation_id, message) => {
 		const { token } = this.props;
 		const config = {
@@ -108,7 +128,7 @@ export class Chat extends Component {
 			return (
 				<div>
 					<NavigationBar/>
-					<ChatComponent createAlert={createAlert} token={token} conversations={conversations} currentUser={this.props.currentUser} loading={loading} sendMessage={this.sendMessage}/>
+					<ChatComponent createConversation={this.createConversation} createAlert={createAlert} token={token} conversations={conversations} currentUser={this.props.currentUser} loading={loading} sendMessage={this.sendMessage}/>
 				</div>
 			)
 		}
@@ -132,7 +152,8 @@ export function ChatComponent({
 	loading,
 	sendMessage,
 	token,
-	createAlert
+	createAlert,
+	createConversation
 }) {
 
 	const [currentConversation, setCurrentConversation] = React.useState(conversations[0]);
@@ -162,10 +183,52 @@ export function ChatComponent({
 						<ChatList>
 							{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
 						</ChatList>
+						<CreateConversationForm createConversation={createConversation}/>
 					</Paper>
-					<CustomMessageList createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
+					<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
 			</div>
 		);
+}
+
+function CreateConversationForm ({
+	createConversation
+}) {
+
+	const [recipients, setRecipients] = React.useState([])
+	const [message, setMessage] = React.useState("")
+
+	const options = []
+	return (
+		<div>
+			<Autocomplete multiple
+				freeSolo
+				onChange={(event, value) => setRecipients(value)}
+				options={options}
+				renderInput={(params) => (
+					<TextField
+						{...params}
+						label="Start a new chat"
+						placeholder="Enter usernames here"
+					/>
+				)}
+				/>
+			<TextField
+				label="Type your message here"
+				multiline
+				rows={5}
+				onChange={(e) => setMessage(e.target.value)}
+				style={{width: '100%', height: '100%'}}
+			/>
+			<div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+				<IconButton>
+					<CancelIcon/>
+				</IconButton>
+				<IconButton onClick={() => createConversation(recipients, message)}>
+					<SendIcon/>
+				</IconButton>
+			</div>
+		</div>
+	)
 }
 
 // Agent Bar. (Top of message list with group chat members)
@@ -173,7 +236,8 @@ function CustomAgentBar ({
 	convo_id,
 	members,
 	token,
-	createAlert
+	createAlert,
+	setConversation
 }) {
 	const [expanded, setExpanded] = React.useState(false)
 
@@ -205,6 +269,7 @@ function CustomAgentBar ({
 							<AddBoxIcon />
 						</IconButton>
 							{expanded ? <AddFriendsField 
+							setConversation={setConversation}
 							token={token}
 							createAlert={createAlert}
 							convo_id={convo_id}/> : <></>}
@@ -220,7 +285,8 @@ function CustomAgentBar ({
 function AddFriendsField({
 	convo_id,
 	token,
-	createAlert
+	createAlert,
+	setConversation
 }) {
 	const [friendUsername, setFriendUsername] = React.useState("")
 	const friends = [
@@ -246,8 +312,8 @@ function AddFriendsField({
 		}
 		axios.get(`/addtogroup/${convo_id}/${friendUsername}`, config)
 			.then(res => {
-				console.log("added friend to group")
-				createAlert(`Added ${friendUsername}! Refresh the page`)
+				setConversation(res.data)
+				createAlert(`Added ${friendUsername}!`)
 			}).catch(err => {
 				console.log(err);
 			})
@@ -281,14 +347,15 @@ function CustomChatListItem ({
 
 	const { id, members, messages, read } = conversation
 	return (
-		<div>
-			<ChatListItem
-				onClick={() => setCurrentConversation(conversation)} 
-				 active={hover}
-				 onMouseEnter={() => setHover(true)}
-				 onMouseLeave={() => setHover(false)}
-				 >
-				<AvatarGroup max={3}>
+		<ChatListItem
+			onClick={() => setCurrentConversation(conversation)} 
+				active={hover}
+				onMouseEnter={() => setHover(true)}
+				onMouseLeave={() => setHover(false)}
+			style={{ justifyContent: 'space-between' }}
+				>
+			<div>
+				<AvatarGroup max={5}>
 					{members.map(member => (
 						<Avatar alt={member.username} src={member.avatar_url} />
 					))}
@@ -306,16 +373,16 @@ function CustomChatListItem ({
 						</Subtitle>
 					</Row>
 				</Column>
-				<Column style={{paddingLeft: '5%', paddingRight: '5%'}}>
-					{read && <CheckBox/>}
-					{!read && <CheckBoxOutlineBlank/>}
-					<Subtitle nowrap>
-						{read ? "Read" : "Sent"}
-					</Subtitle>
-				</Column>
-				
-			</ChatListItem>
-		</div>
+			</div>
+			<Column style={{paddingLeft: '5%', paddingRight: '5%'}}>
+				{read && <CheckBox/>}
+				{!read && <CheckBoxOutlineBlank/>}
+				<Subtitle nowrap>
+					{read ? "Read" : "Sent"}
+				</Subtitle>
+			</Column>
+			
+		</ChatListItem>
 	)
 }
 
@@ -325,7 +392,8 @@ function CustomMessageList ({
 	currentUsername,
 	onMessageSend,
 	token,
-	createAlert
+	createAlert,
+	setConversation
 }) {
 	const { id, members, messages, read } = conversation
 	const avatars = {}
@@ -334,7 +402,7 @@ function CustomMessageList ({
 	})
 	return (
 		<div style={{ borderLeft: '1px solid grey', minWidth: '60%', height:400 }}>
-			<CustomAgentBar createAlert={createAlert} token={token} convo_id={conversation.id} members={members}/>
+			<CustomAgentBar setConversation={setConversation} createAlert={createAlert} token={token} convo_id={conversation.id} members={members}/>
 			<MessageList active>
 			{messages.map((message) => {
 				if (currentUsername === message.sender) {
