@@ -45,6 +45,7 @@ export class SearchFormExample extends Component {
                     break;
 
                 default:
+                    window.location.href = "/#/searchposts/" + this.state.search_text;
                     break;
             }
         }
