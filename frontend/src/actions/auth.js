@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { returnErrors } from './errors';
+import { createMessage, returnErrors } from './errors';
 
 import {
     USER_LOADED,
@@ -17,8 +17,35 @@ import {
     FACEBOOK_OAUTH_SUCCESS,
     FORGOT_SUCCESS,
     FORGOT_FAIL,
-    CLEAR_USERS_POSTS
+    CLEAR_USERS_POSTS,
+    SETTINGS_UPDATE_FAILURE,
+    SETTINGS_UPDATE_PROCESSING,
+    SETTINGS_UPDATE_SUCCESS
 } from './types';
+
+// SAVE NEW USER SETTINGS
+export const save_user_settings = (show_email_on_profile, dark_mode) => (dispatch, getState) => {
+    dispatch({
+        type: SETTINGS_UPDATE_PROCESSING
+    })
+    const config = tokenConfig(getState);
+    const body = JSON.stringify({ show_email_on_profile, dark_mode });
+
+    axios.put('/updateUserSettings', body, config)
+        .then(res => {
+            dispatch(createMessage({ settingsSaved: "Settings Saved!" }));
+            dispatch({
+                type: SETTINGS_UPDATE_SUCCESS,
+                payload: res.data
+            })
+        }).catch(err => {
+            console.log(err)
+            // dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: SETTINGS_UPDATE_FAILURE
+            })
+        })
+}
 
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {

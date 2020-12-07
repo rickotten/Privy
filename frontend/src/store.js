@@ -7,7 +7,6 @@ import rootReducer from "./reducers";
 
 // Prevent reset on refresh
 function saveToLocalStorage(state) {
-  console.log("Saving")
   try {
     const serializedState = JSON.stringify(state)
     localStorage.setItem('state', serializedState)

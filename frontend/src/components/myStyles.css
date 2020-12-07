@@ -1,33 +1,27 @@
 body {
     background-color: rgb(217, 255, 249);
+    background-image: url("../../static/images/key_pattern.png");
+}
+
+.linedPaper {
+    background-color: pink;
+    background-image: url("../../static/images/notebook.png");
+}
+
+.noBackgroundPattern {
+    background-color: lightskyblue;
 }
 
 .blackText {
     color: black;
 }
 
-.textColor {
-    color: black;
-}
-
-.post {
-    background-color: white;
-}
-
-.textField {
-    background-color: white;
-}
-.cardBackground {
-    background-color: white;
-}
-
-.profileInfo {
-    width: '100%';
-    background-color: white;
-}
-
 .linkColor {
     color: red;
+}
+
+.lightBlueCard {
+    background-color: rgb(217, 255, 249);
 }
 
 .card {
@@ -37,6 +31,21 @@ body {
 .landingPage {
     background-color: darkblue;
     color: white;
+}
+
+.paymentPage {
+    background-color: green;
+    color: white;
+}
+
+.marketPage {
+    background-color: rgba(21, 140, 186);
+    color: white;
+}
+
+.bigInput {
+    height: 70px;
+    font-size: xx-large;
 }
 
 .center {
@@ -80,11 +89,38 @@ body {
 .bigText {
     font-size: 1000%;
 }
+
+.mediumText {
+    font-size: 150%;
+}
+
 .comment {
     background-color: whitesmoke;
 }
 
-.centeredText {
-    text-align: center;
-    color: black;
+.questionButton {
+    width: 100%;
+    padding-right: 70%;
+  }
+  
+.questionInput {
+    width: 70%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+.customHeading {
+    color: rgb(241, 196, 15);
+    background-color: black;
+}
+
+.centerB {
+    margin: 0 auto !important;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

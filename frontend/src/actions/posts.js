@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { returnErrors } from './errors';
+import { createMessage } from "./errors";
 import { tokenConfig } from './auth';
 
 import { 
@@ -15,7 +16,7 @@ import {
  } from "./types";
 
 //CREATE A USER POST
-export const create_user_post = (description, media) => (dispatch, getState)  => {
+export const create_user_post = (description, media, page_id) => (dispatch, getState)  => {
     const config = tokenConfig(getState);
 
     let form_data = new FormData();
@@ -23,9 +24,13 @@ export const create_user_post = (description, media) => (dispatch, getState)  =>
     if (media) {
         form_data.append('image', media);
     }
+    if (page_id) {
+        form_data.append('pageId', page_id);
+    }
     
     axios.post(`/api/auth/posts`, form_data, config)
         .then(res => {
+            dispatch(createMessage({ postCreateSuccess: "Post created!" }))
             dispatch({
                 type: CREATE_USER_POST_SUCCESS,
                 payload: res.data
@@ -57,26 +62,6 @@ export const get_user_posts = () => (dispatch, getState) => {
             })
         });
 }
-
-// // PUT REQUEST UPDATE USER POST
-// export const update_user_post = (post) => (dispatch, getState) => {
-//     const config = tokenConfig(getState);
-//     const body = JSON.stringify(post);
-
-//     axios.put(`/api/auth/userposts/${post.id}`, body, config)
-//         .then(res => {
-//             dispatch({
-//                 type: UPDATE_USER_POST_SUCCESS,
-//                 payload: res.data
-//             })
-//         }).catch(err => {
-//             dispatch(returnErrors(err.response.data, err.response.status));
-//             dispatch({
-//                 type: UPDATE_USER_POST_FAILURE,
-//             })
-//         });
-    
-// }
 
 // LIKE USER POST
 export const like_user_post = (userId, postId) => (dispatch, getState) => {

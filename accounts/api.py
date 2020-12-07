@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer, UserSettingsSerializer, TinyPageSerializer, ConversationSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -12,7 +12,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page, UserProfile
+from .models import UserPost, User, Friend, Page, UserProfile, UserSettings, Conversation, Message
 from itertools import *
 
 
@@ -35,6 +35,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        UserSettings.objects.create(user=user)
         return Response(
             {
                 "user": UserSerializer(
@@ -53,6 +54,10 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        try:
+            settings = user.settings
+        except:
+            UserSettings.objects.create(user=user)
         return Response(
             {
                 "user": UserSerializer(
@@ -250,7 +255,20 @@ class UserPostCreateAPI(generics.GenericAPIView):
             }
         )
 
-    
+class UserPostAPI(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+
+    def get(self, request, *args, **kwargs):
+        post = UserPost.objects.get(id=kwargs['post_id'])
+        return Response(UserPostSerializer(post).data)
+
+    def delete(self, request, *args, **kwargs):
+        post = UserPost.objects.get(id=kwargs['post_id'])
+        if request.user == post.author:
+            post.delete()
+            return Response()
+        else:
+            return Response("Unauthorized User", status=403)
 
 #UserPost GET request 
 #Used for getting all posts from a user through the URL
@@ -416,7 +434,29 @@ class PageAPI(generics.GenericAPIView):
     def get(self, request, **kwargs):
         page_id = kwargs.get('page_id')
         page = Page.objects.get(id=page_id)
-        return Response(PageSerializer(page).data)
+        return Response(PageSerializer(page, context=self.get_serializer_context()).data)
+
+# Subscribe to Page API
+class TogglePageSubscriptionAPI(generics.GenericAPIView):
+    def get(self, request, **kwargs):
+        user = self.request.user
+        page = Page.objects.get(id=kwargs.get('page_id'))
+        if page in user.subscribed_pages.all():
+            user.subscribed_pages.remove(page)
+            return Response("unsubscribed")
+        else:
+            user.subscribed_pages.add(page)
+            return Response("subscribed")
+
+class GetUserPagesAPI(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = TinyPageSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        pages_owned = user.owned_pages.all()
+        subscribed_pages = user.subscribed_pages.all()
+        return (pages_owned | subscribed_pages)
 ##############################################################
 #SEARCH APIS
 
@@ -475,3 +515,91 @@ class UserSearchPagesAPI(generics.ListAPIView):
     serializer_class = PageSerializer
 
 ##################################################################
+# USER SETTINGS : Only a PUT request is needed (to update the model). We use a GET request for other users when viewing the user's profile
+##################################################################
+class UserSettingsUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSettingsSerializer
+
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        user_settings = UserSettings.objects.get(user=user)
+        user_settings.show_email_on_profile = request.data['show_email_on_profile']
+        user_settings.dark_mode = request.data['dark_mode']
+        user_settings.save()
+        return Response(UserSerializer(user).data)
+
+#Used for getting all conversations pertaining to the user
+#Flips read receipt
+class ConversationsAPI(generics.ListAPIView):
+    # Must be authenticated to access messages
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ConversationSerializer
+
+    #probably change this to a separate view
+    def get_queryset(self):
+        convo = Conversation.objects.filter(members__username__contains=self.request.user.username)
+
+        for conv in convo:
+            if conv.messages.count() > 0:
+                if conv.messages.order_by('-id')[0].sender.username != self.request.user.username:
+                    conv.read = True
+                    conv.save()
+
+        return convo
+
+#Used for adding a single message to a conversation
+class AddToConversationAPI(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def post(self, request, *args, **kwargs):
+        convo = Conversation.objects.get(id=self.kwargs['convo_id'])
+        message = request.data["message"] 
+
+        Message.objects.create(sender=self.request.user, messageContent=message, conversation=convo)
+        convo.read = False
+        convo.save()
+
+        return Response("Message sent")
+
+#Used to add a user to an existing conversation
+class AddUserToConversationAPI(generics.ListAPIView):
+    
+
+    def get(self, request, *args, **kwargs):
+        convo = Conversation.objects.get(id=self.kwargs['convo_id'])
+
+        u = User.objects.get(username=self.kwargs['username'])
+        convo.members.add(u)
+
+        return Response(ConversationSerializer(convo, context=self.get_serializer_context()).data)
+
+#Initial creating of a conversation
+class CreateConvoAPI(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+
+        recipients = request.data["recipients"]
+        message = request.data["message"]
+        convo = Conversation.objects.create()
+        convo.members.add(user)
+
+        for username in recipients:
+            try:
+                u = User.objects.get(username=username)
+                convo.members.add(u)
+            except:
+                print(username + " does not exist")
+            
+        Message.objects.create(sender=user, messageContent=message, conversation=convo)
+
+        return Response(
+            ConversationSerializer(
+                convo, context=self.get_serializer_context()).data
+        )

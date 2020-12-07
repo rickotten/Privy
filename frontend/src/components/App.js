@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Provider as AlertProvider } from 'react-alert';
@@ -14,8 +13,8 @@ import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
 import HomePage from "./layout/HomePage";
 import UserTimeline from "./layout/UserTimeline"
 import UserPostForm from "./posts/UserPostForm"
-import User from "./user/User"
 import Logout from "./user/Logout"
+import { UserPostView} from './posts/UserPostView';
 
 // import './darkMode.css'
 import('./myStyles.css')
@@ -36,6 +35,11 @@ import SearchResultsExample from "./searches/SearchResultsExample";
 import SearchUsers from "./searches/SearchUsers";
 import SearchPages from "./searches/SearchPages";
 
+import PaymentPortal from "./payment/PaymentPortal";
+import ThemeSelector from "./themes/ThemeSelector";
+import Chat from './messages/Chat';
+import { ThemeProvider } from '@livechat/ui-kit'
+import { Marketplace } from "./payment/Marketplace";
 
 // Alert Options
 const alertOptions = {
@@ -43,82 +47,55 @@ const alertOptions = {
   position: "top center",
 };
 
-const LIGHT = "light";
-const DARK = "dark";
-
-const LightTheme = React.lazy(() => import('./myStyles.css'));
-const DarkTheme = React.lazy(() => import('./darkMode.css'))
-
-const ThemeSelect = ({ children }) => {
-
-  // const currentTheme = localStorage.getItem('THEME');
-  const currentTheme = DARK; // You will want to change this eventually
-  return (
-    <>
-    <React.Suspense fallback={<></>}>
-      {(currentTheme === LIGHT) && <LightTheme/>}
-      {(currentTheme === DARK) && <DarkTheme/>}
-    </React.Suspense>
-    {children}
-    </>
-  )
-}
-
-
-
-//<Route exact path="/searchpages/:terms" component={}/>
-//^^^ Route for searching pages- need SearchPages.js first
-
-
-
-
-
-export class App extends Component {
+export default class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
   }
 
   render() {
     return (
-      <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router>
-            <Fragment>
-              <Alerts />
-              <div className="container">
-                <Switch>
-                  <PrivateRoute exact path="/" component={HomePage} />
-                  <PrivateRoute exact path="/settings" component={PrivacyPage} />
-                  <PrivateRoute exact path="/pages" component={MyPages}/>
-                  <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
-                  <PrivateRoute exact path="/profile" component={UserProfile} />
-                  <Route exact path="/register" component={RegistrationForm} />
-                  <Route exact path="/login" component={LoginForm} />
-                  <PrivateRoute exact path="/forgot" component={ForgotCredentialsForm} />
-                  <Route exact path="/users/:username" component={UserTimeline} />
-                  <PrivateRoute exact path="/createpost" component={UserPostForm} />
-                  <PrivateRoute exact path="/logout" component={Logout} />
-                  <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
-                  <Route exact path="/pages/:pageID" component={Page} />
-                  <Route exact path="/landing" component={LandingPage} />
-                  <Route exact path="/postsearch" component={SearchFormExample} />
-                  <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
-                  <Route exact path="/searchusers/:terms" component={SearchUsers} />
-                  <Route exact path="/searchpages/:terms" component={SearchPages}/>
-                </Switch>
-              </div>
-            </Fragment>
-          </Router>
-        </AlertProvider>
-      </Provider>
+      <ThemeProvider>
+        <ThemeProvider>
+          <Provider store={store}>
+            <ThemeSelector>
+              <AlertProvider template={AlertTemplate} {...alertOptions}>
+                <Router>
+                  <Fragment>
+                    <Alerts />
+                    <div className="container">
+                      <Switch>
+                        <PrivateRoute exact path="/" component={HomePage} />
+                        <PrivateRoute exact path="/settings" component={PrivacyPage} />
+                        <PrivateRoute exact path="/pages" component={MyPages}/>
+                        <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
+                        <PrivateRoute exact path="/profile" component={UserProfile} />
+                        <Route exact path="/register" component={RegistrationForm} />
+                        <Route exact path="/login" component={LoginForm} />
+                        <Route exact path="/forgot" component={ForgotCredentialsForm} />
+                        <Route exact path="/users/:username" component={UserTimeline} />
+                        <PrivateRoute exact path="/createpost" component={UserPostForm} />
+                        <PrivateRoute exact path="/logout" component={Logout} />
+                        <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
+                        <Route exact path="/pages/:pageID" component={Page} />
+                        <Route exact path="/landing" component={LandingPage} />
+                        <PrivateRoute exact path="/payment" component={PaymentPortal} />
+                        <PrivateRoute exact path="/marketplace" component={Marketplace} />
+                        <Route exact path="/postsearch" component={SearchFormExample} />
+                        <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
+                        <Route exact path="/posts/:post_id" component={UserPostView} />
+                        <PrivateRoute exact path="/messages" component={Chat} />
+                        <Route exact path="/searchusers/:terms" component={SearchUsers} />
+                        <Route exact path="/searchpages/:terms" component={SearchPages}/>
+                      </Switch>
+                    </div>
+                  </Fragment>
+                </Router>
+              </AlertProvider>
+            </ThemeSelector>
+          </Provider>
+        </ThemeProvider>
+      </ThemeProvider>
     )
   }
 }
 
-ReactDOM.render(
-  <App/>
-, 
-  
-  document.getElementById("app")
-  
-  );

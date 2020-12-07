@@ -54,7 +54,7 @@ export class UserProfile extends Component {
 
     state = {
         username: this.props.user.username,
-        profilePicture: this.props.user.profile.profile_picture,
+        profilePicture: this.props.user.profile ? this.props.user.profile.profile_picture : "/static/images/penguin.jpg",
         email: this.props.user.email,
         // bio: "Here's a simple bio",
         createdAt: dayjs("2020-10-12T20:01:10.560000Z").format("dddd, MMMM D YYYY"),

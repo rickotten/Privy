@@ -52,7 +52,8 @@ export class ArbitraryUserProfile extends Component {
             bio: "Here's a simple bio",
             createdAt: "Loading...",
             postCount: 5,
-            friendsCount: 10
+            friendsCount: 10,
+            showEmail: true
         }
     }
 
@@ -86,7 +87,8 @@ export class ArbitraryUserProfile extends Component {
                     username: res.data.user.username,
                     email: res.data.user.email,
                     createdAt: dayjs(res.data.user.date_joined).format("dddd, MMMM D YYYY"),
-                    profilePicture: res.data.user.profile.profile_picture || "/static/images/penguin.jpg"
+                    profilePicture: res.data.user.profile ? res.data.user.profile.profile_picture : "/static/images/penguin.jpg",
+                    showEmail: res.data.user.settings ? res.data.user.settings.show_email_on_profile : true
                 })
             }).catch(err => {
                 console.log(err);
@@ -94,7 +96,7 @@ export class ArbitraryUserProfile extends Component {
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount} = this.state;
+        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount, showEmail } = this.state;
         const classes = this.props.classes;
 
         return (
@@ -123,14 +125,14 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={bio} secondary="Bio" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        {showEmail && (<ListItem className="cardBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText className="textColor" primary={email} secondary="User Email" />
-                        </ListItem>
+                        </ListItem>)}
                         <Divider variant="inset" component="li" />
                         <ListItem className="cardBackground">
                             <ListItemAvatar>

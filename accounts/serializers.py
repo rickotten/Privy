@@ -6,7 +6,10 @@ from .models import (User,
                                     UserPost, 
                                     UserPostComment,
                                     Friend,
-                                    Page)
+                                    Page,
+                                    UserSettings,
+                                    Message,
+                                    Conversation)
 import logging
 from django import forms
 
@@ -20,14 +23,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('profile_picture',)
 
+class UserSettingsSerializer(serializers.ModelSerializer):
+    show_email_on_profile = serializers.BooleanField()
+    dark_mode = serializers.BooleanField()
+
+    class Meta:
+        model = UserSettings
+        fields = ('show_email_on_profile', 'dark_mode',)
+
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     username= serializers.CharField(required=False)
     profile = UserProfileSerializer(read_only=True, default=None)
+    settings = UserSettingsSerializer(read_only=True, default=None)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'date_joined', 'profile' )
+        fields = ('id', 'username', 'email', 'date_joined', 'profile', 'settings' )
         slug_field = 'username'
 
 # Register Serializer
@@ -91,6 +103,7 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(read_only=True, slug_field="username")
     authorId = serializers.IntegerField(write_only=True)
     postId = serializers.IntegerField(write_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = UserPostComment
@@ -99,8 +112,17 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
             'author',
             'comment',
             'postId',
-            'authorId'
+            'authorId',
+            'profile_picture'
         )
+
+    def get_profile_picture(self, comment):
+        request = self.context.get('request')
+        try:
+            picture_url = comment.author.profile.profile_picture.url
+            return request.build_absolute_uri(picture_url)
+        except:
+            return None
 
     def create(self, validated_data):
         relatedPost = UserPost.objects.get(id=validated_data.get("postId"))
@@ -169,6 +191,8 @@ class UserPostSerializer(serializers.ModelSerializer):
     comments = UserPostCommentSerializer(many=True, required=False)
     pageId = serializers.IntegerField(write_only=True, required=False)
     page = serializers.SlugRelatedField(read_only=True, slug_field="id")
+    date_created = serializers.DateTimeField(read_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = UserPost
@@ -181,8 +205,19 @@ class UserPostSerializer(serializers.ModelSerializer):
             'usersLiked',
             "comments",
             "page",
-            "pageId"
+            "pageId",
+            "date_created",
+            "profile_picture"
         )  
+        read_only_fields = ["profile_picture"]
+
+    def get_profile_picture(self, post):
+        request = self.context.get('request')
+        try:
+            picture_url = post.author.profile.profile_picture.url
+            return request.build_absolute_uri(picture_url)
+        except:
+            return None
 
     def create(self, validated_data):
         try:
@@ -251,6 +286,15 @@ class PageSerializer(serializers.ModelSerializer):
         page = Page.objects.create(owner=self.context['request'].user, title=validated_data['title'], description=validated_data['description'])
         return page
 
+# The difference between this serializer and the regular page serializer is that this serializer only returns the page id and the title.
+class TinyPageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Page
+        fields = (
+            'id',
+            'title'
+        )
+
 class UserPrivacySerializer(serializers.Serializer):
     def setPrivacy(self):
         user = User.objects.get(username=self.request.user.username)
@@ -260,3 +304,65 @@ class UserPrivacySerializer(serializers.Serializer):
             user.privFlag = True
 
         return user.privFlag
+
+#Message serializer
+class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.CharField(source='sender.username', read_only=True)
+    messageContent = serializers.CharField()
+
+    class Meta:
+        model = Message
+        fields = (
+            'sender',
+            'messageContent'
+        )
+        read_only_fields = ['sender']
+
+    def create(self, validated_data):
+        msg = Message.objects.create(
+            sender=self.request.user, messageContent=validated_data["messageContent"])
+        return msg
+
+#Conversation Serializer
+class ConversationSerializer(serializers.ModelSerializer):
+
+    # members = serializers.SlugRelatedField(
+    #     read_only=True, slug_field="username", many=True
+    # )
+
+    members = serializers.SerializerMethodField()
+    messages = MessageSerializer(many=True)
+    read = serializers.BooleanField()
+
+    def get_members(self, conversation):
+        result = []
+        request = self.context.get('request')
+        
+        for member in conversation.members.all():
+            entry = {}
+            entry['username'] = member.username
+            try:
+                entry['avatar_url'] = request.build_absolute_uri(member.profile.profile_picture.url)
+            except Exception as e:
+                print(e)
+                entry['avatar_url'] = None
+            result.append(entry)
+        return result
+            
+    
+    class Meta:
+        model = Conversation
+        fields = (
+            'id',
+            'members',
+            'messages',
+            'read'
+        )
+
+        
+
+
+    def create(self, validated_data):
+        convo = Conversation.objects.create(
+            members=validated_data["members"], messages=validated_data["messages"])
+        return convo

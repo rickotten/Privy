@@ -19,6 +19,12 @@ class UserProfile(models.Model):
         max_length=254, blank=True, null=True
     )
 
+class UserSettings(models.Model):
+    user = models.OneToOneField(
+        User, related_name="settings", on_delete=models.CASCADE, primary_key=True)
+    show_email_on_profile = models.BooleanField(default=True)
+    dark_mode = models.BooleanField(default=False)
+
 # Model for user privacy page
 
 class UserPrivacy(User):
@@ -50,6 +56,8 @@ class UserPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")
+    date_created = models.DateTimeField(
+        default=django.utils.timezone.now, verbose_name='date created')
 
     def __str__(self):
         """A string representation of the model."""
@@ -70,3 +78,29 @@ class Friend(models.Model):
 
     # username of user who is sending the friend request
     sender_friend = models.CharField(max_length=250)
+
+#Messages between users. Its a collection of members and messages
+class Conversation(models.Model):
+    members = models.ManyToManyField(User, related_name="conversations")
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        """A string representation of the model."""
+        return str(self.id)
+
+#Messages between users to be used in a Conversation
+#Requires a conversation to send to
+#Read flag will be false until read
+class Message(models.Model):
+
+    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+    messageContent = models.TextField()
+    conversation = models.ForeignKey(Conversation, related_name="messages", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        """A string representation of the model."""
+        return str(self.messageContent)
+
+
+
+

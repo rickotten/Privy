@@ -19,11 +19,11 @@ import PropTypes from 'prop-types'
 import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
-import { Box, Slide, Slider } from '@material-ui/core';
+import ShareButton from './util/ShareButton';
 
 const useStyles = theme => ({
     root: {
-        width: "35vw"
+        width: "67.75vw"
     },
     media: {
         // height: 0,
@@ -61,7 +61,7 @@ export class UserPost2 extends Component {
         redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
-            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} />))
+            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} picture={comment.profile_picture}/>))
     }
 
 
@@ -79,8 +79,7 @@ export class UserPost2 extends Component {
         const userImage = post.image;
 
         const avatar = <a href={"#profile/" + this.props.post.author}>
-                                    <Avatar aria-label="profile" className=    {classes.avatar}>
-                                                    {this.props.post.author.toUpperCase().charAt(0)}
+                                    <Avatar alt={this.props.post.author.toUpperCase().charAt(0)} aria-label="profile" className={classes.avatar} src={post.profile_picture}>
                                     </Avatar>
                                 </a>
 
@@ -92,17 +91,17 @@ export class UserPost2 extends Component {
             image={userImage}
             title="Post Image"
         />) : (<div></div>));
+
+        const created_on = this.props.post.date_created ? this.props.post.date_created : "2020-01-31T12:59-0500";
         return (
             <Card className={classes.root} style={{paddingbottom: 20}}>
                 <CardHeader className="post"
                     avatar={avatar}
                     action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
+                            <ShareButton postAuthor={post.author} post_id={post.id}/>
                     }
-                    title="A Creative Title"
-                    subheader={dayjs("2020-01-31T12:59-0500").fromNow()}
+                    title={"Via " + post.author}
+                    subheader={dayjs(created_on).fromNow()}
                 />
                 {media}
                 <CardContent className="post">
@@ -134,7 +133,6 @@ export class UserPost2 extends Component {
                         </CardContent>
                     </Collapse>
                 </Card>
-                
         )
     }
 }

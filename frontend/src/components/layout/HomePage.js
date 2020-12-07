@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import NavigationBar from './NavigationBar';
 import Grid from '@material-ui/core/Grid';
-import User from '../user/User';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 import UserPost2 from "../posts/UserPost";
 import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
-import get_user_data from '../../actions/posts';
-import { ImageTwoTone } from '@material-ui/icons';
-import PrivacyPage from "../privacy/PrivacyPage";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class HomePage extends Component {
 
@@ -17,7 +14,7 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             username: 'Loading...',
-            userPosts: []
+            userPosts: <CircularProgress />
         }
     }
 
@@ -26,6 +23,8 @@ export class HomePage extends Component {
     }
 
     componentDidMount() {
+        // Hackey method to set the dark_mode theme.
+        localStorage.setItem('DARK_THEME', this.props.auth.user.settings.dark_mode);
         this.lookUpPosts();
     }
 
@@ -65,13 +64,18 @@ export class HomePage extends Component {
                     res.data.forEach(post => {
                         localPosts.push(<Grid key={post.id} item><UserPost2 key={post.id} tempContent={tempContent} post={post}/></Grid>);
                     })
-                    this.setState({userPosts: localPosts});
+                    if (localPosts.length === 0) {
+                        this.setState({userPosts: (<h1 style={{paddingTop: 10}}>No Posts yet!</h1>)})
+                    }
+                    else {
+                        this.setState({userPosts: localPosts});
+                    }
 
             }).catch(err => {
                 console.log(err);
             });
     }
-        
+
     render() {
 
         return (
@@ -84,6 +88,7 @@ export class HomePage extends Component {
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
+                    spacing={3}
                 >
                     {this.state.userPosts}
                 </Grid>
