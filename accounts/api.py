@@ -12,7 +12,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page, UserProfile, UserSettings, Conversation, Message
+from .models import UserPost, User, Friend, Page, UserProfile, UserSettings, Conversation, Message, Friend
 from itertools import *
 
 
@@ -229,6 +229,18 @@ class FriendRequestAPI(generics.GenericAPIView):
 
         # return an OK response
         return Response(status=status.HTTP_200_OK)
+
+class AlreadyFriendsAPI(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def post(self, request, *args, **kwargs):
+        sender_friend = self.request.user.username
+        receiver_friend = request.data["friendUsername"]
+
+        query = Friend.objects.filter(sender_friend=sender_friend, receiver_friend=receiver_friend)
+        return Response(query.count() > 0)
 
 #UserPost POST API 
 class UserPostCreateAPI(generics.GenericAPIView):
