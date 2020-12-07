@@ -566,9 +566,7 @@ class AddToConversationAPI(generics.ListAPIView):
 
 #Used to add a user to an existing conversation
 class AddUserToConversationAPI(generics.ListAPIView):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    
 
     def get(self, request, *args, **kwargs):
         convo = Conversation.objects.get(id=self.kwargs['convo_id'])
@@ -602,5 +600,6 @@ class CreateConvoAPI(generics.ListAPIView):
         Message.objects.create(sender=user, messageContent=message, conversation=convo)
 
         return Response(
-            ConversationSerializer(convo).data
+            ConversationSerializer(
+                convo, context=self.get_serializer_context()).data
         )

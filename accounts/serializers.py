@@ -343,7 +343,8 @@ class ConversationSerializer(serializers.ModelSerializer):
             entry['username'] = member.username
             try:
                 entry['avatar_url'] = request.build_absolute_uri(member.profile.profile_picture.url)
-            except:
+            except Exception as e:
+                print(e)
                 entry['avatar_url'] = None
             result.append(entry)
         return result
