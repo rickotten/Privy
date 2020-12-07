@@ -124,14 +124,6 @@ class UserPostCommentSerializer(serializers.ModelSerializer):
         except:
             return None
 
-    def get_profile_picture(self, comment):
-        request = self.context.get('request')
-        try:
-            picture_url = comment.author.profile.profile_picture.url
-            return request.build_absolute_uri(picture_url)
-        except:
-            return None
-
     def create(self, validated_data):
         relatedPost = UserPost.objects.get(id=validated_data.get("postId"))
         comment = UserPostComment.objects.create(
@@ -334,12 +326,30 @@ class MessageSerializer(serializers.ModelSerializer):
 #Conversation Serializer
 class ConversationSerializer(serializers.ModelSerializer):
 
-    members = serializers.SlugRelatedField(
-        read_only=True, slug_field="username", many=True
-    )
+    # members = serializers.SlugRelatedField(
+    #     read_only=True, slug_field="username", many=True
+    # )
+
+    members = serializers.SerializerMethodField()
     messages = MessageSerializer(many=True)
     read = serializers.BooleanField()
 
+    def get_members(self, conversation):
+        result = []
+        request = self.context.get('request')
+        
+        for member in conversation.members.all():
+            entry = {}
+            entry['username'] = member.username
+            try:
+                entry['avatar_url'] = request.build_absolute_uri(member.profile.profile_picture.url)
+            except Exception as e:
+                print(e)
+                entry['avatar_url'] = None
+            result.append(entry)
+        return result
+            
+    
     class Meta:
         model = Conversation
         fields = (
@@ -348,6 +358,9 @@ class ConversationSerializer(serializers.ModelSerializer):
             'messages',
             'read'
         )
+
+        
+
 
     def create(self, validated_data):
         convo = Conversation.objects.create(

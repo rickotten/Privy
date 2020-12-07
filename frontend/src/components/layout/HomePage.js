@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import NavigationBar from './NavigationBar';
 import Grid from '@material-ui/core/Grid';
-import User from '../user/User';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 import UserPost2 from "../posts/UserPost";
 import UserPostForm from '../posts/UserPostForm';
 import axios from 'axios'
-import get_user_data from '../../actions/posts';
-import { ImageTwoTone } from '@material-ui/icons';
-import PrivacyPage from "../privacy/PrivacyPage";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class HomePage extends Component {

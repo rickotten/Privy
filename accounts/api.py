@@ -542,8 +542,9 @@ class ConversationsAPI(generics.ListAPIView):
 
         for conv in convo:
             if conv.messages.count() > 0:
-                if conv.messages.reverse()[0].sender.username != self.request.user.username:
+                if conv.messages.order_by('-id')[0].sender.username != self.request.user.username:
                     conv.read = True
+                    conv.save()
 
         return convo
 
@@ -558,14 +559,14 @@ class AddToConversationAPI(generics.ListAPIView):
         message = request.data["message"] 
 
         Message.objects.create(sender=self.request.user, messageContent=message, conversation=convo)
+        convo.read = False
+        convo.save()
 
         return Response("Message sent")
 
 #Used to add a user to an existing conversation
 class AddUserToConversationAPI(generics.ListAPIView):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    
 
     def get(self, request, *args, **kwargs):
         convo = Conversation.objects.get(id=self.kwargs['convo_id'])
@@ -573,7 +574,7 @@ class AddUserToConversationAPI(generics.ListAPIView):
         u = User.objects.get(username=self.kwargs['username'])
         convo.members.add(u)
 
-        return Response("Member added")
+        return Response(ConversationSerializer(convo, context=self.get_serializer_context()).data)
 
 #Initial creating of a conversation
 class CreateConvoAPI(generics.ListAPIView):
@@ -599,5 +600,6 @@ class CreateConvoAPI(generics.ListAPIView):
         Message.objects.create(sender=user, messageContent=message, conversation=convo)
 
         return Response(
-            ConversationSerializer(convo).data
+            ConversationSerializer(
+                convo, context=self.get_serializer_context()).data
         )
