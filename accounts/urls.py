@@ -24,7 +24,8 @@ from .api import (FriendRequestAPI,
                             ConversationsAPI,
                             AddToConversationAPI,
                             CreateConvoAPI,
-                            AddUserToConversationAPI)
+                            AddUserToConversationAPI,
+                            AlreadyFriendsAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -43,6 +44,7 @@ urlpatterns = [
     path('updateProfilePicture', UpdateProfilePictureAPI.as_view()),
     path('profiles/<str:username>', GetUserProfileAPI.as_view()),
     path('api/auth/friendRequest', FriendRequestAPI.as_view()),
+    path('alreadyfriends', AlreadyFriendsAPI.as_view()),
     ################################################
     #To use these queries, use this example:
     #/searchname/?search=username or /searchemail/?search=email (except for searching FoF)

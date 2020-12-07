@@ -9,7 +9,8 @@ export class SearchPages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            resultingPages: []
+            resultingPages: [],
+            loadingResults: true
         }
     }
 
@@ -20,6 +21,7 @@ export class SearchPages extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.setState({ resultingPages: [], loadingResults: true })
             this.lookUpPages();
         }
     }
@@ -46,7 +48,7 @@ export class SearchPages extends Component {
                 res.data.forEach(post => {
                     localPages.push(<Grid key={post.id} item><a href={`#/pages/${post.id}`}><h1>Title: {post.title}</h1></a></Grid>);
                 })
-                this.setState({resultingPages: localPages});
+                this.setState({resultingPages: localPages, loadingResults: false});
 
             }).catch(err => {
                 console.log(err);
@@ -54,7 +56,8 @@ export class SearchPages extends Component {
     }
         
     render() {
-
+        const { resultingPages, loadingResults } = this.state
+        console.log(loadingResults)
         return (
             <div>
                 <NavigationBar/>
@@ -63,7 +66,8 @@ export class SearchPages extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.resultingPages.length > 0 ? this.state.resultingPages : <h1>No results!</h1>}
+                    {loadingResults && <h1>Loading Search Results</h1>}
+                    {(resultingPages.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingPages}
                 </Grid>
             </div>
         )

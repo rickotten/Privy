@@ -25,7 +25,7 @@ const useStyles = (theme) => ({
     root: {
         width: '100%',
         maxWidth: 1200,
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
     },
     small: {
         width: theme.spacing(3),
@@ -111,6 +111,7 @@ export class UserProfile extends Component {
                     </label>
 
                     <List className={classes.root}>
+                        <Divider variant="inset" component="li" />
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>
