@@ -43,7 +43,7 @@ export class PaymentPortal extends Component {
                         <br />
                     </div>
                     <div className="text-center">
-                        <img src="..\static\images\dollar.jpg" alt="dollar" width="90%" height="90%"></img>
+                        <img src="..\static\images\dollar.jpg" alt="dollar" width="60%" height="60%"></img>
                     </div>
                     <div>
                         <br /><br />
