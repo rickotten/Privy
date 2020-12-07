@@ -47,7 +47,7 @@ export default function PageHeader({
 					</div>
 					<div style={{display: 'flex'}}>
 					{subscribeButton}
-					<MembersButton members={members}/>
+					<MembersButton menuLabel={"Members"} members={members}/>
 					</div>
 				</Toolbar>
 			</AppBar>
@@ -55,7 +55,8 @@ export default function PageHeader({
 	);
 }
 
-function MembersButton({
+export function MembersButton({
+	menuLabel,
 	members
 }) {
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,7 +72,7 @@ function MembersButton({
 	return (
 		<div>
 			<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-				Members
+				{menuLabel}
       		</Button>
 			<Menu
 				id="simple-menu"

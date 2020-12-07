@@ -18,6 +18,7 @@ import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from "../layout/NavigationBar"
+import { MembersButton } from "../pages/PageHeader";
 
 const useStyles = (theme) => ({
     root: {
@@ -54,7 +55,9 @@ export class ArbitraryUserProfile extends Component {
             postCount: 5,
             friendsCount: 10,
             showEmail: true,
-            following: false
+            following: false,
+            followers: [],
+            followingUsers: []
         }
     }
 
@@ -95,6 +98,12 @@ export class ArbitraryUserProfile extends Component {
             }).catch(err => {
                 console.log(err);
             });
+        axios.get(`/getsocialcircle/${this.props.match.params.username}`, config)
+            .then(res => {
+                this.setState({ followers: res.data.followers, followingUsers: res.data.following})
+            }).catch(err => {
+                console.log(err);
+            })
     }
 
     ifAlreadyFriends = () => {
@@ -151,16 +160,30 @@ export class ArbitraryUserProfile extends Component {
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount, showEmail, following } = this.state;
+        const {username, profilePicture, email, bio, createdAt, showEmail, following, followers, followingUsers } = this.state;
         const classes = this.props.classes;
 
         return (
             <div className="col-md-18 m-auto">
                 <NavigationBar/>
                 <div className="card card-body">
-                    
-                    <Avatar alt="R" className={classes.profilePicture} src={profilePicture} />
-                    {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
+                    <div>
+                    <Avatar alt={username.toUpperCase()} className={classes.profilePicture} src={profilePicture} />
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <MembersButton
+                                menuLabel={"Followers"}
+                                members={followers}
+                            />
+                            <MembersButton
+                                menuLabel={"Following"}
+                                members={followingUsers}
+                            />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
+                        </div>
+                        
+                    </div>
                     <List className={classes.root}>
                         <ListItem className="goldenBackground">
                             <ListItemAvatar>
@@ -171,14 +194,6 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="lightYellowBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <NoteIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
-                        </ListItem>
                         <Divider variant="inset" component="li" />
                         {showEmail && (<ListItem className="goldenBackground">
                             <ListItemAvatar>
@@ -196,24 +211,6 @@ export class ArbitraryUserProfile extends Component {
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="lightYellowBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <PostAddIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="goldenBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <EmojiPeopleIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>
