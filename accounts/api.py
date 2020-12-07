@@ -321,6 +321,17 @@ class UserPostGetFriendsAPI(generics.ListAPIView):
 
         return userposts.order_by('-id')
 
+class GetSocialCircleAPI(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(username=kwargs['username'])
+        followers = [f[0] for f in Friend.objects.filter(receiver_friend=user.username).values_list("sender_friend")]
+        following = [f[0] for f in Friend.objects.filter(sender_friend=user.username).values_list("receiver_friend")]
+
+        return Response({
+            "followers": followers,
+            "following": following
+        })
+
 # UserPostUpdate PUT request
 class UserPostUpdateAPI(generics.GenericAPIView, UpdateModelMixin):
     permission_classes = [
