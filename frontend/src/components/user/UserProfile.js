@@ -111,8 +111,7 @@ export class UserProfile extends Component {
                     </label>
 
                     <List className={classes.root}>
-                        <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <FaceIcon/>
@@ -120,17 +119,7 @@ export class UserProfile extends Component {
                             </ListItemAvatar>
                             <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <NoteIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="lightYellowBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
@@ -139,7 +128,7 @@ export class UserProfile extends Component {
                             <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
@@ -148,7 +137,7 @@ export class UserProfile extends Component {
                             <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="lightYellowBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <PostAddIcon />
@@ -157,7 +146,7 @@ export class UserProfile extends Component {
                             <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <EmojiPeopleIcon/>

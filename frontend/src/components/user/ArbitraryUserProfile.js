@@ -161,8 +161,8 @@ export class ArbitraryUserProfile extends Component {
                     
                     <Avatar alt="R" className={classes.profilePicture} src={profilePicture} />
                     {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
-                    <List className="profileInfo">
-                        <ListItem className="cardBackground">
+                    <List className={classes.root}>
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <FaceIcon/>
@@ -171,7 +171,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="lightYellowBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <NoteIcon/>
@@ -180,7 +180,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={bio} secondary="Bio" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        {showEmail && (<ListItem className="cardBackground">
+                        {showEmail && (<ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
@@ -189,7 +189,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>)}
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
@@ -198,7 +198,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="lightYellowBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <PostAddIcon />
@@ -207,7 +207,7 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <EmojiPeopleIcon/>
