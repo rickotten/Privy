@@ -32,6 +32,7 @@ import PaymentPortal from "./payment/PaymentPortal";
 import ThemeSelector from "./themes/ThemeSelector";
 import Chat from './messages/Chat';
 import { ThemeProvider } from '@livechat/ui-kit'
+import { Marketplace } from "./payment/Marketplace";
 
 // Alert Options
 const alertOptions = {
@@ -47,40 +48,43 @@ export default class App extends Component {
   render() {
     return (
       <ThemeProvider>
-        <Provider store={store}>
-          <ThemeSelector>
-            <AlertProvider template={AlertTemplate} {...alertOptions}>
-              <Router>
-                <Fragment>
-                  <Alerts />
-                  <div className="container">
-                    <Switch>
-                      <PrivateRoute exact path="/" component={HomePage} />
-                      <PrivateRoute exact path="/settings" component={PrivacyPage} />
-                      <PrivateRoute exact path="/pages" component={MyPages}/>
-                      <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
-                      <PrivateRoute exact path="/profile" component={UserProfile} />
-                      <Route exact path="/register" component={RegistrationForm} />
-                      <Route exact path="/login" component={LoginForm} />
-                      <Route exact path="/forgot" component={ForgotCredentialsForm} />
-                      <Route exact path="/users/:username" component={UserTimeline} />
-                      <PrivateRoute exact path="/createpost" component={UserPostForm} />
-                      <PrivateRoute exact path="/logout" component={Logout} />
-                      <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
-                      <Route exact path="/pages/:pageID" component={Page} />
-                      <Route exact path="/landing" component={LandingPage} />
-                      <Route exact path="/payment" component={PaymentPortal} />
-                      <Route exact path="/postsearch" component={SearchFormExample} />
-                      <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
-                      <Route exact path="/posts/:post_id" component={UserPostView} />
-                      <PrivateRoute exact path="/messages" component={Chat} />
-                    </Switch>
-                  </div>
-                </Fragment>
-              </Router>
-            </AlertProvider>
-          </ThemeSelector>
-        </Provider>
+        <ThemeProvider>
+          <Provider store={store}>
+            <ThemeSelector>
+              <AlertProvider template={AlertTemplate} {...alertOptions}>
+                <Router>
+                  <Fragment>
+                    <Alerts />
+                    <div className="container">
+                      <Switch>
+                        <PrivateRoute exact path="/" component={HomePage} />
+                        <PrivateRoute exact path="/settings" component={PrivacyPage} />
+                        <PrivateRoute exact path="/pages" component={MyPages}/>
+                        <PrivateRoute exact path="/profile/:username" component={ArbitraryUserProfile} />
+                        <PrivateRoute exact path="/profile" component={UserProfile} />
+                        <Route exact path="/register" component={RegistrationForm} />
+                        <Route exact path="/login" component={LoginForm} />
+                        <Route exact path="/forgot" component={ForgotCredentialsForm} />
+                        <Route exact path="/users/:username" component={UserTimeline} />
+                        <PrivateRoute exact path="/createpost" component={UserPostForm} />
+                        <PrivateRoute exact path="/logout" component={Logout} />
+                        <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
+                        <Route exact path="/pages/:pageID" component={Page} />
+                        <Route exact path="/landing" component={LandingPage} />
+                        <PrivateRoute exact path="/payment" component={PaymentPortal} />
+                        <PrivateRoute exact path="/marketplace" component={Marketplace} />
+                        <Route exact path="/postsearch" component={SearchFormExample} />
+                        <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
+                        <Route exact path="/posts/:post_id" component={UserPostView} />
+                        <PrivateRoute exact path="/messages" component={Chat} />
+                      </Switch>
+                    </div>
+                  </Fragment>
+                </Router>
+              </AlertProvider>
+            </ThemeSelector>
+          </Provider>
+        </ThemeProvider>
       </ThemeProvider>
     )
   }

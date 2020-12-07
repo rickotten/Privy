@@ -15,6 +15,7 @@ export class NavigationBar extends Component {
                         <Nav.Link href="/#/profile">Profile</Nav.Link>
                         <Nav.Link href="/#/pages">Pages</Nav.Link>
                         <Nav.Link href="/#/messages">Messages</Nav.Link>
+                        <Nav.Link href="/#/marketplace">Market</Nav.Link>
                     </Nav>
                     <Nav className="justify-content-end">
                         <Nav.Link href="/#/settings">Settings</Nav.Link>

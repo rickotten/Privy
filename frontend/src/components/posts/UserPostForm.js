@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form'
-import { create_user_post} from '../../actions/posts';
+import { create_user_post } from '../../actions/posts';
 import NavigationBar from '../layout/NavigationBar';
 import { Grid } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -23,7 +23,7 @@ export class UserPostForm extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        this.props.create_user_post(this.state.text_post, this.state.media, this.props.page_id); 
+        this.props.create_user_post(this.state.text_post, this.state.media, this.props.page_id);
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -34,37 +34,48 @@ export class UserPostForm extends Component {
     render() {
         const { text_post, media } = this.state;
         return (
-            <Grid>
-                <Paper>
-                    <div className="form-group">
-                            <form onSubmit={this.onSubmit}>
-                                {/* The text for the user's post */}
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6">
+                        <Grid>
+                            <Paper>
+                                <div className="form-group linedPaper">
+                                    <form onSubmit={this.onSubmit}>
+                                        {/* The text for the user's post */}
 
                                         <Form.Group controlId="exampleForm.ControlInput1">
-                                            
+
                                             <Form.Control type="text" placeholder="What do you want to say?"
                                                 type="text"
                                                 name="text_post"
                                                 onChange={this.onChange}
-                                                value={text_post} 
-                                                style={{height: 40}}/>
+                                                value={text_post}
+                                                style={{ height: 40 }} />
 
                                         </Form.Group>
 
                                         <Form.Group>
-                                            <Form.File label="Attach a File:" 
-                                            type="file"
-                                            name="media"
-                                            onChange={this.onChangeImage}
-                                            />                   
+                                            <Form.File label="Attach a File:"
+                                                type="file"
+                                                name="media"
+                                                onChange={this.onChangeImage}
+                                            />
                                         </Form.Group>
-                                <a href = "/">
-                                    <button style= {{fontSize:15, height:35, width:115}} type="submit" className="btn btn-primary">Post</button>
-                                </a>
-                            </form>
-                        </div>
-                        </Paper>
-                </Grid>
+                                        <div className="text-center">
+                                        <a href="/">
+                                            <button style={{ fontSize: 15, height: 35, width: 115 }} type="submit" className="btn btn-primary btn-success btn-lg">Post!</button>
+                                        </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    </div>
+                    <div className="col-md-6">
+                        <img src="..\static\images\pen_icon.png" alt="pen" width="90%" height="90%"></img>
+                    </div>
+                </div>
+            </div>
         )
     }
 }

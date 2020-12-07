@@ -76,7 +76,7 @@ export class Chat extends Component {
 			})
 	}
 
-	createConversation = (recipients, message) => {
+	createConversation = (recipients, message, closeForm) => {
 		const { token, createAlert } = this.props;
 		const config = {
 			headers: {
@@ -93,7 +93,8 @@ export class Chat extends Component {
 			.then(res => {
 				this.setState({
 					conversations: [...this.state.conversations, res.data]
-				})
+				});
+				closeForm()
 			}).catch(err => {
 				console.log(err)
 			})
@@ -203,7 +204,7 @@ export function ChatComponent({
 					{!newMessageExpand && <CreateMessageHeader/>}
 					{newMessageExpand && <CreateConversationForm closeForm={() => setNewMessageExpand(false)} createConversation={createConversation} />}
 					<ChatList>
-						{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
+						{conversations.slice().reverse().map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
 					</ChatList>
 				</Paper>
 				<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
@@ -245,7 +246,7 @@ function CreateConversationForm ({
 				<IconButton onClick={closeForm}>
 					<CancelIcon/>
 				</IconButton>
-				<IconButton onClick={() => {createConversation(recipients, message); closeForm()}}>
+				<IconButton onClick={() => {createConversation(recipients, message, closeForm)}}>
 					<SendIcon/>
 				</IconButton>
 			</div>
@@ -352,7 +353,8 @@ function CustomChatListItem ({
 	conversation,
 	setCurrentConversation
 }) {
-	const [hover, setHover] = React.useState(conversation.read);
+
+	const [hover, setHover] = React.useState(false);
 
 	React.useEffect(() => {
 		setHover(conversation.read)
