@@ -434,7 +434,7 @@ class PageAPI(generics.GenericAPIView):
     def get(self, request, **kwargs):
         page_id = kwargs.get('page_id')
         page = Page.objects.get(id=page_id)
-        return Response(PageSerializer(page).data)
+        return Response(PageSerializer(page, context=self.get_serializer_context()).data)
 
 # Subscribe to Page API
 class TogglePageSubscriptionAPI(generics.GenericAPIView):

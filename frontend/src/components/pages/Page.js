@@ -1,14 +1,13 @@
 import axios from 'axios';
-import dayjs from 'dayjs';
-import { createMessage } from "../../actions/errors";
 import { toggle_subscribe } from "../../actions/pages";
 import { connect } from "react-redux";
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import NavigationBar from "../layout/NavigationBar"
 import UserPost2 from '../posts/UserPost'
-import { Paper, Button, Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import UserPostForm from '../posts/UserPostForm';
+import PageHeader from './PageHeader'
 
 
 export class Page extends Component {
@@ -19,7 +18,8 @@ export class Page extends Component {
 			owner: "Loading",
 			description: "Loading...",
 			dateCreated: "Loading",
-			posts: []
+			posts: [],
+			members: []
 		}
 	}
 
@@ -51,7 +51,8 @@ export class Page extends Component {
 					title: res.data.title,
 					description: res.data.description,
 					dateCreated: res.data.date_created,
-					posts: localPosts
+					posts: localPosts,
+					members: res.data.members
 				})
 			}).catch(err => {
 				console.log(err)
@@ -63,15 +64,24 @@ export class Page extends Component {
 	}
 
 	render() {
-		const { title, description, dateCreated, owner } = this.state;
+		const { title, description, dateCreated, owner, members } = this.state;
+		console.log(members)
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
 		return (
 			<div>
 				<NavigationBar/>
+				<PageHeader
+					title={title}
+					description={description}
+					dateCreated={dateCreated}
+					owner={owner}
+					members={members}
+					subscribeButton={subscribeButton}
+				/>
 				<div className="card card-body">
 					<UserPostForm page_id={this.props.match.params.pageID}/>
 				</div>
-					<Paper>
+					{/* <Paper>
 						<h1>{title}</h1>
 					</Paper>
 					<Paper>
@@ -79,7 +89,7 @@ export class Page extends Component {
 						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
 						<h4>By: {owner}</h4>
 						{subscribeButton}
-					</Paper>
+					</Paper> */}
 				<br></br>
 				<Grid container
 					direction="column"

@@ -64,13 +64,18 @@ export class HomePage extends Component {
                     res.data.forEach(post => {
                         localPosts.push(<Grid key={post.id} item><UserPost2 key={post.id} tempContent={tempContent} post={post}/></Grid>);
                     })
-                    this.setState({userPosts: localPosts});
+                    if (localPosts.length === 0) {
+                        this.setState({userPosts: (<h1 style={{paddingTop: 10}}>No Posts yet!</h1>)})
+                    }
+                    else {
+                        this.setState({userPosts: localPosts});
+                    }
 
             }).catch(err => {
                 console.log(err);
             });
     }
-        
+
     render() {
 
         return (
