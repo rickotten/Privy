@@ -256,6 +256,7 @@ function AddFriendsField({
 	return (
 		<form onSubmit={submit}>
 			<Autocomplete
+				freeSolo={true}
 				onChange={(event, value) => setFriendUsername(value)}
 				size="small"
 				options={friends}
