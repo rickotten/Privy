@@ -131,14 +131,18 @@ export class UserProfile extends Component {
                             </Badge>
                         </IconButton>
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <MembersButton
-                                menuLabel={"Followers"}
-                                members={followers}
-                            />
-                            <MembersButton
-                                menuLabel={"Following"}
-                                members={following}
-                            />
+                            <Badge badgeContent={followers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Followers"}
+                                    members={followers}
+                                />
+                            </Badge>
+                            <Badge badgeContent={following.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Following"}
+                                    members={following}
+                                />
+                            </Badge>
                         </div>
                     </label>
 

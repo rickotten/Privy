@@ -19,6 +19,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from "../layout/NavigationBar"
 import { MembersButton } from "../pages/PageHeader";
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = (theme) => ({
     root: {
@@ -170,14 +171,18 @@ export class ArbitraryUserProfile extends Component {
                     <div>
                     <Avatar alt={username.toUpperCase()} className={classes.profilePicture} src={profilePicture} />
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <MembersButton
-                                menuLabel={"Followers"}
-                                members={followers}
-                            />
-                            <MembersButton
-                                menuLabel={"Following"}
-                                members={followingUsers}
-                            />
+                            <Badge badgeContent={followers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Followers"}
+                                    members={followers}
+                                />
+                            </Badge>
+                            <Badge badgeContent={followingUsers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Following"}
+                                    members={followingUsers}
+                                />
+                            </Badge>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
