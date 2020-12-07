@@ -117,7 +117,11 @@ def exchange_token(request, backend):
             # get and populate a user object for any properly enabled/configured backend
             # which python-social-auth can handle.
             user = request.backend.do_auth(serializer.validated_data['access_token'])
-            UserProfile.objects.create(user=user)
+            try:
+                profile = user.profile
+            except:
+                print("No profile. Creating new one")
+                UserProfile.objects.create(user=user)
         except HTTPError as e:
             # An HTTPError bubbled up from the request to the social auth provider.
             # This happens, at least in Google's case, every time you send a malformed
