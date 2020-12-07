@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
 	ChatList,
 	ChatListItem,
-	TitleBar,
 	TextInput,
 	MessageList,
 	Message,
@@ -13,21 +12,13 @@ import {
 	Title,
 	Subtitle,
 	MessageGroup,
-	MessageButtons,
-	MessageButton,
-	MessageTitle,
-	MessageMedia,
 	TextComposer,
 	Row,
 	Fill,
 	Fit,
 	SendIcon,
 	SendButton,
-	EmojiIcon,
-	CloseIcon,
 	Column,
-	RateGoodIcon,
-	RateBadIcon,
 	Bubble,
 } from '@livechat/ui-kit'
 import { AvatarGroup } from '@material-ui/lab';
@@ -143,7 +134,7 @@ export class Chat extends Component {
 				<div>
 					<NavigationBar/>
 					<Paper>
-						<h1>No messages yet!</h1>
+						<CreateConversationForm createConversation={this.createConversation} closeForm={() => {}}/>
 					</Paper>
 				</div>
 			)
