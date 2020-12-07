@@ -95,3 +95,11 @@ body {
     color: white;
 
 }
+
+.lightYellowBackground {
+    background-color: lightgoldenrodyellow;
+}
+
+.goldenBackground {
+    background-color: rgb(241, 196, 50);
+}
