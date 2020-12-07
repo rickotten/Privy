@@ -10,6 +10,7 @@ import { Col, Row } from "react-bootstrap";
 
 export class SearchFormExample extends Component {
     state = {
+        dropdownTitle: 'Filter',
         search_text: '',
         selection: ''
     }
@@ -18,13 +19,11 @@ export class SearchFormExample extends Component {
         isAuthenticated: PropTypes.bool
     }
 
-    onSubmit = e => {
-        e.preventDefault();
-    }
-
     onChange = e => this.setState({ [e.target.name]: e.target.value });
-    onSelect = e => this.setState({ [e.target.name]: e.target.value });
+    onSelect = e => {
+        this.setState({ [e.target.name]: e.target.value, dropdownTitle: e.target.value });
 
+    }
 
 
     //What is rendered for the user
@@ -48,32 +47,23 @@ export class SearchFormExample extends Component {
                 break;
         }
         return (
-            <div className="form-group">
-                    <form onSubmit={this.onSubmit}>
-                        {/* The text for the user's post */}
-                            <Row>
-                                <Col>
-                                    <DropdownButton title="Search...">
-                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Users">Users</DropdownItem>
-                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Posts">Posts</DropdownItem>
-                                            <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Pages">Pages</DropdownItem>
-                                    </DropdownButton>
-                                </Col>
-                                <Col>
-                                    <Form.Control className = "textField" type="text" placeholder="Search..."
-                                        type="text"
-                                        name="search_text"
-                                        onChange={this.onChange}/>
-                                </Col>
-                                <Col>
-                                    <a href= {url.toString()}>
-                                        <button type="button" className="btn btn-info btn-sm text-light">Search!</button>
-                                
-                                    </a>
-                                </Col>
-                            </Row>
-                    </form>
+            <div className="form-group" style={{ display: 'flex' }}>
+                {/* The text for the user's post */}
+                <Form.Control className="textField" type="text" placeholder="Search..."
+                    type="text"
+                    name="search_text"
+                    onChange={this.onChange} />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <DropdownButton title={this.state.dropdownTitle}>
+                        <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Users">Users</DropdownItem>
+                        <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Posts">Posts</DropdownItem>
+                        <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Pages">Pages</DropdownItem>
+                    </DropdownButton>
+                    <a href={url.toString()}>
+                        <button type="button" className="btn btn-info btn-sm text-light">Search!</button>
+                    </a>
                 </div>
+            </div>
         )
     }
 }

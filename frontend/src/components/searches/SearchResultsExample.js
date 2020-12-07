@@ -19,6 +19,12 @@ export class SearchResultsExample extends Component {
     componentDidMount() {
         this.lookUpPosts()
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.lookUpPosts();
+        }
+    }
     
     lookUpPosts = () => {
         // Code below taken from auth.js action
@@ -59,7 +65,7 @@ export class SearchResultsExample extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.userPosts}
+                    {this.state.userPosts.length > 0 ? this.state.userPosts : <h1>No results!</h1>}
                 </Grid>
             </div>
         )

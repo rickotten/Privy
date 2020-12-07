@@ -17,7 +17,8 @@ import UserPostForm from "./posts/UserPostForm"
 import User from "./user/User"
 import Logout from "./user/Logout"
 
-import './darkMode.css'
+// import './darkMode.css'
+import('./myStyles.css')
 
 
 import { Provider } from 'react-redux';
@@ -33,6 +34,7 @@ import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
 import SearchUsers from "./searches/SearchUsers";
+import SearchPages from "./searches/SearchPages";
 
 
 // Alert Options
@@ -102,6 +104,7 @@ export class App extends Component {
                   <Route exact path="/postsearch" component={SearchFormExample} />
                   <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
                   <Route exact path="/searchusers/:terms" component={SearchUsers} />
+                  <Route exact path="/searchpages/:terms" component={SearchPages}/>
                 </Switch>
               </div>
             </Fragment>

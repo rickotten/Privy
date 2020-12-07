@@ -10,7 +10,7 @@ export class SearchUsers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'Loading...',
+            resultingUsers: []
         }
     }
 
@@ -18,7 +18,13 @@ export class SearchUsers extends Component {
     componentDidMount() {
         this.lookUpUsers()
     }
-    
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.lookUpUsers();
+        }
+    }
+
     lookUpUsers = () => {
         // Code below taken from auth.js action
         const token = this.props.auth.token;
@@ -33,32 +39,33 @@ export class SearchUsers extends Component {
             config.headers['Authorization'] = `Token ${token}`;
         }
 
-            
+
         //Getting the user
-        axios.get(`searchusers/?search=${this.props.match.params.terms}`, config)
+        axios.get(`searchuser/?search=${this.props.match.params.terms}`, config)
             .then(res => {
-                    const localUsers = []
-                    res.data.forEach(post => {
-                        localUsers.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
-                    })
-                    this.setState({userPosts: localPosts});
+                const results = res.data
+                const localResults = []
+                results.forEach(user => {
+                localResults.push(<Grid key={user.id} item><a href={`#/profile/${user.username}`}><h1>Username: {user.username}</h1></a></Grid>);
+                })
+                this.setState({ resultingUsers: localResults });
 
             }).catch(err => {
                 console.log(err);
             });
     }
-        
+
     render() {
 
         return (
             <div>
-                <NavigationBar/>
+                <NavigationBar />
                 <Grid container
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.userPosts}
+                    {this.state.resultingUsers.length > 0 ? this.state.resultingUsers : (<h1>No results!</h1>)}
                 </Grid>
             </div>
         )

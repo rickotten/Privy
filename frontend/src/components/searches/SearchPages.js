@@ -3,23 +3,28 @@ import NavigationBar from '../layout/NavigationBar';
 import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import axios from 'axios'
-import { User } from '../user/User';
 
-export class SearchUsers extends Component {
+export class SearchPages extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: 'Loading...',
+            resultingPages: []
         }
     }
 
 
     componentDidMount() {
-        this.lookUpUsers()
+        this.lookUpPages()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.lookUpPages();
+        }
     }
     
-    lookUpUsers = () => {
+    lookUpPages = () => {
         // Code below taken from auth.js action
         const token = this.props.auth.token;
         // Headers 
@@ -35,13 +40,13 @@ export class SearchUsers extends Component {
 
             
         //Getting the user
-        axios.get(`searchusers/?search=${this.props.match.params.terms}`, config)
+        axios.get(`searchpages/?search=${this.props.match.params.terms}`, config)
             .then(res => {
-                    const localUsers = []
-                    res.data.forEach(post => {
-                        localUsers.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
-                    })
-                    this.setState({userPosts: localPosts});
+                const localPages = []
+                res.data.forEach(post => {
+                    localPages.push(<Grid key={post.id} item><a href={`#/pages/${post.id}`}><h1>Title: {post.title}</h1></a></Grid>);
+                })
+                this.setState({resultingPages: localPages});
 
             }).catch(err => {
                 console.log(err);
@@ -58,7 +63,7 @@ export class SearchUsers extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.pages}
+                    {this.state.resultingPages.length > 0 ? this.state.resultingPages : <h1>No results!</h1>}
                 </Grid>
             </div>
         )
@@ -69,4 +74,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(SearchUsers)
+export default connect(mapStateToProps)(SearchPages)
