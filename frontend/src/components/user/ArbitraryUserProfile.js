@@ -23,7 +23,7 @@ const useStyles = (theme) => ({
     root: {
         width: '100%',
         maxWidth: 1200,
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
     },
     small: {
         width: theme.spacing(3),
@@ -53,7 +53,8 @@ export class ArbitraryUserProfile extends Component {
             createdAt: "Loading...",
             postCount: 5,
             friendsCount: 10,
-            showEmail: true
+            showEmail: true,
+            following: false
         }
     }
 
@@ -90,13 +91,67 @@ export class ArbitraryUserProfile extends Component {
                     profilePicture: res.data.user.profile ? res.data.user.profile.profile_picture : "/static/images/penguin.jpg",
                     showEmail: res.data.user.settings ? res.data.user.settings.show_email_on_profile : true
                 })
+                this.ifAlreadyFriends()
             }).catch(err => {
                 console.log(err);
             });
     }
 
+    ifAlreadyFriends = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ friendUsername });
+        axios.post(`/alreadyfriends`, body, config)
+            .then(res => {
+                if (res.data) {
+                    this.setState({ following: true })
+                } else {
+                    this.setState({ following: false })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    follow = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const username = this.props.auth.user.username;
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ username, friendUsername });
+
+        if (this.state.following) {
+            this.setState({ following: false })
+        } else {
+            axios.post('/api/auth/friendRequest', body, config)
+                .then(res => {
+                    this.setState({ following: true })
+                })
+        }
+    }
+
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount, showEmail } = this.state;
+        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount, showEmail, following } = this.state;
         const classes = this.props.classes;
 
         return (
@@ -104,8 +159,8 @@ export class ArbitraryUserProfile extends Component {
                 <NavigationBar/>
                 <div className="card card-body">
                     
-                    <Avatar alt="Richard" className={classes.profilePicture} src={profilePicture} />
-                    <button style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">Follow</button>
+                    <Avatar alt="R" className={classes.profilePicture} src={profilePicture} />
+                    {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
                     <List className={classes.root}>
                         <ListItem className="goldenBackground">
                             <ListItemAvatar>

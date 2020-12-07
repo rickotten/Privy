@@ -10,7 +10,8 @@ export class SearchUsers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            resultingUsers: []
+            resultingUsers: [],
+            loadingResults: true
         }
     }
 
@@ -21,6 +22,7 @@ export class SearchUsers extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.terms !== prevProps.match.params.terms) {
+            this.setState({ resultingUsers: [], loadingResults: true })
             this.lookUpUsers();
         }
     }
@@ -48,7 +50,7 @@ export class SearchUsers extends Component {
                 results.forEach(user => {
                 localResults.push(<Grid key={user.id} item><a href={`#/profile/${user.username}`}><h1>Username: {user.username}</h1></a></Grid>);
                 })
-                this.setState({ resultingUsers: localResults });
+                this.setState({ resultingUsers: localResults, loadingResults: false });
 
             }).catch(err => {
                 console.log(err);
@@ -56,7 +58,7 @@ export class SearchUsers extends Component {
     }
 
     render() {
-
+        const { resultingUsers, loadingResults } = this.state;
         return (
             <div>
                 <NavigationBar />
@@ -65,7 +67,8 @@ export class SearchUsers extends Component {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {this.state.resultingUsers.length > 0 ? this.state.resultingUsers : (<h1>No results!</h1>)}
+                    {loadingResults && <h1>Loading Search Results</h1>}
+                    {(resultingUsers.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingUsers}
                 </Grid>
             </div>
         )
