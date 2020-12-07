@@ -98,6 +98,12 @@ export class ArbitraryUserProfile extends Component {
             }).catch(err => {
                 console.log(err);
             });
+        axios.get(`/getsocialcircle/${this.props.match.params.username}`, config)
+            .then(res => {
+                this.setState({ followers: res.data.followers, followingUsers: res.data.following})
+            }).catch(err => {
+                console.log(err);
+            })
     }
 
     ifAlreadyFriends = () => {

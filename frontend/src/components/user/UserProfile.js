@@ -63,6 +63,27 @@ export class UserProfile extends Component {
         following: []
     }
     
+    componentDidMount = () => {
+        const token = this.props.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
+        axios.get(`/getsocialcircle/${this.props.user.username}`, config)
+            .then(res => {
+                this.setState({ followers: res.data.followers, following: res.data.following })
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
     // onChangeImage = e => this.setState({ [e.target.name]: e.target.files[0] });
     onChangeImage = e => {
         // this.setState({ [e.target.name]: e.target.files[0] });
