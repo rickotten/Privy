@@ -33,6 +33,7 @@ import {
 import { AvatarGroup } from '@material-ui/lab';
 import { Avatar, Paper, CircularProgress, IconButton } from "@material-ui/core";
 import { CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
+import CreateIcon from '@material-ui/icons/Create';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import TextField from '@material-ui/core/TextField';
@@ -76,12 +77,16 @@ export class Chat extends Component {
 	}
 
 	createConversation = (recipients, message) => {
-		const { token } = this.props;
+		const { token, createAlert } = this.props;
 		const config = {
 			headers: {
 				'Content-type': 'application/json',
 				'Authorization': `Token ${token}`
 			}
+		}
+		if (recipients.length < 1) {
+			createAlert("Form not valid. Did you hit the enter button after each username?")
+			return;
 		}
 		const body = JSON.stringify({recipients, message})
 		axios.post('/createconvo', body, config)
@@ -157,6 +162,7 @@ export function ChatComponent({
 }) {
 
 	const [currentConversation, setCurrentConversation] = React.useState(conversations[0]);
+	const [newMessageExpand, setNewMessageExpand] = React.useState(false)
 
 	React.useEffect(() => {
 		setCurrentConversation(conversations[0])
@@ -177,21 +183,37 @@ export function ChatComponent({
 				]
 			});
 	}
+
+	const CreateMessageHeader = () => {
 		return (
-			<div style={{justifyContent: 'center', display: 'flex'}}>
-					<Paper style={{ minWidth: '40%' }}>
-						<ChatList>
-							{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
-						</ChatList>
-						<CreateConversationForm createConversation={createConversation}/>
-					</Paper>
-					<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
-			</div>
+			<AgentBar style={{display: 'flex', justifyContent: 'flex-end'}}>
+				<Title>
+					New Message
+				</Title>
+				<IconButton size='small' onClick={(e) => setNewMessageExpand(!newMessageExpand)}>
+					<CreateIcon/>
+				</IconButton>
+			</AgentBar>
+		)
+	}
+
+	return (
+		<div style={{justifyContent: 'center', display: 'flex'}}>
+				<Paper style={{ minWidth: '40%' }}>
+					{!newMessageExpand && <CreateMessageHeader/>}
+					{newMessageExpand && <CreateConversationForm closeForm={() => setNewMessageExpand(false)} createConversation={createConversation} />}
+					<ChatList>
+						{conversations.map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
+					</ChatList>
+				</Paper>
+				<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
+		</div>
 		);
 }
 
 function CreateConversationForm ({
-	createConversation
+	createConversation,
+	closeForm
 }) {
 
 	const [recipients, setRecipients] = React.useState([])
@@ -207,7 +229,7 @@ function CreateConversationForm ({
 				renderInput={(params) => (
 					<TextField
 						{...params}
-						label="Start a new chat"
+						label="Start a new chat. Hit enter after each user"
 						placeholder="Enter usernames here"
 					/>
 				)}
@@ -220,10 +242,10 @@ function CreateConversationForm ({
 				style={{width: '100%', height: '100%'}}
 			/>
 			<div style={{ display: 'flex', justifyContent: 'flex-end'}}>
-				<IconButton>
+				<IconButton onClick={closeForm}>
 					<CancelIcon/>
 				</IconButton>
-				<IconButton onClick={() => createConversation(recipients, message)}>
+				<IconButton onClick={() => {createConversation(recipients, message); closeForm()}}>
 					<SendIcon/>
 				</IconButton>
 			</div>
@@ -289,17 +311,9 @@ function AddFriendsField({
 	setConversation
 }) {
 	const [friendUsername, setFriendUsername] = React.useState("")
-	const friends = [
-		// "friend1",
-		// "friend2",
-		// "friend3",
-		// "friend4",
-	]
+	const friends = []
 	const submit = (event) => {
 		event.preventDefault();
-		console.log(friendUsername)
-		console.log(token)
-		console.log("submit")
 		add_friend_to_group()
 	}
 
@@ -313,7 +327,6 @@ function AddFriendsField({
 		axios.get(`/addtogroup/${convo_id}/${friendUsername}`, config)
 			.then(res => {
 				setConversation(res.data)
-				createAlert(`Added ${friendUsername}!`)
 			}).catch(err => {
 				console.log(err);
 			})
@@ -465,7 +478,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	createAlert: (message) => { dispatch(createMessage({ postDeleteSuccess: message })) }
+	createAlert: (message) => { dispatch(createMessage({ pageSubscribeFailure: message })) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)
