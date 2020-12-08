@@ -52,7 +52,7 @@ export class UserTimeline extends Component {
             .then(res => {
                     const localPosts = []
                     res.data.forEach(post => {
-                        localPosts.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
+                        localPosts.push(<UserPost2 post={post} />);
                     })
                     this.setState({userPosts: localPosts});
 
@@ -66,13 +66,10 @@ export class UserTimeline extends Component {
         return (
             <div>
                 <NavigationBar/>
-                <Grid container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
+                
+                <div style={{display: 'flex', flexDirection: 'column'}}>
                     {this.state.userPosts}
-                </Grid>
+                </div>
             </div>
         )
     }

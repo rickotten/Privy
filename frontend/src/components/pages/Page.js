@@ -44,7 +44,9 @@ export class Page extends Component {
 			.then(res => {
 				const localPosts = []
 				res.data.posts.forEach(post => {
-					localPosts.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
+					localPosts.push(
+						<UserPost2 key={post.id} post={post} />
+					)
 				})
 				this.setState({
 					owner: res.data.owner,
@@ -81,24 +83,11 @@ export class Page extends Component {
 				<div className="card card-body">
 					<UserPostForm page_id={this.props.match.params.pageID}/>
 				</div>
-					{/* <Paper>
-						<h1>{title}</h1>
-					</Paper>
-					<Paper>
-						<h3>{description}</h3>
-						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
-						<h4>By: {owner}</h4>
-						{subscribeButton}
-					</Paper> */}
-				<br></br>
-				<Grid container
-					direction="column"
-					justify="flex-start"
-					alignItems="flex-start"
-					spacing={3}
-				>
-						{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
-				</Grid>
+				{/* <div style={{display: 'flex', justifyContent: 'center'}}> */}
+					<div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+							{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
+					</div>
+				{/* </div> */}
 			</div>
 		)
 	}
