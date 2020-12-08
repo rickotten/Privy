@@ -50,7 +50,7 @@ export class PaymentPortal extends Component {
     get_item() {
         axios.get('/getmarketitems')
             .then(res => {
-                this.setState({ item: res.data[this.props.match.params.item_id] })
+                this.setState({ item: res.data[this.props.match.params.item_id - 1] })
             }).catch(err => {
                 console.log(err);
             })

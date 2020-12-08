@@ -41,7 +41,7 @@ export class Marketplace extends Component {
                             <img src="..\static\images\sweater.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
-                                <button className="btn btn-success btn-lg" formAction={`#/payment/${0}`}>bid now!</button>
+                                <button className="btn btn-success btn-lg" formAction={`#/payment/${1}`}>bid now!</button>
                             </form>
                         </div>
                         <div className="col-md-4">
@@ -49,7 +49,7 @@ export class Marketplace extends Component {
                             <img src="..\static\images\beachball.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
-                                <button className="btn btn-success btn-lg" formAction={`#/payment/${1}`}>bid now!</button>
+                                <button className="btn btn-success btn-lg" formAction={`#/payment/${2}`}>bid now!</button>
                             </form>
                         </div>
                         <div className="col-md-4">
@@ -57,7 +57,7 @@ export class Marketplace extends Component {
                             <img src="..\static\images\lawnmower.jpg" alt="sweater" width="90%" height="70%"></img>
                             <form>
                                 <br/>
-                                <button className="btn btn-success btn-lg" formAction={`#/payment/${2}`}>bid now!</button>
+                                <button className="btn btn-success btn-lg" formAction={`#/payment/${3}`}>bid now!</button>
                             </form>
                         </div>
                     </div>
