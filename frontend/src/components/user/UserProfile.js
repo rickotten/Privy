@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar';
 import IconButton from '@material-ui/core/IconButton';
 import { MembersButton } from "../pages/PageHeader";
+import UserTimeline from "../layout/UserTimeline2";
 
 const useStyles = (theme) => ({
     root: {
@@ -60,7 +61,8 @@ export class UserProfile extends Component {
         // bio: "Here's a simple bio",
         createdAt: dayjs("2020-10-12T20:01:10.560000Z").format("dddd, MMMM D YYYY"),
         followers: [],
-        following: []
+        following: [],
+        reload: false
     }
     
     componentDidMount = () => {
@@ -102,14 +104,14 @@ export class UserProfile extends Component {
 
         axios.post(`/updateProfilePicture`, form_data, config)
             .then(res => {
-                this.setState({ profilePicture: res.data.profile_picture })
+                this.setState({ profilePicture: res.data.profile_picture, reload: true })
             }).catch(err => {
                 console.log(err);
             })
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, followers, following} = this.state;
+        const {username, profilePicture, email, bio, createdAt, followers, following, reload} = this.state;
         const classes = this.props.classes;
         return (
             <div className="col-md-18 m-auto">
@@ -175,7 +177,8 @@ export class UserProfile extends Component {
                         <Divider variant="inset" component="li" />
                     </List>
                 </div>
-                
+                {reload && <UserTimeline reload match={{ params: { username: username } }} />}
+                {!reload && <UserTimeline match={{ params: { username: username } }} />}
             </div>
             
         )

@@ -14,8 +14,9 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             username: 'Loading...',
-            userPosts: <CircularProgress />,
-            reload: false
+            userPosts: [],
+            reload: false,
+            loading: true
         }
     }
 
@@ -67,10 +68,10 @@ export class HomePage extends Component {
                             key={post.id} tempContent={tempContent} post={post}/>);
                     })
                     if (localPosts.length === 0) {
-                        this.setState({userPosts: (<h1 style={{paddingTop: 10}}>No Posts yet!</h1>)})
+                        this.setState({userPosts: (<h1 style={{paddingTop: 10}}>No Posts yet!</h1>), loading: false})
                     }
                     else {
-                        this.setState({userPosts: localPosts});
+                        this.setState({userPosts: localPosts, loading: false});
                     }
 
             }).catch(err => {
@@ -87,9 +88,12 @@ export class HomePage extends Component {
                         <UserPostForm reload={this.reload}/>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
+                    {this.state.loading && <CircularProgress style={{ width: '10%', height: '10%' }} />}
+                    {!this.state.loading &&
                         <div style={{display: 'flex', flexDirection: 'column', width: '80%'}}>
                             {this.state.userPosts}
                         </div>
+                    }
                     </div>
                 
             </div>

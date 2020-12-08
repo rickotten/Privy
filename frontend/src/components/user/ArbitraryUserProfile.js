@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import NavigationBar from "../layout/NavigationBar"
 import { MembersButton } from "../pages/PageHeader";
 import Badge from '@material-ui/core/Badge';
+import UserTimeline from "../layout/UserTimeline2";
 
 const useStyles = (theme) => ({
     root: {
@@ -218,63 +219,64 @@ export class ArbitraryUserProfile extends Component {
         const classes = this.props.classes;
 
         return (
-            <div className="col-md-18 m-auto">
-                <NavigationBar/>
-                <div className="card card-body">
-                    <div>
-                    <Avatar alt={username.toUpperCase()} className={classes.profilePicture} src={profilePicture} />
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Badge badgeContent={followers.length} color="primary">
-                                <MembersButton
-                                    menuLabel={"Followers"}
-                                    members={followers}
-                                />
-                            </Badge>
-                            <Badge badgeContent={followingUsers.length} color="primary">
-                                <MembersButton
-                                    menuLabel={"Following"}
-                                    members={followingUsers}
-                                />
-                            </Badge>
+            <div>
+                <div className="col-md-18 m-auto">
+                    <NavigationBar/>
+                    <div className="card card-body">
+                        <div>
+                        <Avatar alt={username.toUpperCase()} className={classes.profilePicture} src={profilePicture} />
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <Badge badgeContent={followers.length} color="primary">
+                                    <MembersButton
+                                        menuLabel={"Followers"}
+                                        members={followers}
+                                    />
+                                </Badge>
+                                <Badge badgeContent={followingUsers.length} color="primary">
+                                    <MembersButton
+                                        menuLabel={"Following"}
+                                        members={followingUsers}
+                                    />
+                                </Badge>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
+                            </div>
+                            
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
-                        </div>
-                        
+                        <List className={classes.root}>
+                            <ListItem className="goldenBackground">
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <FaceIcon/>
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText className="textColor" primary={username} secondary="Username" />
+                            </ListItem>
+                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li" />
+                            {showEmail && (<ListItem className="goldenBackground">
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <AlternateEmailIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText className="textColor" primary={email} secondary="User Email" />
+                            </ListItem>)}
+                            <Divider variant="inset" component="li" />
+                            <ListItem className="goldenBackground">
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <AccessTimeIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
+                            </ListItem>
+                        </List>
                     </div>
-                    <List className={classes.root}>
-                        <ListItem className="goldenBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <FaceIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={username} secondary="Username" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <Divider variant="inset" component="li" />
-                        {showEmail && (<ListItem className="goldenBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AlternateEmailIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={email} secondary="User Email" />
-                        </ListItem>)}
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="goldenBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AccessTimeIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
-                        </ListItem>
-                    </List>
                 </div>
-                
+                <UserTimeline match={{params: {username: username}}}/>
             </div>
-            
         )
     }
 }
