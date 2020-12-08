@@ -78,7 +78,7 @@ export default class App extends Component {
                         <PrivateRoute exact path="/pages/create" component={CreatePageForm} />
                         <Route exact path="/pages/:pageID" component={Page} />
                         <Route exact path="/landing" component={LandingPage} />
-                        <PrivateRoute exact path="/payment" component={PaymentPortal} />
+                        <PrivateRoute exact path="/payment/:item_id" component={PaymentPortal} />
                         <PrivateRoute exact path="/marketplace" component={Marketplace} />
                         <Route exact path="/postsearch" component={SearchFormExample} />
                         <Route exact path="/searchposts/:terms" component={SearchResultsExample} />
