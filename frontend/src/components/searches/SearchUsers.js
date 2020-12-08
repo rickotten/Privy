@@ -4,8 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import axios from 'axios'
 import { User } from '../user/User';
+import Avatar from '@material-ui/core/Avatar';
+import { Paper } from '@material-ui/core';
+import { sizing } from '@material-ui/system';
+
 
 export class SearchUsers extends Component {
+ 
 
     constructor(props) {
         super(props);
@@ -14,6 +19,7 @@ export class SearchUsers extends Component {
             loadingResults: true
         }
     }
+
 
 
     componentDidMount() {
@@ -48,7 +54,17 @@ export class SearchUsers extends Component {
                 const results = res.data
                 const localResults = []
                 results.forEach(user => {
-                localResults.push(<Grid key={user.id} item><a href={`#/profile/${user.username}`}><h1>Username: {user.username}</h1></a></Grid>);
+                localResults.push(
+                <Grid key={user.id} item >
+                    <a href={`#/profile/${user.username}`}>
+                        <Paper style={{width: 600, height: 100, padding: 15, marginTop: 15}} variant="outlined">
+                            <div className="row centered">
+                                <Avatar/>
+                                <h1>Username: {user.username}</h1>
+                            </div>
+                        </Paper>
+                    </a>
+                    </Grid>);
                 })
                 this.setState({ resultingUsers: localResults, loadingResults: false });
 
@@ -62,14 +78,16 @@ export class SearchUsers extends Component {
         return (
             <div>
                 <NavigationBar />
+                <div className="card card-body">
                 <Grid container
                     direction="column"
-                    justify="flex-start"
+                    justify="flex-start" 
                     alignItems="flex-start"
                 >
                     {loadingResults && <h1>Loading Search Results</h1>}
                     {(resultingUsers.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingUsers}
                 </Grid>
+                </div>
             </div>
         )
     }

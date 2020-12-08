@@ -3,6 +3,7 @@ import NavigationBar from '../layout/NavigationBar';
 import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import axios from 'axios'
+import { Paper } from '@material-ui/core';
 
 export class SearchPages extends Component {
 
@@ -46,7 +47,15 @@ export class SearchPages extends Component {
             .then(res => {
                 const localPages = []
                 res.data.forEach(post => {
-                    localPages.push(<Grid key={post.id} item><a href={`#/pages/${post.id}`}><h1>Title: {post.title}</h1></a></Grid>);
+                    localPages.push(
+                    <Grid key={post.id} item>
+                            <a href={`#/pages/${post.id}`}>
+                                <Paper style={{width: 600, height: 100, padding: 15, marginTop: 15}} rounded={true}>
+                                    <h1>Title: {post.title}</h1>
+                                </Paper>
+                            </a>
+                            </Grid>                      
+                        );
                 })
                 this.setState({resultingPages: localPages, loadingResults: false});
 
@@ -61,6 +70,7 @@ export class SearchPages extends Component {
         return (
             <div>
                 <NavigationBar/>
+                <div className="card card-body">
                 <Grid container
                     direction="column"
                     justify="flex-start"
@@ -69,6 +79,7 @@ export class SearchPages extends Component {
                     {loadingResults && <h1>Loading Search Results</h1>}
                     {(resultingPages.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingPages}
                 </Grid>
+                </div>
             </div>
         )
     }

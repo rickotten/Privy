@@ -14,7 +14,8 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             username: 'Loading...',
-            userPosts: <CircularProgress />
+            userPosts: <CircularProgress />,
+            reload: false
         }
     }
 
@@ -29,14 +30,14 @@ export class HomePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.username !== prevProps.match.params.username) {
+        if (this.props.match.params.username !== prevProps.match.params.username || this.state.reload) {
             this.lookUpPosts();
-            
         }
     }
-    
 
-        //axios.get('/api/auth/${username}') the two pages are going to have to have some kind of axios calls to get the user's posts
+    reload = () => {
+        this.setState({ reload: true })
+    }
 
     lookUpPosts = () => {
         // Code below taken from auth.js action
@@ -62,7 +63,8 @@ export class HomePage extends Component {
             .then(res => {
                     const localPosts = [];
                     res.data.forEach(post => {
-                        localPosts.push(<Grid key={post.id} item><UserPost2 key={post.id} tempContent={tempContent} post={post}/></Grid>);
+                        localPosts.push(<UserPost2 reload={this.reload}
+                            key={post.id} tempContent={tempContent} post={post}/>);
                     })
                     if (localPosts.length === 0) {
                         this.setState({userPosts: (<h1 style={{paddingTop: 10}}>No Posts yet!</h1>)})
@@ -74,30 +76,22 @@ export class HomePage extends Component {
             }).catch(err => {
                 console.log(err);
             });
+            this.setState({ reload: false })
     }
 
     render() {
-
         return (
             <div>
                 <NavigationBar />
                     <div className="card card-body">
-                        <UserPostForm/>
+                        <UserPostForm reload={this.reload}/>
                     </div>
-                <Grid container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                    spacing={3}
-                >
-                    {this.state.userPosts}
-                </Grid>
-                {/* <Jumbotron>
-                    {this.userPosts}
-                </Jumbotron> */}
-
-                {/* <User /> */}
-                {/* <CommentForm username={this.props.user["username"]}/> */}
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', width: '80%'}}>
+                            {this.state.userPosts}
+                        </div>
+                    </div>
+                
             </div>
         )
     }

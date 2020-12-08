@@ -19,7 +19,8 @@ export class Page extends Component {
 			description: "Loading...",
 			dateCreated: "Loading",
 			posts: [],
-			members: []
+			members: [],
+			reload: false
 		}
 	}
 
@@ -34,9 +35,13 @@ export class Page extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.pageID !== prevProps.match.params.pageID) {
+		if (this.props.match.params.pageID !== prevProps.match.params.pageID || this.state.reload) {
 			this.getPage();
 		}
+	}
+
+	reload = () => {
+		this.setState({ reload: true })
 	}
 
 	getPage() {
@@ -44,7 +49,9 @@ export class Page extends Component {
 			.then(res => {
 				const localPosts = []
 				res.data.posts.forEach(post => {
-					localPosts.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
+					localPosts.push(
+						<UserPost2 reload={this.reload} key={post.id} post={post} />
+					)
 				})
 				this.setState({
 					owner: res.data.owner,
@@ -65,7 +72,6 @@ export class Page extends Component {
 
 	render() {
 		const { title, description, dateCreated, owner, members } = this.state;
-		console.log(members)
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
 		return (
 			<div>
@@ -79,26 +85,15 @@ export class Page extends Component {
 					subscribeButton={subscribeButton}
 				/>
 				<div className="card card-body">
-					<UserPostForm page_id={this.props.match.params.pageID}/>
+					<UserPostForm reload={this.reload} page_id={this.props.match.params.pageID}/>
 				</div>
-					{/* <Paper>
-						<h1>{title}</h1>
-					</Paper>
-					<Paper>
-						<h3>{description}</h3>
-						<h4>Created on: {dayjs(dateCreated).format('MMM D, YYYY')}</h4>
-						<h4>By: {owner}</h4>
-						{subscribeButton}
-					</Paper> */}
-				<br></br>
-				<Grid container
-					direction="column"
-					justify="flex-start"
-					alignItems="flex-start"
-					spacing={3}
-				>
-						{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
-				</Grid>
+				{/* <div style={{display: 'flex', justifyContent: 'center'}}> */}
+				<div style={{display: 'flex', justifyContent: 'center'}}>
+					<div style={{width: '80%', display: 'flex', flexDirection: 'column'}}>
+							{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
+					</div>
+				</div>
+				{/* </div> */}
 			</div>
 		)
 	}

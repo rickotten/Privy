@@ -20,6 +20,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar';
 import IconButton from '@material-ui/core/IconButton';
+import { MembersButton } from "../pages/PageHeader";
 
 const useStyles = (theme) => ({
     root: {
@@ -58,10 +59,31 @@ export class UserProfile extends Component {
         email: this.props.user.email,
         // bio: "Here's a simple bio",
         createdAt: dayjs("2020-10-12T20:01:10.560000Z").format("dddd, MMMM D YYYY"),
-        postCount: 5,
-        friendsCount: 10
+        followers: [],
+        following: []
     }
     
+    componentDidMount = () => {
+        const token = this.props.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+
+        axios.get(`/getsocialcircle/${this.props.user.username}`, config)
+            .then(res => {
+                this.setState({ followers: res.data.followers, following: res.data.following })
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
     // onChangeImage = e => this.setState({ [e.target.name]: e.target.files[0] });
     onChangeImage = e => {
         // this.setState({ [e.target.name]: e.target.files[0] });
@@ -87,7 +109,7 @@ export class UserProfile extends Component {
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount} = this.state;
+        const {username, profilePicture, email, bio, createdAt, followers, following} = this.state;
         const classes = this.props.classes;
         return (
             <div className="col-md-18 m-auto">
@@ -102,17 +124,30 @@ export class UserProfile extends Component {
                         multiple
                         type="file"
                     />
-                    <label className={classes.wrapperLabel} htmlFor="contained-button-file">
+                    <label className={classes.wrapperLabel} htmlFor="contained-button-file" style={{display: 'flex', flexDirection: 'column'}}>
                         <IconButton component="span">
                             <Badge badgeContent={'edit'} color="primary">
                                 <Avatar alt={username.toUpperCase().charAt(0)} className={classes.profilePicture} src={profilePicture} />
                             </Badge>
                         </IconButton>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Badge badgeContent={followers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Followers"}
+                                    members={followers}
+                                />
+                            </Badge>
+                            <Badge badgeContent={following.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Following"}
+                                    members={following}
+                                />
+                            </Badge>
+                        </div>
                     </label>
 
                     <List className={classes.root}>
-                        <Divider variant="inset" component="li" />
-                        <ListItem>
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <FaceIcon/>
@@ -120,17 +155,7 @@ export class UserProfile extends Component {
                             </ListItemAvatar>
                             <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <NoteIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="lightYellowBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
@@ -139,7 +164,7 @@ export class UserProfile extends Component {
                             <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
@@ -148,23 +173,6 @@ export class UserProfile extends Component {
                             <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <PostAddIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <EmojiPeopleIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={friendsCount} secondary="Followers" />
-                        </ListItem>
                     </List>
                 </div>
                 

@@ -18,6 +18,8 @@ import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from "../layout/NavigationBar"
+import { MembersButton } from "../pages/PageHeader";
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = (theme) => ({
     root: {
@@ -54,7 +56,9 @@ export class ArbitraryUserProfile extends Component {
             postCount: 5,
             friendsCount: 10,
             showEmail: true,
-            following: false
+            following: false,
+            followers: [],
+            followingUsers: []
         }
     }
 
@@ -95,6 +99,65 @@ export class ArbitraryUserProfile extends Component {
             }).catch(err => {
                 console.log(err);
             });
+        axios.get(`/getsocialcircle/${this.props.match.params.username}`, config)
+            .then(res => {
+                this.setState({ followers: res.data.followers, followingUsers: res.data.following})
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
+    ifAlreadyFriends = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ friendUsername });
+        axios.post(`/alreadyfriends`, body, config)
+            .then(res => {
+                if (res.data) {
+                    this.setState({ following: true })
+                } else {
+                    this.setState({ following: false })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    follow = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const username = this.props.auth.user.username;
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ username, friendUsername });
+
+        if (this.state.following) {
+            this.setState({ following: false })
+        } else {
+            axios.post('/api/auth/friendRequest', body, config)
+                .then(res => {
+                    this.setState({ following: true })
+                })
+        }
     }
 
     ifAlreadyFriends = () => {
@@ -151,18 +214,36 @@ export class ArbitraryUserProfile extends Component {
     }
 
     render() {
-        const {username, profilePicture, email, bio, createdAt, postCount, friendsCount, showEmail, following } = this.state;
+        const {username, profilePicture, email, bio, createdAt, showEmail, following, followers, followingUsers } = this.state;
         const classes = this.props.classes;
 
         return (
             <div className="col-md-18 m-auto">
                 <NavigationBar/>
                 <div className="card card-body">
-                    
-                    <Avatar alt="R" className={classes.profilePicture} src={profilePicture} />
-                    {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
-                    <List className="profileInfo">
-                        <ListItem className="cardBackground">
+                    <div>
+                    <Avatar alt={username.toUpperCase()} className={classes.profilePicture} src={profilePicture} />
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Badge badgeContent={followers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Followers"}
+                                    members={followers}
+                                />
+                            </Badge>
+                            <Badge badgeContent={followingUsers.length} color="primary">
+                                <MembersButton
+                                    menuLabel={"Following"}
+                                    members={followingUsers}
+                                />
+                            </Badge>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            {(this.props.auth.user.username !== username) && <button onClick={this.follow} style= {{fontSize:15, height:50, width:150}} className="btn btn-primary">{following ? "Following" : "Follow"}</button>}
+                        </div>
+                        
+                    </div>
+                    <List className={classes.root}>
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <FaceIcon/>
@@ -171,16 +252,8 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={username} secondary="Username" />
                         </ListItem>
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <NoteIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={bio} secondary="Bio" />
-                        </ListItem>
                         <Divider variant="inset" component="li" />
-                        {showEmail && (<ListItem className="cardBackground">
+                        {showEmail && (<ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AlternateEmailIcon />
@@ -189,31 +262,13 @@ export class ArbitraryUserProfile extends Component {
                             <ListItemText className="textColor" primary={email} secondary="User Email" />
                         </ListItem>)}
                         <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
+                        <ListItem className="goldenBackground">
                             <ListItemAvatar>
                                 <Avatar>
                                     <AccessTimeIcon />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText className="textColor" primary={createdAt} secondary="Member since" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <PostAddIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={postCount} secondary="Number of Posts" />
-                        </ListItem>
-                        <Divider variant="inset" component="li" />
-                        <ListItem className="cardBackground">
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <EmojiPeopleIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText className="textColor" primary={friendsCount} secondary="Followers" />
                         </ListItem>
                     </List>
                 </div>

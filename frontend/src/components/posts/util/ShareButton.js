@@ -18,7 +18,8 @@ export class ShareButton extends Component {
 		postAuthor: PropTypes.string.isRequired,
 		token: PropTypes.string.isRequired,
 		createAlert: PropTypes.func.isRequired,
-		post_id: PropTypes.number.isRequired
+		post_id: PropTypes.number.isRequired,
+		reload: PropTypes.func.isRequired
 	}
 
 	handleClick = (event) => {
@@ -43,7 +44,8 @@ export class ShareButton extends Component {
 
 		axios.delete(`/posts/${post_id}`, config)
 			.then(res => {
-				this.props.createAlert("Deleted Post! Reload page")
+				this.props.createAlert("Deleted Post")
+				this.props.reload()
 				// window.location.reload()
 			}).catch(err => {
 				this.props.createAlert("Can't delete!")
