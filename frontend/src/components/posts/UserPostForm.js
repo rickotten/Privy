@@ -18,12 +18,13 @@ export class UserPostForm extends Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         create_user_post: PropTypes.func.isRequired,
-        page_id: PropTypes.string // optional page_id to post to
+        page_id: PropTypes.string, // optional page_id to post to
+        reload: PropTypes.func.isRequired
     }
 
     onSubmit = e => {
         e.preventDefault();
-        this.props.create_user_post(this.state.text_post, this.state.media, this.props.page_id);
+        this.props.create_user_post(this.state.text_post, this.state.media, this.props.page_id, this.props.reload);
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });

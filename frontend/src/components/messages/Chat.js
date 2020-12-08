@@ -371,7 +371,7 @@ function CustomChatListItem ({
 						<Title ellipsis>
 							{members.reduce((accumulator, current) => (accumulator + ` ${current.username}`), "Members: ")}
 							</Title>
-						<Subtitle nowrap>{'14:31 PM'}</Subtitle>
+						{/* <Subtitle nowrap>{'14:31 PM'}</Subtitle> */}
 					</Row>
 					<Row>
 						<Subtitle ellipsis>

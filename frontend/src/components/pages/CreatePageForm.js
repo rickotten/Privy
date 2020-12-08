@@ -13,8 +13,8 @@ export class CreatePageForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: "An Interesting Title",
-			description: "A compelling description"
+			title: "",
+			description: ""
 		}
 	}
 

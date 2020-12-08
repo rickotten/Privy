@@ -20,10 +20,11 @@ import LikeButton from '../../util/LikeButton'
 import CommentForm from './CommentForm';
 import Comment from './Comment';
 import ShareButton from './util/ShareButton';
+import Box from '@material-ui/core/Box';
 
 const useStyles = theme => ({
     root: {
-        width: "67.75vw"
+        // width: "67.75vw"
     },
     media: {
         // height: 0,
@@ -49,19 +50,20 @@ export class UserPost2 extends Component {
 
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        post: PropTypes.object.isRequired
+        post: PropTypes.object.isRequired,
+        reload: PropTypes.func.isRequired
     }
 
     addCommentOnPost = (username, comment) => {
-        this.setState({ comments: [...this.state.comments, <Comment key={comment} authorName={username} comment={comment} />]});
-        
+        this.setState({ comments: [...this.state.comments, <Comment key={comment} authorName={username} comment={comment} />] });
+
     }
 
     state = {
         redirect: null,
         expanded: false,
         comments: this.props.post.comments.map(
-            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} picture={comment.profile_picture}/>))
+            (comment, i) => (<Comment key={comment.id} authorName={comment.author} comment={comment.comment} picture={comment.profile_picture} />))
     }
 
 
@@ -79,9 +81,9 @@ export class UserPost2 extends Component {
         const userImage = post.image;
 
         const avatar = <a href={"#profile/" + this.props.post.author}>
-                                    <Avatar alt={this.props.post.author.toUpperCase().charAt(0)} aria-label="profile" className={classes.avatar} src={post.profile_picture}>
-                                    </Avatar>
-                                </a>
+            <Avatar alt={this.props.post.author.toUpperCase().charAt(0)} aria-label="profile" className={classes.avatar} src={post.profile_picture}>
+            </Avatar>
+        </a>
 
         if (this.state.redirect) {
             return this.state.redirect;
@@ -93,23 +95,27 @@ export class UserPost2 extends Component {
         />) : (<div></div>));
 
         const created_on = this.props.post.date_created ? this.props.post.date_created : "2020-01-31T12:59-0500";
+        // <Card className={classes.root} style={{paddingbottom: 20}}>
         return (
-            <Card className={classes.root} style={{paddingbottom: 20}}>
-                <CardHeader className="post"
-                    avatar={avatar}
-                    action={
-                            <ShareButton postAuthor={post.author} post_id={post.id}/>
-                    }
-                    title={"Via " + post.author}
-                    subheader={dayjs(created_on).fromNow()}
-                />
-                {media}
-                <CardContent className="post">
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {post.description}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing className="post">
+            <Box width="100%" 
+                style={{paddingTop: 10, paddingBottom: 10}}
+                >
+                <Card>
+                    <CardHeader className="post"
+                        avatar={avatar}
+                        action={
+                            <ShareButton reload={this.props.reload} postAuthor={post.author} post_id={post.id} />
+                        }
+                        title={"Via " + post.author}
+                        subheader={dayjs(created_on).fromNow()}
+                    />
+                    {media}
+                    <CardContent style={{display: 'flex', justifyContent: 'center'}}>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {post.description}
+                        </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing className="post">
 
                         <LikeButton post={post} postId={post.id} />
 
@@ -133,6 +139,7 @@ export class UserPost2 extends Component {
                         </CardContent>
                     </Collapse>
                 </Card>
+            </Box>
         )
     }
 }

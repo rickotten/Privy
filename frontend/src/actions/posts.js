@@ -16,7 +16,7 @@ import {
  } from "./types";
 
 //CREATE A USER POST
-export const create_user_post = (description, media, page_id) => (dispatch, getState)  => {
+export const create_user_post = (description, media, page_id, reload) => (dispatch, getState)  => {
     const config = tokenConfig(getState);
 
     let form_data = new FormData();
@@ -35,7 +35,9 @@ export const create_user_post = (description, media, page_id) => (dispatch, getS
                 type: CREATE_USER_POST_SUCCESS,
                 payload: res.data
             })
+            reload();
         }).catch(err => {
+            console.log(err)
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: CREATE_USER_POST_FAILURE,
