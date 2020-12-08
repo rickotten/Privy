@@ -53,7 +53,7 @@ class UserPost(models.Model):
         max_length=254, blank=True, null=True
     )
     page = models.ForeignKey(Page, related_name="posts", on_delete=models.CASCADE, blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     likesCount = models.IntegerField(default=0)
     usersLiked = models.ManyToManyField(User, related_name="usersLiked")
     date_created = models.DateTimeField(
@@ -78,6 +78,9 @@ class Friend(models.Model):
 
     # username of user who is sending the friend request
     sender_friend = models.CharField(max_length=250)
+
+    receiver_friend_obj = models.ForeignKey(User, related_name="receiver_friend_obj", on_delete=models.CASCADE)
+    sender_friend_obj = models.ForeignKey(User, related_name="sender_friend_obj", on_delete=models.CASCADE)
 
 #Messages between users. Its a collection of members and messages
 class Conversation(models.Model):

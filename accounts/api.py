@@ -293,8 +293,7 @@ class UserPostGetAPI(generics.ListAPIView):
     serializer_class = UserPostSerializer
     
     def get_queryset(self):
-        user = User.objects.get(username=self.kwargs['username'])
-        return UserPost.objects.filter(author=user).order_by('-id')
+        return User.objects.get(username=self.kwargs['username']).posts.order_by('-id')
 
 #Used for getting all posts from a given users friends + their own
 class UserPostGetFriendsAPI(generics.ListAPIView):
@@ -303,25 +302,18 @@ class UserPostGetFriendsAPI(generics.ListAPIView):
     
     def get_queryset(self):
         #Getting current user's posts
-        user = User.objects.get(username=self.kwargs['username'])
-        userposts = UserPost.objects.filter(author=user)
+        userposts = User.objects.get(username=self.kwargs['username']).posts.all()
+        # userposts = UserPost.objects.filter(author=user)
 
         #Get list of friends of the current user
         friendlist = Friend.objects.filter(sender_friend = self.kwargs['username']) 
 
         #Empty query set
-        userFriends = User.objects.filter(username='')
-
-        #For each Friend in the list of friend, search users with the same name
-        #append it to userFriends
-        for x in friendlist:
-            userFriends = userFriends | User.objects.filter(username=x.receiver_friend)
-
-        #For every user in userFriends
-        for x in userFriends:
-            #Get all of their posts, add them to the list
-            userposts = userposts | UserPost.objects.filter(author=x)
-
+        userFriends = []
+        for relation in friendlist:
+            userFriends += [relation.receiver_friend_obj]
+        for user in userFriends:
+            userposts |=user.posts.all()
 
         return userposts.order_by('-id')
 

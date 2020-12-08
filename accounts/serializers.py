@@ -153,7 +153,9 @@ class FriendRequestSerializer(serializers.Serializer):
         # create object
         friend = Friend.objects.create(
             receiver_friend = data.get('friendUsername'),
-            sender_friend = data.get('username')
+            sender_friend = data.get('username'),
+            receiver_friend_obj = User.objects.get(username=data.get('friendUsername')),
+            sender_friend_obj = User.objects.get(username=data.get('username'))
             )
 
         # log friendship
@@ -165,20 +167,13 @@ class FriendRequestSerializer(serializers.Serializer):
 
     
     def validate(self, data):
-
-        # retrieve all registered users
-        users = User.objects.all()
-
-        # make sure there is a matching username
-        logger = logging.getLogger(__name__)
-        logger.error(data.get('friendUsername'))
-        for user in users:
-            if data.get('friendUsername') == user.username:
-                return data
-
-        # otherwise raise an error
-        raise serializers.ValidationError(
-            "Username not associated with any account")
+        try:
+            User.objects.get(username=data.get("friendUsername"))
+            return data
+        except:
+            # otherwise raise an error
+            raise serializers.ValidationError(
+                "Username not associated with any account")
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):
