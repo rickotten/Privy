@@ -19,7 +19,8 @@ export class Page extends Component {
 			description: "Loading...",
 			dateCreated: "Loading",
 			posts: [],
-			members: []
+			members: [],
+			reload: false
 		}
 	}
 
@@ -34,9 +35,13 @@ export class Page extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.pageID !== prevProps.match.params.pageID) {
+		if (this.props.match.params.pageID !== prevProps.match.params.pageID || this.state.reload) {
 			this.getPage();
 		}
+	}
+
+	reload = () => {
+		this.setState({ reload: true })
 	}
 
 	getPage() {
@@ -45,7 +50,7 @@ export class Page extends Component {
 				const localPosts = []
 				res.data.posts.forEach(post => {
 					localPosts.push(
-						<UserPost2 key={post.id} post={post} />
+						<UserPost2 reload={this.reload} key={post.id} post={post} />
 					)
 				})
 				this.setState({
@@ -67,7 +72,6 @@ export class Page extends Component {
 
 	render() {
 		const { title, description, dateCreated, owner, members } = this.state;
-		console.log(members)
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
 		return (
 			<div>

@@ -14,7 +14,8 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             username: 'Loading...',
-            userPosts: <CircularProgress />
+            userPosts: <CircularProgress />,
+            reload: false
         }
     }
 
@@ -29,10 +30,13 @@ export class HomePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.username !== prevProps.match.params.username) {
+        if (this.props.match.params.username !== prevProps.match.params.username || this.state.reload) {
             this.lookUpPosts();
-            
         }
+    }
+
+    reload = () => {
+        this.setState({ reload: true })
     }
 
     lookUpPosts = () => {
@@ -59,7 +63,7 @@ export class HomePage extends Component {
             .then(res => {
                     const localPosts = [];
                     res.data.forEach(post => {
-                        localPosts.push(<UserPost2
+                        localPosts.push(<UserPost2 reload={this.reload}
                             key={post.id} tempContent={tempContent} post={post}/>);
                     })
                     if (localPosts.length === 0) {
@@ -72,15 +76,15 @@ export class HomePage extends Component {
             }).catch(err => {
                 console.log(err);
             });
+            this.setState({ reload: false })
     }
 
     render() {
-
         return (
             <div>
                 <NavigationBar />
                     <div className="card card-body">
-                        <UserPostForm/>
+                        <UserPostForm reload={this.reload}/>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         {this.state.userPosts}

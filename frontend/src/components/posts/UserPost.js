@@ -50,7 +50,8 @@ export class UserPost2 extends Component {
 
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        post: PropTypes.object.isRequired
+        post: PropTypes.object.isRequired,
+        reload: PropTypes.func.isRequired
     }
 
     addCommentOnPost = (username, comment) => {
@@ -103,7 +104,7 @@ export class UserPost2 extends Component {
                     <CardHeader className="post"
                         avatar={avatar}
                         action={
-                            <ShareButton postAuthor={post.author} post_id={post.id} />
+                            <ShareButton reload={this.props.reload} postAuthor={post.author} post_id={post.id} />
                         }
                         title={"Via " + post.author}
                         subheader={dayjs(created_on).fromNow()}
