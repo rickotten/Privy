@@ -86,8 +86,10 @@ export class HomePage extends Component {
                     <div className="card card-body">
                         <UserPostForm reload={this.reload}/>
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                        {this.state.userPosts}
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', width: '80%'}}>
+                            {this.state.userPosts}
+                        </div>
                     </div>
                 
             </div>

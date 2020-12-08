@@ -85,12 +85,14 @@ export class Page extends Component {
 					subscribeButton={subscribeButton}
 				/>
 				<div className="card card-body">
-					<UserPostForm page_id={this.props.match.params.pageID}/>
+					<UserPostForm reload={this.reload} page_id={this.props.match.params.pageID}/>
 				</div>
 				{/* <div style={{display: 'flex', justifyContent: 'center'}}> */}
-					<div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+				<div style={{display: 'flex', justifyContent: 'center'}}>
+					<div style={{width: '80%', display: 'flex', flexDirection: 'column'}}>
 							{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
 					</div>
+				</div>
 				{/* </div> */}
 			</div>
 		)

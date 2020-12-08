@@ -110,7 +110,7 @@ export class UserPost2 extends Component {
                         subheader={dayjs(created_on).fromNow()}
                     />
                     {media}
-                    <CardContent className="post">
+                    <CardContent style={{display: 'flex', justifyContent: 'center'}}>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {post.description}
                         </Typography>
