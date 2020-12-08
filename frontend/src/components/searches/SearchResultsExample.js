@@ -48,7 +48,7 @@ export class SearchResultsExample extends Component {
             .then(res => {
                     const localPosts = []
                     res.data.forEach(post => {
-                        localPosts.push(<Grid key={post.id} item><UserPost2 post={post} /></Grid>);
+                        localPosts.push(<UserPost2 post={post} />);
                     })
                     this.setState({userPosts: localPosts, loadingResults: false});
 
@@ -62,14 +62,18 @@ export class SearchResultsExample extends Component {
         return (
             <div>
                 <NavigationBar/>
-                <Grid container
+                {/* <Grid container
                     direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
-                >
+                > */}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ width: '80%', display: 'flex', flexDirection: 'column' }}>
                     {loadingResults && <h1>Loading Search Results</h1>}
                     {(userPosts.length === 0 && !loadingResults) ? <h1>No results!</h1> : userPosts}
-                </Grid>
+                {/* </Grid> */}
+                    </div>
+                </div>
             </div>
         )
     }
