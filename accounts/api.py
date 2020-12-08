@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer, UserSettingsSerializer, TinyPageSerializer, ConversationSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialSerializer, ForgotSerializer, UserPostSerializer, UserPostCommentSerializer, FriendRequestSerializer, PageSerializer, UserPrivacySerializer, UserProfileSerializer, UserSettingsSerializer, TinyPageSerializer, ConversationSerializer, MarketItemSerializer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 import os
@@ -12,7 +12,7 @@ from rest_framework.parsers import FormParser, MultiPartParser, JSONParser, File
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .models import UserPost, User, Friend, Page, UserProfile, UserSettings, Conversation, Message, Friend
+from .models import UserPost, User, Friend, Page, UserProfile, UserSettings, Conversation, Message, Friend, MarketItem
 from itertools import *
 
 
@@ -622,3 +622,17 @@ class CreateConvoAPI(generics.ListAPIView):
             ConversationSerializer(
                 convo, context=self.get_serializer_context()).data
         )
+
+class MarketItemAPI(generics.ListAPIView):
+    serializer_class = MarketItemSerializer
+    
+    def get_queryset(self):
+        return MarketItem.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        market_item = MarketItem.objects.get(id=kwargs['item_id'])
+        bid_amount = int(request.data['bid'])
+        if (bid_amount > market_item.current_bid):
+            market_item.current_bid = bid_amount
+            market_item.save()
+        return Response(MarketItemSerializer(market_item).data)

@@ -26,7 +26,8 @@ from .api import (FriendRequestAPI,
                             CreateConvoAPI,
                             AddUserToConversationAPI,
                             AlreadyFriendsAPI,
-                            GetSocialCircleAPI)
+                            GetSocialCircleAPI,
+                            MarketItemAPI)
 from django.urls import path, include, re_path
 from knox import views as knox_views
 
@@ -70,5 +71,7 @@ urlpatterns = [
     path('sendmessage/<int:convo_id>', AddToConversationAPI.as_view()),
     path('addtogroup/<int:convo_id>/<str:username>', AddUserToConversationAPI.as_view()),
     path('getconvos', ConversationsAPI.as_view()),
-    path('getsocialcircle/<str:username>', GetSocialCircleAPI.as_view())
+    path('getsocialcircle/<str:username>', GetSocialCircleAPI.as_view()),
+    path('getmarketitems', MarketItemAPI.as_view()),
+    path('itembid/<int:item_id>', MarketItemAPI.as_view())
 ]

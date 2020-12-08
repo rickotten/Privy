@@ -1,4 +1,4 @@
-from .models import User, UserPost, UserPostComment, UserProfile
+from .models import User, UserPost, UserPostComment, UserProfile, MarketItem
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -174,6 +174,15 @@ class FriendRequestSerializer(serializers.Serializer):
             # otherwise raise an error
             raise serializers.ValidationError(
                 "Username not associated with any account")
+
+class MarketItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketItem
+        fields = (
+            'id',
+            'current_bid',
+            'item_name'
+        )
 
 #User Post Serializer
 class UserPostSerializer(serializers.ModelSerializer):

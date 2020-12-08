@@ -79,8 +79,8 @@ class Friend(models.Model):
     # username of user who is sending the friend request
     sender_friend = models.CharField(max_length=250)
 
-    receiver_friend_obj = models.ForeignKey(User, related_name="receiver_friend_obj", on_delete=models.CASCADE)
-    sender_friend_obj = models.ForeignKey(User, related_name="sender_friend_obj", on_delete=models.CASCADE)
+    receiver_friend_obj = models.ForeignKey(User, related_name="receiver_friend_obj", on_delete=models.CASCADE, default=None)
+    sender_friend_obj = models.ForeignKey(User, related_name="sender_friend_obj", on_delete=models.CASCADE, default=None)
 
 #Messages between users. Its a collection of members and messages
 class Conversation(models.Model):
@@ -104,6 +104,12 @@ class Message(models.Model):
         """A string representation of the model."""
         return str(self.messageContent)
 
+class MarketItem(models.Model):
+    current_bid = models.IntegerField(default=0)
+    item_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.item_name)
 
 
 
