@@ -48,13 +48,11 @@ export class SearchPages extends Component {
                 const localPages = []
                 res.data.forEach(post => {
                     localPages.push(
-                    <Grid key={post.id} item>
                             <a href={`#/pages/${post.id}`}>
                                 <Paper style={{width: 600, height: 100, padding: 15, marginTop: 15}} rounded={true}>
                                     <h1>Title: {post.title}</h1>
                                 </Paper>
                             </a>
-                            </Grid>                      
                         );
                 })
                 this.setState({resultingPages: localPages, loadingResults: false});
@@ -71,14 +69,12 @@ export class SearchPages extends Component {
             <div>
                 <NavigationBar/>
                 <div className="card card-body">
-                <Grid container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    {loadingResults && <h1>Loading Search Results</h1>}
-                    {(resultingPages.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingPages}
-                </Grid>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {loadingResults && <h1>Loading Search Results</h1>}
+                        {(resultingPages.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingPages}
+                        </div>
+                    </div>
                 </div>
             </div>
         )
