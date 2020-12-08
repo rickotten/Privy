@@ -160,6 +160,59 @@ export class ArbitraryUserProfile extends Component {
         }
     }
 
+    ifAlreadyFriends = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ friendUsername });
+        axios.post(`/alreadyfriends`, body, config)
+            .then(res => {
+                if (res.data) {
+                    this.setState({ following: true })
+                } else {
+                    this.setState({ following: false })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    follow = () => {
+        const token = this.props.auth.token;
+        // Headers 
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+        // If token, add to headers config
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`;
+        }
+        const username = this.props.auth.user.username;
+        const friendUsername = this.props.match.params.username;
+        const body = JSON.stringify({ username, friendUsername });
+
+        if (this.state.following) {
+            this.setState({ following: false })
+        } else {
+            axios.post('/api/auth/friendRequest', body, config)
+                .then(res => {
+                    this.setState({ following: true })
+                })
+        }
+    }
+
     render() {
         const {username, profilePicture, email, bio, createdAt, showEmail, following, followers, followingUsers } = this.state;
         const classes = this.props.classes;
