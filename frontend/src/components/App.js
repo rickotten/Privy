@@ -28,7 +28,7 @@ import ArbitraryUserProfile from "./user/ArbitraryUserProfile";
 import PrivacyPage from "./privacy/PrivacyPage";
 import CreatePageForm from "./pages/CreatePageForm"
 import Page from "./pages/Page"
-import LandingPage from "./landing/LandingPage";
+import LandingPage from "./landing/LandingPage2";
 import MyPages from "./pages/MyPages"
 import SearchFormExample from "./searches/SearchFormExample";
 import SearchResultsExample from "./searches/SearchResultsExample";
