@@ -11,7 +11,7 @@ import LoginForm from "./login/LoginForm";
 import PrivateRoute from "./common/PrivateRoute";
 import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
 import HomePage from "./layout/HomePage";
-import UserTimeline from "./layout/UserTimeline"
+import UserTimeline from "./layout/UserTimeline2"
 import UserPostForm from "./posts/UserPostForm"
 import Logout from "./user/Logout"
 import { UserPostView} from './posts/UserPostView';
