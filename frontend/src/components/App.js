@@ -5,7 +5,7 @@ import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-basic";
 
 import Alerts from './layout/Alerts';
-import RegistrationForm from "./registration/RegistrationForm";
+import RegistrationForm from "./registration/RegistrationForm2";
 import LoginForm from "./login/LoginForm2";
 // import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
