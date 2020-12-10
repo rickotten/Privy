@@ -5,7 +5,8 @@ import { create_user_post } from '../../actions/posts';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: 350
+		width: 350,
+		padding: 10
 	},
 	textField: {
 		fontFamily: "Nunito",
@@ -54,6 +55,7 @@ export function UserPostForm({
 					onChange={onChange}
 					fullWidth
 					multiline
+					variant="outlined"
 					placeholder="Post something interesting to share with your friends!"
 					className={classes.textField}
 					rows={8}>

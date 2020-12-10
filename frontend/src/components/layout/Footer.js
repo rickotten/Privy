@@ -9,6 +9,9 @@ import UserPostForm from '../posts/UserPostForm2';
 import { IconButton, Slide, Menu, MenuItem } from '@material-ui/core';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ForumIcon from '@material-ui/icons/Forum';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import CreatePageForm from '../pages/CreatePageForm2'
 import Chat from "../messages/Chat";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +46,7 @@ export default function Footer({
 }) {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [navAnchorEl, setNavAnchor] = useState(null)
+	const [pageFormAnchorEl, setPageAnchor] = useState(null)
 	const classes = useStyles();
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -60,19 +64,22 @@ export default function Footer({
 		setNavAnchor(null);
 	}
 
+	const showPageForm = (event) => {
+		setPageAnchor(event.currentTarget)
+	}
+
+	const closePageForm = () => {
+		setPageAnchor(null);
+	}
+
 	return (
 		<div className={classes.root}>
-			{/* <Zoom in={true}>
-				<Fab color="primary" aria-label="add">
-					<AddIcon />
-				</Fab>
-			</Zoom> */}
-
-			{loading && <Zoom in={true}>
-				<Fab >
-					<CircularProgress />
-				</Fab>
-			</Zoom>}
+			{loading &&
+				<Zoom in={true}>
+					<Fab >
+						<CircularProgress />
+					</Fab>
+				</Zoom>}
 			{postable &&
 				<Zoom in={true}>
 					<Fab color="secondary" aria-label="edit">
@@ -81,6 +88,13 @@ export default function Footer({
 						</IconButton>
 					</Fab>
 				</Zoom>}
+			<Zoom in={true}>
+				<Fab>
+					<IconButton aria-controls="page-form-menu" aria-haspopup="true" onClick={showPageForm} onClose={closePageForm}>
+						<PostAddIcon />
+					</IconButton>
+				</Fab>
+			</Zoom>
 			<Zoom in={true}>
 				<Fab variant="extended">
 					<IconButton aria-controls="navigation-menu" aria-haspopup="true" onClick={showMenu}>
@@ -108,6 +122,16 @@ export default function Footer({
 				TransitionComponent={Slide}
 			>
 				<UserPostForm page_id={page} reload={reload} />
+			</Menu>
+			<Menu
+				id="page-form-menu"
+				anchorEl={pageFormAnchorEl}
+				keepMounted
+				open={Boolean(pageFormAnchorEl)}
+				onClose={closePageForm}
+				TransitionComponent={Slide}
+			>
+				<CreatePageForm />
 			</Menu>
 			<Menu
 				id="simple-menu"
