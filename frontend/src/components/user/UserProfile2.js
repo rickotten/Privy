@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component, useState } from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,9 +18,10 @@ import NavigationBar from '../layout/NavigationBar2';
 import IconButton from '@material-ui/core/IconButton';
 import { MembersButton } from "../pages/PageHeader";
 import UserTimeline from "../layout/UserTimeline2";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, FormGroup, FormControlLabel, Switch, Button } from "@material-ui/core";
 import NavBlocker from "../../util/NavBlocker";
 import Footer from "../layout/Footer";
+import { save_user_settings } from "../../actions/auth";
 
 const useStyles = (theme) => ({
 	root: {
@@ -83,7 +84,9 @@ export class UserProfile extends Component {
 	static propTypes = {
 		token: PropTypes.string.isRequired,
 		classes: PropTypes.object.isRequired,
-		user: PropTypes.object.isRequired
+		user: PropTypes.object.isRequired,
+		save_user_settings: PropTypes.func.isRequired,
+		settings: PropTypes.object.isRequired
 	}
 
 	state = {
@@ -144,7 +147,7 @@ export class UserProfile extends Component {
 
 	render() {
 		const { username, profilePicture, email, bio, createdAt, followers, following, reload } = this.state;
-		const classes = this.props.classes;
+		const {classes, settings, save_user_settings} = this.props;
 		return (
 			<div className={classes.root}>
 				<NavigationBar authenticated />
@@ -189,6 +192,7 @@ export class UserProfile extends Component {
 											</IconButton>
 											</label>
 										</div>
+										<UserSettings settings={settings} save_settings={save_user_settings}/>
 									</div>
 								</Grid>
 								<Grid item xs={6} className={classes.centered}>
@@ -201,14 +205,14 @@ export class UserProfile extends Component {
 											</ListItemAvatar>
 											<ListItemText primary={username} secondary="Username" />
 										</ListItem>
-										<ListItem >
+										{settings.show_email_on_profile && <ListItem >
 											<ListItemAvatar>
 												<Avatar>
 													<AlternateEmailIcon />
 												</Avatar>
 											</ListItemAvatar>
 											<ListItemText primary={email} secondary="User Email" />
-										</ListItem>
+										</ListItem>}
 										<ListItem className="goldenBackground">
 											<ListItemAvatar>
 												<Avatar>
@@ -236,9 +240,71 @@ export class UserProfile extends Component {
 	}
 }
 
+const settingsStyles = makeStyles((theme) => ({
+	root: {
+		display: 'flex',
+		justifyContent: 'space-around',
+		width: '100%'
+	},
+	saveButton: {
+		textTransform: "none" ,
+		fontFamily: "Nunito"
+	}
+}))
+function UserSettings({
+	settings,
+	save_settings
+}) {
+	const classes = settingsStyles();
+	const [state, setState] = React.useState({
+		checkedDark: settings.dark_mode,
+		checkedShowEmail: settings.show_email_on_profile,
+	});
+	const handleChange = (event) => {
+		setState({ ...state, [event.target.name]: event.target.checked });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		save_settings(state.checkedShowEmail, state.checkedDark);
+	}
+	return (
+		<form className={classes.root} onSubmit={handleSubmit}>
+			<FormGroup column>
+				<FormControlLabel
+					control={<Switch checked={state.checkedDark} onChange={handleChange} name="checkedDark" />}
+					label="Galaxy Background"
+				/>
+				<FormControlLabel
+					control={
+						<Switch
+							checked={state.checkedShowEmail}
+							onChange={handleChange}
+							name="checkedShowEmail"
+							color="primary"
+						/>
+					}
+					label="Show Email on Profile"
+				/>
+				<Button
+				type="submit"
+				disableFocusRipple
+				disableRipple
+				className={classes.saveButton}
+				variant="outlined"
+				color="primary">
+					SAVE
+				</Button>
+			</FormGroup>
+		</form>
+	)
+}
+
 const mapStateToProps = state => ({
+	auth: state.auth,
 	token: state.auth.token,
-	user: state.auth.user
+	user: state.auth.user,
+	settings: state.auth.user.settings
 })
 
-export default connect(mapStateToProps)(withStyles(useStyles)(UserProfile));
+export default connect(mapStateToProps, { save_user_settings })(withStyles(useStyles)(UserProfile));

@@ -18,7 +18,7 @@ import NavigationBar from "../layout/NavigationBar2"
 import { MembersButton } from "../pages/PageHeader";
 import Badge from '@material-ui/core/Badge';
 import UserTimeline from "../layout/UserTimeline2";
-import { Grid, Paper, Button } from "@material-ui/core";
+import { Grid, Paper, Button, FormGroup } from "@material-ui/core";
 import NavBlocker from "../../util/NavBlocker";
 import Footer from "../layout/Footer";
 
@@ -59,7 +59,8 @@ const useStyles = (theme) => ({
 	},
 	centered: {
 		display: 'flex',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		margin: 'auto'
 	},
 	paperBackground: {
 		margin: 'auto'
@@ -72,7 +73,7 @@ const useStyles = (theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center'
-	}
+	},
 });
 
 export class ArbitraryUserProfile extends Component {
@@ -279,7 +280,7 @@ export class ArbitraryUserProfile extends Component {
 									</Badge>
 								</Grid>
 								<Grid item xs={6}>
-									<div className={classes.columnCentered}>
+									<div className={classes.columnCentered} style={{height: '100%'}}>
 										<div className={classes.centered}>
 											<Avatar alt={username.toUpperCase().charAt(0)} className={classes.profilePicture} src={profilePicture} />
 										</div>

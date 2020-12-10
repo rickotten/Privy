@@ -36,7 +36,7 @@ import SearchUsers from "./searches/SearchUsers";
 import SearchPages from "./searches/SearchPages";
 
 import PaymentPortal from "./payment/PaymentPortal";
-import ThemeSelector from "./themes/ThemeSelector";
+import ThemeSelector from "./themes/ThemeSelector2";
 import Chat from './messages/Chat';
 import { ThemeProvider } from '@livechat/ui-kit'
 import { Marketplace } from "./payment/Marketplace";
@@ -57,6 +57,12 @@ const useStyles = (theme) => ({
     backgroundImage: "url(../../static/images/background.jpg)",
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover'
+  },
+  altBackground: {
+    minHeight: '100vh',
+    backgroundImage: "url(../../static/images/galaxy.jpg)",
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
   }
 });
 
@@ -67,12 +73,16 @@ export class App extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(classes)
+    const state = store.getState();
+
+    
+    
     return (
-      <div className={classes.root}>
-        <CssBaseline />
+      <div>
         <ThemeProvider>
+          <CssBaseline />
           <Provider store={store}>
+            <ThemeSelector>
             {/* <ThemeSelector> */}
             <AlertProvider template={AlertTemplate} {...alertOptions}>
               <Router>
@@ -108,7 +118,7 @@ export class App extends Component {
                 </Fragment>
               </Router>
             </AlertProvider>
-            {/* </ThemeSelector> */}
+            </ThemeSelector>
           </Provider>
         </ThemeProvider>
       </div >
