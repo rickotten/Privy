@@ -4,9 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
 import UserPost2 from "../posts/UserPost";
-import UserPostForm from '../posts/UserPostForm2';
 import axios from 'axios'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import NavBlocker from '../../util/NavBlocker'
 import Footer from './Footer'
 import Grid from '@material-ui/core/Grid';
@@ -17,12 +15,15 @@ const useStyles = theme => ({
 		display: 'flex',
 		justifyContent: 'center'
 	},
-	// posts: {
-	// 	display: 'flex',
-	// 	flexDirection: 'column',
-	// 	justifyContent: 'center',
-	// 	alignItems: 'center'
-	// }
+	heading: {
+		fontFamily: 'Nunito',
+		fontWeight: 'bold',
+		color: '#fff',
+	},
+	headingContainer: {
+		display: 'flex',
+		justifyContent: 'center'
+	},
 	posts: {
 		padding: theme.spacing(2)
 	}
@@ -109,6 +110,9 @@ export class HomePage extends Component {
 				<NavBlocker />
 				<div className={classes.root}>
 					<Grid container spacing={3}>
+						<Grid item xs={12} className={classes.headingContainer}>
+							<h2 className={classes.heading}>See what your friends are up to!</h2>
+						</Grid>
 						{!loading &&
 							userPosts.map(each => (
 								<Grid item xs={6}>

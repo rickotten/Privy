@@ -9,6 +9,7 @@ import UserPostForm from '../posts/UserPostForm2';
 import { IconButton, Slide, Menu, MenuItem } from '@material-ui/core';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Chat from "../messages/Chat";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -87,13 +88,14 @@ export default function Footer({
 			</Zoom>
 			<Zoom in={true}>
 				<Fab className={classes.messageIcon} variant="extended">
-					<IconButton>
-						<ChatBubbleOutlineIcon className={classes.extendedIcon} />
+					<a href="#/messages">
+						<IconButton>
+							<ChatBubbleOutlineIcon className={classes.extendedIcon} />
 					Messages
 					</IconButton>
+					</a>
 				</Fab>
 			</Zoom>
-
 			<Menu
 				id="simple-menu"
 				anchorEl={anchorEl}

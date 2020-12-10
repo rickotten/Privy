@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		fontFamily: "Nunito",
 	},
 	appbar: {
-		background: 'none'
+		backgroundColor: 'rgb(82, 106, 107, 0.6)'
 	},
 	colorText: {
 		color: '#5AFF3D'
