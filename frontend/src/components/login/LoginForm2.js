@@ -1,13 +1,14 @@
 import React, { Component, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
 import { login } from '../../actions/auth';
 import GoogleOAuth from '../oauth/GoogleOAuth';
 import FacebookOAuth from '../oauth/FacebookOAuth';
 import NavigationBar from '../layout/NavigationBar2'
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox, makeStyles, Typography } from '@material-ui/core';
 import { Face, Fingerprint } from '@material-ui/icons'
+import MockReviewCard from './MockReviewCard';
+import Slide from '@material-ui/core/Slide';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,10 +41,14 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 		color: 'rgb(51, 51, 51)'
 	},
+	reviewsTop: {
+		fontFamily: "Nunito",
+		fontWeight: "bold",
+		color: '#fff'
+	},
 	textFields: {
 		backgroundColor: 'rgb(123, 147, 172)',
 		fontFamily: "Nunito",
-		color: '#fff'
 	},
 	colorText: {
 		color: '#22e600'
@@ -94,7 +99,11 @@ export function LoginForm({
 		<div className={classes.root}>
 			<NavigationBar />
 			<div className={classes.containers}>
-
+				<Slide direction="up" in={true} timeout={1000} mountOnEnter unmountOnExit>
+					<Paper elevation={4} className={classes.paper}>
+						<MockReviewCard />
+					</Paper>
+				</Slide>
 			</div>
 			<div className={classes.containers}>
 				<form onSubmit={onSubmit}>
@@ -146,7 +155,7 @@ export function LoginForm({
 					</Paper>
 				</form>
 			</div>
-		</div>
+		</div >
 	)
 }
 

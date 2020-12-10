@@ -43,7 +43,9 @@ export default function NavigationBar() {
 	return (
 		<AppBar className={classes.appbar} elevation={0}>
 			<Toolbar className={classes.appbarWrapper}>
-				<img className="key" src="/static/images/loginOuthouse.png" alt="yellow key" width='50' height='50'></img>
+				<a href="#/">
+					<img className="key" src="/static/images/loginOuthouse.png" alt="yellow key" width='50' height='50'></img>
+				</a>
 				<h1 className={classes.appbarTitle}>
 					Privy<span className={classes.colorText}>Social.</span>
 				</h1>
