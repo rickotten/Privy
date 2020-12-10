@@ -225,6 +225,7 @@ export const forgot = (email) => (dispatch) => {
 
     axios.post('/api/auth/forgot', body, config)
         .then(res => {
+            dispatch(createMessage({ postCreateSuccess: 'Email sent!'}))
             dispatch({
                 type: FORGOT_SUCCESS,
                 payload: res.data

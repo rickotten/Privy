@@ -15,8 +15,6 @@ import { REVIEWS } from "./FakeReviews";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
-		// margin: 'auto',
-		// justifyContent: 'column'
 		height: '100vh',
 		minWidth: '100'
 	},
@@ -28,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 		width: '40%',
 		height: '100%',
 		background: 'none',
-		// backgroundColor: 'blue'
 	},
 	padding: {
 		padding: theme.spacing.unit * 6,

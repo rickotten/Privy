@@ -58,6 +58,11 @@ export function NavigationBar({
 		<a href="#/register">
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Register</MenuItem></a>
+				<a href="#/forgot">
+			<MenuItem onClick={handleClose} className={classes.toolMenu}>
+				Forgot Password
+			</MenuItem>
+				</a>
 	</div>)
 
 	const authMenu = (<div>

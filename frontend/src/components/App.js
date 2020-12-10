@@ -9,7 +9,7 @@ import RegistrationForm from "./registration/RegistrationForm2";
 import LoginForm from "./login/LoginForm2";
 // import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
-import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
+import ForgotCredentialsForm from "./login/ForgotCredentialsForm2";
 import HomePage from "./layout/HomePage2";
 import UserTimeline from "./layout/UserTimeline2"
 import UserPostForm from "./posts/UserPostForm"
@@ -43,6 +43,7 @@ import { Marketplace } from "./payment/Marketplace";
 
 import { withStyles } from '@material-ui/core/styles';
 import { CssBaseline, CssBaseling } from '@material-ui/core';
+import { ComplexGrid } from "./payment/MarketItem";
 
 // Alert Options
 const alertOptions = {
@@ -101,6 +102,7 @@ export class App extends Component {
                       <PrivateRoute exact path="/messages" component={Chat} />
                       <Route exact path="/searchusers/:terms" component={SearchUsers} />
                       <Route exact path="/searchpages/:terms" component={SearchPages} />
+                      <Route exact path="/test/" component={ComplexGrid}/>
                     </Switch>
                   </div>
                 </Fragment>
