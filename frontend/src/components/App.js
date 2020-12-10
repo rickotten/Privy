@@ -14,7 +14,7 @@ import HomePage from "./layout/HomePage2";
 import UserTimeline from "./layout/UserTimeline2"
 import UserPostForm from "./posts/UserPostForm"
 import Logout from "./user/Logout"
-import { UserPostView } from './posts/UserPostView';
+import UserPostView from './posts/UserPostView';
 
 // import './darkMode.css'
 // import('./myStyles.css')

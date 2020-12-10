@@ -4,9 +4,18 @@ import NavBlocker from '../../util/NavBlocker'
 import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import axios from 'axios'
-import { Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles'
 import Page from '../pages/Page'
 
+const useStyles = theme => ({
+    text: {
+        fontFamily: 'Nunito',
+        fontWeight: 'bold',
+        color: '#fff',
+        display: 'flex',
+        justifyContent: 'center'
+    },
+})
 export class SearchPages extends Component {
 
     constructor(props) {
@@ -50,7 +59,7 @@ export class SearchPages extends Component {
                 const localPages = []
                 res.data.forEach(post => {
                     localPages.push(
-                        <Page match={{ params: { postID: post.id } }} />
+                        <Page match={{ params: { pageID: post.id } }} />
                     );
                 })
                 this.setState({ resultingPages: localPages, loadingResults: false });
@@ -61,12 +70,14 @@ export class SearchPages extends Component {
     }
 
     render() {
+        const classes = this.props.classes
         const { resultingPages, loadingResults } = this.state
         console.log(loadingResults)
         return (
             <div>
                 <NavigationBar />
                 <NavBlocker />
+                <h2 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h2>
                 {resultingPages}
             </div>
         )
@@ -77,4 +88,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(SearchPages)
+export default connect(mapStateToProps)(withStyles(useStyles)(SearchPages))

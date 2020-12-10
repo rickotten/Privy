@@ -6,21 +6,19 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 // MUI Icons
 import Badge from '@material-ui/core/Badge';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from '../layout/NavigationBar2';
 import IconButton from '@material-ui/core/IconButton';
 import { MembersButton } from "../pages/PageHeader";
 import UserTimeline from "../layout/UserTimeline2";
-import { Grid, Paper, GridList } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import NavBlocker from "../../util/NavBlocker";
 import Footer from "../layout/Footer";
 
@@ -64,16 +62,20 @@ const useStyles = (theme) => ({
 		justifyContent: 'center'
 	},
 	paperBackground: {
-		margin: 'auto'
+		margin: 'auto',
+		paddingTop: 10
 	},
 	postsContainer: {
 		maxHeight: 550,
-		overflow: 'scroll'
+		overflowY: 'scroll'
 	},
 	columnCentered: {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center'
+	},
+	profileWrapper: {
+		margin: 'auto'
 	}
 });
 
@@ -150,8 +152,8 @@ export class UserProfile extends Component {
 				<Grid container spacing={3}>
 					<Grid item xs>
 						<Paper className={classes.paperBackground}>
-							<Grid container spacing={3}>
-								<Grid item xs={6} className={classes.centered}>
+							<Grid container spacing={3} className={classes.profileWrapper}>
+								<Grid item xs={6}>
 									<Badge badgeContent={followers.length} color="primary">
 										<MembersButton
 											menuLabel={"Followers"}

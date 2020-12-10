@@ -76,11 +76,6 @@ export class SearchResultsExample extends Component {
             <div>
                 <NavigationBar />
                 <NavBlocker />
-                {/* <Grid container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                > */}
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <h3 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h3>

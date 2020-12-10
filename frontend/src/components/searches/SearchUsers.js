@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import NavigationBar from '../layout/NavigationBar';
-import Grid from '@material-ui/core/Grid';
+import NavigationBar from '../layout/NavigationBar2';
 import { connect } from "react-redux";
 import axios from 'axios'
-import { User } from '../user/User';
-import Avatar from '@material-ui/core/Avatar';
-import { Paper } from '@material-ui/core';
-import { sizing } from '@material-ui/system';
+import { Grid } from '@material-ui/core';
+import NavBlocker from '../../util/NavBlocker'
+import ArbitraryUserProfile2 from '../user/ArbitraryUserProfile2'
+import { withStyles } from '@material-ui/core/styles'
+import Footer from '../layout/Footer'
 
-
+const useStyles = theme => ({
+    textField: {
+        fontFamily: 'Nunito',
+        fontWeight: 'bold',
+        color: '#fff',
+        display: 'flex',
+        justifyContent: 'center'
+    },
+})
 export class SearchUsers extends Component {
- 
 
     constructor(props) {
         super(props);
@@ -54,15 +61,9 @@ export class SearchUsers extends Component {
                 const results = res.data
                 const localResults = []
                 results.forEach(user => {
-                localResults.push(
-                    <a href={`#/profile/${user.username}`}>
-                        <Paper style={{width: 600, height: 100, padding: 15, marginTop: 15}} variant="outlined">
-                            <div className="row centered">
-                                <Avatar/>
-                                <h1>Username: {user.username}</h1>
-                            </div>
-                        </Paper>
-                    </a>);
+                    localResults.push(
+                        <ArbitraryUserProfile2 match={{ params: { username: user.username } }} />
+                    );
                 })
                 this.setState({ resultingUsers: localResults, loadingResults: false });
 
@@ -72,18 +73,19 @@ export class SearchUsers extends Component {
     }
 
     render() {
+        const classes = this.props.classes
         const { resultingUsers, loadingResults } = this.state;
         return (
             <div>
                 <NavigationBar />
-                <div className="card card-body">
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                        {loadingResults && <h1>Loading Search Results</h1>}
-                        {(resultingUsers.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingUsers}
-                    </div>
-                </div>
-                </div>
+                <NavBlocker />
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <h3 className={classes.textField}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h3>
+                    </Grid>
+                    {resultingUsers.map(each => <Grid item xs={12}>{each}</Grid>)}
+                </Grid>
+                <Footer />
             </div>
         )
     }
@@ -93,4 +95,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(SearchUsers)
+export default connect(mapStateToProps)(withStyles(useStyles)(SearchUsers))

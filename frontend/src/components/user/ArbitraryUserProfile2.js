@@ -69,7 +69,7 @@ const useStyles = (theme) => ({
 	},
 	postsContainer: {
 		maxHeight: 550,
-		overflow: 'scroll'
+		overflowY: 'scroll'
 	},
 	columnCentered: {
 		display: 'flex',
