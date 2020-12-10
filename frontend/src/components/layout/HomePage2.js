@@ -9,17 +9,22 @@ import axios from 'axios'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NavBlocker from '../../util/NavBlocker'
 import Footer from './Footer'
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = theme => ({
 	root: {
+		flexGrow: '1',
 		display: 'flex',
 		justifyContent: 'center'
 	},
+	// posts: {
+	// 	display: 'flex',
+	// 	flexDirection: 'column',
+	// 	justifyContent: 'center',
+	// 	alignItems: 'center'
+	// }
 	posts: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center'
+		padding: theme.spacing(2)
 	}
 })
 export class HomePage extends Component {
@@ -96,26 +101,35 @@ export class HomePage extends Component {
 
 	render() {
 		const { classes } = this.props
+		const { loading, userPosts } = this.state
 		console.log(this.state.loading)
 		return (
 			<div>
 				<NavigationBar authenticated />
 				<NavBlocker />
 				<div className={classes.root}>
-
+					<Grid container spacing={3}>
+						{!loading &&
+							userPosts.map(each => (
+								<Grid item xs={6}>
+									{each}
+								</Grid>
+							))
+						}
+					</Grid>
+					<Footer loading={this.state.loading} reload={this.reload} />
 					{/* <div className="card card-body">
 					<UserPostForm reload={this.reload} />
 				</div> */}
-					<div className={classes.posts}>
+					{/* <div className={classes.posts}>
 						{this.state.loading && <CircularProgress style={{ width: '100%', height: '100%' }} />}
 						{!this.state.loading &&
 							<div style={{ display: 'flex', flexDirection: 'column', width: '80%' }}>
 								{this.state.userPosts}
 							</div>
-						}
-						{/* <UserPostForm reload={this.reload} /> */}
-						<Footer loading={this.state.loading} reload={this.reload} />
-					</div>
+						} */}
+					{/* <UserPostForm reload={this.reload} /> */}
+
 				</div>
 			</div>
 		)
