@@ -197,10 +197,10 @@ export function RegistrationForm({
 								</Grid>
 							</Grid>
 							<Grid container justify="center" style={{ marginTop: '10px' }}>
-								<Grid item>
+								<Grid item style={{ display: 'flex', justifyContent: 'center' }} xs={12}>
 								<Button type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Register</Button>
 								</Grid>
-								<Grid item>
+								<Grid item style={{display: 'flex', justifyContent: 'center'}} xs={12}>
 									<a href="#/login"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Already have an account?</Button></a>
 								</Grid>
 							</Grid>

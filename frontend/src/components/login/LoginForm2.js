@@ -144,18 +144,12 @@ export function LoginForm({
 								</Grid>
 							</Grid>
 							<Grid container alignItems="center" justify="space-between" spacing={3}>
-								<Grid item xs={7}>
+								<Grid item xs>
 									<FormControlLabel control={
 										<Checkbox
 											color="primary"
 										/>
 									} label="Remember me" />
-								</Grid>
-								<Grid item xs={3}>
-									<a href="#/register"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Register</Button></a>
-								</Grid>
-								<Grid item xs={2}>
-									<a href="#/forgot"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot</Button></a>
 								</Grid>
 							</Grid>
 							<Grid container justify="center" style={{ marginTop: '10px' }}>
@@ -165,6 +159,10 @@ export function LoginForm({
 								<div style={{ display: 'flex', margin: 'auto' }}>
 									<GoogleOAuth />
 									<FacebookOAuth />
+								</div>
+								<div style={{display: 'flex', justifyContent: 'space-around', paddingTop: 10}}>
+									<a href="#/register"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Register</Button></a>
+									<a href="#/forgot"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot</Button></a>
 								</div>
 							</Grid>
 						</div>

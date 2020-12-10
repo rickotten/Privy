@@ -73,6 +73,11 @@ export function NavigationBar({
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Messages</MenuItem>
 		</a>
+		<a href="#/settings">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Settings</MenuItem>
+		</a>
+
 		{/* <a href="#/market">
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Market</MenuItem>
@@ -83,6 +88,11 @@ export function NavigationBar({
 		</a> */}
 	</div>)
 
+	const clickLogout = () => {
+		logout();
+		window.location.href = "#/"
+	}
+
 	return (
 		<AppBar className={classes.appbar} elevation={0}>
 			<Toolbar className={classes.appbarWrapper}>
@@ -92,14 +102,16 @@ export function NavigationBar({
 				<h1 className={classes.appbarTitle}>
 					Privy<span className={classes.colorText}>Social.</span>
 				</h1>
-				<SearchFormExample />
+				{authenticated && <SearchFormExample />}
 				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 					<SortIcon className={classes.icon} />
 				</IconButton>
-				<IconButton onClick={logout}>
+				{authenticated &&
+				<IconButton onClick={clickLogout}>
 					<ExitToAppIcon className={classes.icon} />
 					<span className={classes.logout}>Logout</span>
 				</IconButton>
+				}
 				<Menu
 					id="simple-menu"
 					anchorEl={anchorEl}
