@@ -2,16 +2,16 @@ import axios from 'axios'
 import { Grid, Paper, CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
 import React, { Component } from 'react';
-import NavigationBar from "../layout/NavigationBar";
+import NavigationBar from "../layout/NavigationBar2";
 import CreatePageForm from "./CreatePageForm";
 import PropTypes from 'prop-types'
-
+import Page from './Page'
 
 export class MyPages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pages: <CircularProgress/>
+            pages: <CircularProgress />
         }
     }
 
@@ -42,13 +42,13 @@ export class MyPages extends Component {
                 const localPages = []
                 res.data.forEach(page => {
                     localPages.push(
-                    <a key={page.id} href={`#/pages/${page.id}`}><h2>{page.title}</h2></a>
+                        <Page match={{ params: { pageID: page.id } }} />
                     )
                 })
                 if (localPages.length === 0) {
-                    this.setState({ pages: <h2>You're not subscribed to any pages!</h2>})
+                    this.setState({ pages: <h2>You're not subscribed to any pages!</h2> })
                 } else {
-                    this.setState({ pages: localPages})
+                    this.setState({ pages: localPages })
                 }
             }).catch(err => {
                 console.log(err);
@@ -56,20 +56,10 @@ export class MyPages extends Component {
     }
 
     render() {
-        return(
+        return (
             <div>
-                <NavigationBar/>
-                <CreatePageForm/>
-                <div className="card card-body mt-5">
-                    <h1 className="centeredText">My Pages</h1>
-                    <Grid>
-                        <Grid>
-                            <Paper>
-                                {this.state.pages}
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </div>
+                <NavigationBar />
+                {this.state.pages}
             </div>
         )
     }

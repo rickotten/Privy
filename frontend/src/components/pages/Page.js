@@ -13,6 +13,9 @@ import { withStyles } from "@material-ui/core";
 import Footer from "../layout/Footer";
 
 const useStyles = theme => ({
+	root: {
+		minHeight: '100vh'
+	},
 	text: {
 		fontFamily: 'Nunito',
 		fontWeight: 'bold',
@@ -43,6 +46,7 @@ export class Page extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props)
 		this.getPage();
 	}
 
@@ -57,6 +61,7 @@ export class Page extends Component {
 	}
 
 	getPage() {
+		console.log(this.props.match.params.pageID)
 		axios.get(`/pages/${this.props.match.params.pageID}`)
 			.then(res => {
 				const localPosts = []
@@ -87,7 +92,7 @@ export class Page extends Component {
 		const { title, description, dateCreated, owner, members, posts } = this.state;
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
 		return (
-			<div>
+			<div className={classes.root}>
 				<NavigationBar authenticated />
 				<NavBlocker />
 				<PageHeader
