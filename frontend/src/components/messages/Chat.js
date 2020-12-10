@@ -29,10 +29,12 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-import NavigationBar from '../layout/NavigationBar'
+import NavigationBar from '../layout/NavigationBar2'
+import NavBlocker from "../../util/NavBlocker";
 import { createMessage } from "../../actions/errors";
+import Footer from "../layout/Footer";
 
 export class Chat extends Component {
 	static propTypes = {
@@ -79,7 +81,7 @@ export class Chat extends Component {
 			createAlert("Form not valid. Did you hit the enter button after each username?")
 			return;
 		}
-		const body = JSON.stringify({recipients, message})
+		const body = JSON.stringify({ recipients, message })
 		axios.post('/createconvo', body, config)
 			.then(res => {
 				this.setState({
@@ -99,7 +101,7 @@ export class Chat extends Component {
 				'Authorization': `Token ${token}`
 			}
 		}
-		axios.post(`/sendmessage/${conversation_id}`, { "message": message}, config)
+		axios.post(`/sendmessage/${conversation_id}`, { "message": message }, config)
 			.then(res => {
 				console.log("message sent")
 			}).catch(err => {
@@ -112,30 +114,36 @@ export class Chat extends Component {
 		const { token, createAlert } = this.props;
 		if (conversations === null) {
 			return (
-			<div>
-				<NavigationBar/>
-				<Paper style={{ minWidth: '100%' }}>
-					<CircularProgress />
-					<h2>Loading your messages</h2>
-				</Paper>
-			</div>
+				<div>
+					<NavigationBar authenticated />
+					<NavBlocker />
+					<Paper style={{ minWidth: '100%' }}>
+						<CircularProgress />
+						<h2>Loading your messages</h2>
+					</Paper>
+					<Footer noMessage />
+				</div>
 			)
 		}
 		else if (conversations.length > 0) {
 			return (
 				<div>
-					<NavigationBar/>
-					<ChatComponent createConversation={this.createConversation} createAlert={createAlert} token={token} conversations={conversations} currentUser={this.props.currentUser} loading={loading} sendMessage={this.sendMessage}/>
+					<NavigationBar authenticated />
+					<NavBlocker />
+					<ChatComponent createConversation={this.createConversation} createAlert={createAlert} token={token} conversations={conversations} currentUser={this.props.currentUser} loading={loading} sendMessage={this.sendMessage} />
+					<Footer noMessage />
 				</div>
 			)
 		}
 		else {
 			return (
 				<div>
-					<NavigationBar/>
+					<NavigationBar authenticated />
+					<NavBlocker />
 					<Paper>
-						<CreateConversationForm createConversation={this.createConversation} closeForm={() => {}}/>
+						<CreateConversationForm createConversation={this.createConversation} closeForm={() => { }} />
 					</Paper>
+					<Footer noMessage />
 				</div>
 			)
 		}
@@ -168,7 +176,8 @@ export function ChatComponent({
 
 		sendMessage(id, message);
 		setCurrentConversation(
-			{...currentConversation,
+			{
+				...currentConversation,
 				messages: [
 					...currentConversation.messages,
 					formatted_message
@@ -178,32 +187,32 @@ export function ChatComponent({
 
 	const CreateMessageHeader = () => {
 		return (
-			<AgentBar style={{display: 'flex', justifyContent: 'flex-end'}}>
+			<AgentBar style={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<Title>
 					New Message
 				</Title>
 				<IconButton size='small' onClick={(e) => setNewMessageExpand(!newMessageExpand)}>
-					<CreateIcon/>
+					<CreateIcon />
 				</IconButton>
 			</AgentBar>
 		)
 	}
 
 	return (
-		<div style={{justifyContent: 'center', display: 'flex'}}>
-				<Paper style={{ minWidth: '40%' }}>
-					{!newMessageExpand && <CreateMessageHeader/>}
-					{newMessageExpand && <CreateConversationForm closeForm={() => setNewMessageExpand(false)} createConversation={createConversation} />}
-					<ChatList>
-						{conversations.slice().reverse().map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
-					</ChatList>
-				</Paper>
-				<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
+		<div style={{ justifyContent: 'center', display: 'flex' }}>
+			<Paper style={{ minWidth: '40%' }}>
+				{!newMessageExpand && <CreateMessageHeader />}
+				{newMessageExpand && <CreateConversationForm closeForm={() => setNewMessageExpand(false)} createConversation={createConversation} />}
+				<ChatList>
+					{conversations.slice().reverse().map((convo) => (<CustomChatListItem key={convo.id} conversation={convo} setCurrentConversation={setCurrentConversation} />))}
+				</ChatList>
+			</Paper>
+			<CustomMessageList setConversation={setCurrentConversation} createAlert={createAlert} token={token} conversation={currentConversation} currentUsername={currentUser.username} onMessageSend={onMessageSend} />
 		</div>
-		);
+	);
 }
 
-function CreateConversationForm ({
+function CreateConversationForm({
 	createConversation,
 	closeForm
 }) {
@@ -225,20 +234,20 @@ function CreateConversationForm ({
 						placeholder="Enter usernames here"
 					/>
 				)}
-				/>
+			/>
 			<TextField
 				label="Type your message here"
 				multiline
 				rows={5}
 				onChange={(e) => setMessage(e.target.value)}
-				style={{width: '100%', height: '100%'}}
+				style={{ width: '100%', height: '100%' }}
 			/>
-			<div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+			<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<IconButton onClick={closeForm}>
-					<CancelIcon/>
+					<CancelIcon />
 				</IconButton>
-				<IconButton onClick={() => {createConversation(recipients, message, closeForm)}}>
-					<SendIcon/>
+				<IconButton onClick={() => { createConversation(recipients, message, closeForm) }}>
+					<SendIcon />
 				</IconButton>
 			</div>
 		</div>
@@ -246,7 +255,7 @@ function CreateConversationForm ({
 }
 
 // Agent Bar. (Top of message list with group chat members)
-function CustomAgentBar ({
+function CustomAgentBar({
 	convo_id,
 	members,
 	token,
@@ -256,11 +265,11 @@ function CustomAgentBar ({
 	const [expanded, setExpanded] = React.useState(false)
 
 	const avatar = (
-	<AvatarGroup max={3}>
-		{members.map(member => (
-			<Avatar alt={member.username} src={member.avatar_url} />
-		))}
-	</AvatarGroup>
+		<AvatarGroup max={3}>
+			{members.map(member => (
+				<Avatar alt={member.username} src={member.avatar_url} />
+			))}
+		</AvatarGroup>
 	)
 
 	const expandFriendAdd = () => {
@@ -275,20 +284,20 @@ function CustomAgentBar ({
 				<Column flexFill>
 					<Title>{members.reduce((accum, current) => (accum + current.username + ", "), "Messages with ").slice(0, -2)}</Title>
 					<Subtitle >
-						
+
 						<Row>
-						Add Friends!
+							Add Friends!
 						<IconButton onClick={expandFriendAdd}
-							size={'small'}>
-							<AddBoxIcon />
-						</IconButton>
-							{expanded ? <AddFriendsField 
-							setConversation={setConversation}
-							token={token}
-							createAlert={createAlert}
-							convo_id={convo_id}/> : <></>}
+								size={'small'}>
+								<AddBoxIcon />
+							</IconButton>
+							{expanded ? <AddFriendsField
+								setConversation={setConversation}
+								token={token}
+								createAlert={createAlert}
+								convo_id={convo_id} /> : <></>}
 						</Row>
-						
+
 					</Subtitle>
 				</Column>
 			</Row>
@@ -334,13 +343,13 @@ function AddFriendsField({
 				getOptionLabel={(option) => option}
 				style={{ width: 300 }}
 				renderInput={(params) => <TextField {...params} onChange={(e) => setFriendUsername(e.target.value)} label="Type in username and hit enter	" size="small"
-				variant="outlined" />}/>
+					variant="outlined" />} />
 		</form>
 	);
 }
 
 // Side bar with chats
-function CustomChatListItem ({
+function CustomChatListItem({
 	conversation,
 	setCurrentConversation
 }) {
@@ -354,12 +363,12 @@ function CustomChatListItem ({
 	const { id, members, messages, read } = conversation
 	return (
 		<ChatListItem
-			onClick={() => setCurrentConversation(conversation)} 
-				active={hover}
-				onMouseEnter={() => setHover(true)}
-				onMouseLeave={() => setHover(false)}
+			onClick={() => setCurrentConversation(conversation)}
+			active={hover}
+			onMouseEnter={() => setHover(true)}
+			onMouseLeave={() => setHover(false)}
 			style={{ justifyContent: 'space-between' }}
-				>
+		>
 			<div>
 				<AvatarGroup max={5}>
 					{members.map(member => (
@@ -370,30 +379,30 @@ function CustomChatListItem ({
 					<Row justify>
 						<Title ellipsis>
 							{members.reduce((accumulator, current) => (accumulator + ` ${current.username}`), "Members: ")}
-							</Title>
+						</Title>
 						{/* <Subtitle nowrap>{'14:31 PM'}</Subtitle> */}
 					</Row>
 					<Row>
 						<Subtitle ellipsis>
-							{messages[messages.length -1].messageContent}
+							{messages[messages.length - 1].messageContent}
 						</Subtitle>
 					</Row>
 				</Column>
 			</div>
-			<Column style={{paddingLeft: '5%', paddingRight: '5%'}}>
-				{read && <CheckBox/>}
-				{!read && <CheckBoxOutlineBlank/>}
+			<Column style={{ paddingLeft: '5%', paddingRight: '5%' }}>
+				{read && <CheckBox />}
+				{!read && <CheckBoxOutlineBlank />}
 				<Subtitle nowrap>
 					{read ? "Read" : "Sent"}
 				</Subtitle>
 			</Column>
-			
+
 		</ChatListItem>
 	)
 }
 
 // Messages in chat
-function CustomMessageList ({
+function CustomMessageList({
 	conversation,
 	currentUsername,
 	onMessageSend,
@@ -407,37 +416,37 @@ function CustomMessageList ({
 		avatars[member.username] = member.avatar_url
 	})
 	return (
-		<div style={{ borderLeft: '1px solid grey', minWidth: '60%', height:400 }}>
-			<CustomAgentBar setConversation={setConversation} createAlert={createAlert} token={token} convo_id={conversation.id} members={members}/>
+		<div style={{ borderLeft: '1px solid grey', minWidth: '60%', height: 400 }}>
+			<CustomAgentBar setConversation={setConversation} createAlert={createAlert} token={token} convo_id={conversation.id} members={members} />
 			<MessageList active>
-			{messages.map((message) => {
-				if (currentUsername === message.sender) {
-					return (
-						<Message isOwn={true} authorName={currentUsername}>
-							<Bubble isOwn={true} style={{minWidth: 80, maxWidth: '70%'}}>
-								<MessageText>
-									{message.messageContent}
-								</MessageText>
-							</Bubble>
-						</Message>
-					)
-				} else {
-					return (
-						<MessageGroup
-							avatar={avatars[message.sender]}
-							onlyFirstWithMeta
-						>
-							<Message authorName={message.sender}>
-								<Bubble isOwn={false} style={{ minWidth: 80, maxWidth: '70%' }}>
+				{messages.map((message) => {
+					if (currentUsername === message.sender) {
+						return (
+							<Message isOwn={true} authorName={currentUsername}>
+								<Bubble isOwn={true} style={{ minWidth: 80, maxWidth: '70%' }}>
 									<MessageText>
 										{message.messageContent}
 									</MessageText>
 								</Bubble>
 							</Message>
-						</MessageGroup>
-					)
-				}
-			})}
+						)
+					} else {
+						return (
+							<MessageGroup
+								avatar={avatars[message.sender]}
+								onlyFirstWithMeta
+							>
+								<Message authorName={message.sender}>
+									<Bubble isOwn={false} style={{ minWidth: 80, maxWidth: '70%' }}>
+										<MessageText>
+											{message.messageContent}
+										</MessageText>
+									</Bubble>
+								</Message>
+							</MessageGroup>
+						)
+					}
+				})}
 			</MessageList>
 			<TextComposer onSend={onMessageSend(id)} >
 				<Row align="center">

@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		margin: 0,
 		top: 'auto',
-		right: 20,
+		left: 20,
 		bottom: 20,
-		left: 'auto',
+		right: 'auto',
 		position: 'fixed',
 		'& > *': {
 			margin: theme.spacing(1),
@@ -42,7 +42,8 @@ export default function Footer({
 	reload,
 	loading,
 	postable,
-	page
+	page,
+	noMessage
 }) {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [navAnchorEl, setNavAnchor] = useState(null)
@@ -103,16 +104,17 @@ export default function Footer({
 					</IconButton>
 				</Fab>
 			</Zoom>
-			<Zoom in={true}>
-				<Fab className={classes.messageIcon} variant="extended">
-					<a href="#/messages">
-						<IconButton>
-							<ChatBubbleOutlineIcon className={classes.extendedIcon} />
+			{!noMessage &&
+				<Zoom in={true}>
+					<Fab className={classes.messageIcon} variant="extended">
+						<a href="#/messages">
+							<IconButton>
+								<ChatBubbleOutlineIcon className={classes.extendedIcon} />
 					Messages
 					</IconButton>
-					</a>
-				</Fab>
-			</Zoom>
+						</a>
+					</Fab>
+				</Zoom>}
 			<Menu
 				id="simple-menu"
 				anchorEl={anchorEl}
