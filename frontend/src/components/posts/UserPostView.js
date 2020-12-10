@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import UserPost2 from "./UserPost";
-import NavigationBar from "../layout/NavigationBar";
+import NavigationBar from "../layout/NavigationBar2";
+import { Grid } from "@material-ui/core";
+import NavBlocker from "../../util/NavBlocker";
 
 export class UserPostView extends Component {
 	state = {
@@ -22,15 +24,20 @@ export class UserPostView extends Component {
 
 		axios.get(`/posts/${this.props.match.params.post_id}`)
 			.then(res => {
-				this.setState({ post: <UserPost2 post={res.data} />})
+				this.setState({ post: <UserPost2 post={res.data} /> })
 			})
 	}
 
 	render() {
 		return (
 			<div>
-				<NavigationBar/>
-				{this.state.post}
+				<NavigationBar authenticated />
+				<NavBlocker />
+				<Grid container spacing={3} style={{ display: 'flex', justifyContent: 'center' }}>
+					<Grid xs={6}>
+						{this.state.post}
+					</Grid>
+				</Grid>
 			</div>
 		)
 	}
