@@ -6,9 +6,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Zoom from '@material-ui/core/Zoom';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import UserPostForm from '../posts/UserPostForm2';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { IconButton, Slide } from '@material-ui/core';
+import { IconButton, Slide, Menu, MenuItem } from '@material-ui/core';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -28,10 +28,15 @@ const useStyles = makeStyles((theme) => ({
 	toolMenu: {
 		fontFamily: "Nunito",
 	},
+	messageIcon: {
+		fontFamily: "Nunito",
+		backgroundColor: 'rgb(50, 201, 209)'
+	}
 }));
 
 export default function Footer({
-	reload
+	reload,
+	loading
 }) {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [navAnchorEl, setNavAnchor] = useState(null)
@@ -59,6 +64,12 @@ export default function Footer({
 					<AddIcon />
 				</Fab>
 			</Zoom> */}
+
+			{loading && <Zoom in={true}>
+				<Fab >
+					<CircularProgress />
+				</Fab>
+			</Zoom>}
 			<Zoom in={true}>
 				<Fab color="secondary" aria-label="edit">
 					<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -74,6 +85,15 @@ export default function Footer({
 					</IconButton>
 				</Fab>
 			</Zoom>
+			<Zoom in={true}>
+				<Fab className={classes.messageIcon} variant="extended">
+					<IconButton>
+						<ChatBubbleOutlineIcon className={classes.extendedIcon} />
+					Messages
+					</IconButton>
+				</Fab>
+			</Zoom>
+
 			<Menu
 				id="simple-menu"
 				anchorEl={anchorEl}

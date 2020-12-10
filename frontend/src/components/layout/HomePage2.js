@@ -96,6 +96,7 @@ export class HomePage extends Component {
 
 	render() {
 		const { classes } = this.props
+		console.log(this.state.loading)
 		return (
 			<div>
 				<NavigationBar authenticated />
@@ -106,14 +107,14 @@ export class HomePage extends Component {
 					<UserPostForm reload={this.reload} />
 				</div> */}
 					<div className={classes.posts}>
-						{this.state.loading && <CircularProgress style={{ width: '10%', height: '10%' }} />}
+						{this.state.loading && <CircularProgress style={{ width: '100%', height: '100%' }} />}
 						{!this.state.loading &&
 							<div style={{ display: 'flex', flexDirection: 'column', width: '80%' }}>
 								{this.state.userPosts}
 							</div>
 						}
 						{/* <UserPostForm reload={this.reload} /> */}
-						<Footer reload={this.reload} />
+						<Footer loading={this.state.loading} reload={this.reload} />
 					</div>
 				</div>
 			</div>
