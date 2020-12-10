@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { create_page } from "../../actions/pages"
 import Page from "./Page"
-import { hexToRgb } from '@material-ui/core';
 
 export class CreatePageForm extends Component {
 	constructor(props) {
@@ -50,7 +49,7 @@ export class CreatePageForm extends Component {
 			.then(res => {
 				console.log('Here is the page:')
 				console.log(res.data)
-				window.location.href=`#/pages/${res.data.id}`
+				window.location.href = `#/pages/${res.data.id}`
 			}).catch(err => {
 				console.log(err);
 			})

@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer({
 	reload,
 	loading,
-	postable
+	postable,
+	page
 }) {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [navAnchorEl, setNavAnchor] = useState(null)
@@ -106,7 +107,7 @@ export default function Footer({
 				onClose={handleClose}
 				TransitionComponent={Slide}
 			>
-				<UserPostForm reload={reload} />
+				<UserPostForm page_id={page} reload={reload} />
 			</Menu>
 			<Menu
 				id="simple-menu"

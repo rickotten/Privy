@@ -27,8 +27,6 @@ export function UserPostForm({
 
 	const onSubmit = e => {
 		e.preventDefault();
-		console.log(textPost);
-		console.log(media);
 		create_user_post(textPost, media, page_id, reload);
 	}
 

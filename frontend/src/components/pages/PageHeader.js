@@ -7,8 +7,27 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+	text: {
+		fontFamily: 'Nunito',
+		fontWeight: 'bold',
+		color: '#fff',
+		display: 'flex',
+		justifyContent: 'center'
+	},
+	centered: {
+		display: 'flex',
+		justifyContent: 'center'
+	},
+	coloredText: {
+		fontFamily: 'Nunito',
+		fontWeight: 'bold',
+		color: '#5AFF3D',
+		display: 'flex',
+		justifyContent: 'center'
+	},
 	root: {
 		flexGrow: 1
 	},
@@ -32,26 +51,20 @@ export default function PageHeader({
 
 	return (
 		<div>
-			<AppBar position="static" style={{ backgroundColor: 'lightskyblue' }}>
-				<Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						<Typography variant="h4" className={classes.title}>
-							{title}
-						</Typography>
-						<Typography variant="h5" className={classes.title}>
-							{description}
-						</Typography>
-						<Typography variant="h7" className={classes.title}>
-							Managed by {owner}. Created on {dayjs(dateCreated).format('MMM D, YYYY')}
-						</Typography>
-					</div>
-					<div style={{ display: 'flex' }}>
-						{subscribeButton}
-						<MembersButton menuLabel={"Members"} members={members} />
-					</div>
-				</Toolbar>
-			</AppBar>
-		</div>
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<h2 className={classes.text}>{title}</h2>
+				</Grid>
+				<Grid item xs={12}>
+					<h3 className={classes.text}>{description}</h3>
+				</Grid>
+				<Grid item xs={12}>
+					<h5 className={classes.text}>Managed by</h5>
+					<h5 className={classes.coloredText}>{owner}</h5>
+					<h5 className={classes.text}>since {dayjs(dateCreated).format('MMM D, YYYY')}</h5>
+				</Grid>
+			</Grid>
+		</div >
 	);
 }
 

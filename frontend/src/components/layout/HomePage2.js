@@ -122,18 +122,6 @@ export class HomePage extends Component {
 						}
 					</Grid>
 					<Footer postable loading={this.state.loading} reload={this.reload} />
-					{/* <div className="card card-body">
-					<UserPostForm reload={this.reload} />
-				</div> */}
-					{/* <div className={classes.posts}>
-						{this.state.loading && <CircularProgress style={{ width: '100%', height: '100%' }} />}
-						{!this.state.loading &&
-							<div style={{ display: 'flex', flexDirection: 'column', width: '80%' }}>
-								{this.state.userPosts}
-							</div>
-						} */}
-					{/* <UserPostForm reload={this.reload} /> */}
-
 				</div>
 			</div>
 		)
