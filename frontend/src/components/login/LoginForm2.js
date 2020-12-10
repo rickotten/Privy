@@ -9,6 +9,7 @@ import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox, makeStyles,
 import { Face, Fingerprint } from '@material-ui/icons'
 import MockReviewCard from './MockReviewCard';
 import Slide from '@material-ui/core/Slide';
+import { REVIEWS } from "./FakeReviews";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
 	margin: {
 		margin: theme.spacing.unit * 2,
 	},
+	reviewCards: {
+		height: '80%',
+		display: 'flex',
+		justifyContent: 'space-around',
+		flexDirection: 'column'
+	}
 }))
 
 export function LoginForm({
@@ -99,11 +106,20 @@ export function LoginForm({
 		<div className={classes.root}>
 			<NavigationBar />
 			<div className={classes.containers}>
-				<Slide direction="up" in={true} timeout={1000} mountOnEnter unmountOnExit>
-					<Paper elevation={4} className={classes.paper}>
-						<MockReviewCard />
-					</Paper>
-				</Slide>
+				<div className={classes.reviewCards}>
+					{REVIEWS.map(review => (
+						<Slide direction="up" in={true} timeout={1000} mountOnEnter unmountOnExit>
+							<Paper elevation={4}>
+								<MockReviewCard
+									className={classes.reviewCard}
+									author={review.author}
+									review={review.review}
+									starCount={review.starCount} />
+							</Paper>
+						</Slide>
+					))}
+				</div>
+
 			</div>
 			<div className={classes.containers}>
 				<form onSubmit={onSubmit}>
