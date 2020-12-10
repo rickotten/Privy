@@ -17,11 +17,11 @@ export class FacebookOAuth extends Component {
         return (
             <FacebookLogin
                 appId="4397489906992106"
-                textButton="Facebook Login"
+                textButton="Facebook"
                 autoLoad={false}
                 fields="name,email,picture"
-                callback={this.responseFacebook} 
-                size="small"/>
+                callback={this.responseFacebook}
+                size="small" />
         )
     }
 }

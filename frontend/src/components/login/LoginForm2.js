@@ -8,7 +8,7 @@ import FacebookOAuth from '../oauth/FacebookOAuth';
 import NavigationBar from '../layout/NavigationBar2'
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox, makeStyles, Typography } from '@material-ui/core';
 import { Face, Fingerprint } from '@material-ui/icons'
-import Form from 'react-bootstrap/Form'
+
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -94,7 +94,7 @@ export function LoginForm({
 		<div className={classes.root}>
 			<NavigationBar />
 			<div className={classes.containers}>
-				<h1>HELLO</h1>
+
 			</div>
 			<div className={classes.containers}>
 				<form onSubmit={onSubmit}>
@@ -135,6 +135,12 @@ export function LoginForm({
 							</Grid>
 							<Grid container justify="center" style={{ marginTop: '10px' }}>
 								<Button type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Login</Button>
+							</Grid>
+							<Grid container justify="center" style={{ marginTop: '10px' }}>
+								<div style={{ display: 'flex', margin: 'auto' }}>
+									<GoogleOAuth />
+									<FacebookOAuth />
+								</div>
 							</Grid>
 						</div>
 					</Paper>
