@@ -4,7 +4,15 @@ import UserPost2 from '../posts/UserPost';
 import { connect } from "react-redux";
 import axios from 'axios'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from "@material-ui/core";
 
+const useStyles = (theme) => ({
+	noPosts: {
+		fontFamily: "Nunito",
+		fontWeight: "bold",
+		color: '#fff'
+	}
+})
 export class UserTimeline extends Component {
 
 	constructor(props) {
@@ -59,15 +67,16 @@ export class UserTimeline extends Component {
 	}
 
 	render() {
+		const classes = this.props.classes
 		return (
 			<div>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-				{this.state.loading && <CircularProgress style={{width: '10%', height:'10%'}}/>}
-				{!this.state.loading && 
+					{this.state.loading && <CircularProgress style={{ width: '10%', height: '10%' }} />}
+					{!this.state.loading &&
 						<div style={{ display: 'flex', flexDirection: 'column', width: "80%" }}>
-							{this.state.userPosts.length === 0 ? <h1>No Posts yet!</h1> : this.state.userPosts}
+							{this.state.userPosts.length === 0 ? <h1 className={classes.noPosts}>No Posts yet!</h1> : this.state.userPosts}
 						</div>
-				}
+					}
 				</div>
 			</div>
 		)
@@ -78,4 +87,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 })
 
-export default connect(mapStateToProps)(UserTimeline)
+export default connect(mapStateToProps)(withStyles(useStyles)(UserTimeline))

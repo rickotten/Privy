@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Footer({
 	reload,
-	loading
+	loading,
+	postable
 }) {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const [navAnchorEl, setNavAnchor] = useState(null)
@@ -71,13 +72,14 @@ export default function Footer({
 					<CircularProgress />
 				</Fab>
 			</Zoom>}
-			<Zoom in={true}>
-				<Fab color="secondary" aria-label="edit">
-					<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-						<EditIcon />
-					</IconButton>
-				</Fab>
-			</Zoom>
+			{postable &&
+				<Zoom in={true}>
+					<Fab color="secondary" aria-label="edit">
+						<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+							<EditIcon />
+						</IconButton>
+					</Fab>
+				</Zoom>}
 			<Zoom in={true}>
 				<Fab variant="extended">
 					<IconButton aria-controls="navigation-menu" aria-haspopup="true" onClick={showMenu}>

@@ -121,7 +121,7 @@ export class HomePage extends Component {
 							))
 						}
 					</Grid>
-					<Footer loading={this.state.loading} reload={this.reload} />
+					<Footer postable loading={this.state.loading} reload={this.reload} />
 					{/* <div className="card card-body">
 					<UserPostForm reload={this.reload} />
 				</div> */}

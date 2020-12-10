@@ -34,7 +34,7 @@ export default function PageHeader({
 		<div>
 			<AppBar position="static" style={{ backgroundColor: 'lightskyblue' }}>
 				<Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-					<div style={{display: 'flex', flexDirection: 'column'}}>
+					<div style={{ display: 'flex', flexDirection: 'column' }}>
 						<Typography variant="h4" className={classes.title}>
 							{title}
 						</Typography>
@@ -45,9 +45,9 @@ export default function PageHeader({
 							Managed by {owner}. Created on {dayjs(dateCreated).format('MMM D, YYYY')}
 						</Typography>
 					</div>
-					<div style={{display: 'flex'}}>
-					{subscribeButton}
-					<MembersButton menuLabel={"Members"} members={members}/>
+					<div style={{ display: 'flex' }}>
+						{subscribeButton}
+						<MembersButton menuLabel={"Members"} members={members} />
 					</div>
 				</Toolbar>
 			</AppBar>
@@ -55,11 +55,17 @@ export default function PageHeader({
 	);
 }
 
+const membersButtonStyles = makeStyles((theme) => ({
+	styledButton: {
+		fontFamily: "Nunito",
+	},
+}))
 export function MembersButton({
 	menuLabel,
 	members
 }) {
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const classes = membersButtonStyles();
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -68,12 +74,11 @@ export function MembersButton({
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
 	return (
 		<div>
-			<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+			<Button color='primary' variant="outlined" className={classes.styledButton} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 				{menuLabel}
-      		</Button>
+			</Button>
 			<Menu
 				id="simple-menu"
 				anchorEl={anchorEl}
