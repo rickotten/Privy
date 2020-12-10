@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { login } from '../../actions/auth';
 import GoogleOAuth from '../oauth/GoogleOAuth';
 import FacebookOAuth from '../oauth/FacebookOAuth';
-import { get_user_posts } from "../../actions/posts";
 
 export class LoginForm extends Component {
     state = {

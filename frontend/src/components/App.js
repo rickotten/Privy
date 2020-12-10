@@ -6,7 +6,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Alerts from './layout/Alerts';
 import RegistrationForm from "./registration/RegistrationForm";
-import LoginForm from "./login/LoginForm";
+import LoginForm from "./login/LoginForm2";
 // import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
 import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
