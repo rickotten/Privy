@@ -77,7 +77,7 @@ export class SearchUsers extends Component {
         const { resultingUsers, loadingResults } = this.state;
         return (
             <div>
-                <NavigationBar />
+                <NavigationBar authenticated />
                 <NavBlocker />
                 <Grid container spacing={3}>
                     <Grid item xs={12}>

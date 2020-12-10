@@ -74,7 +74,7 @@ export class SearchResultsExample extends Component {
         const { userPosts, loadingResults } = this.state
         return (
             <div>
-                <NavigationBar />
+                <NavigationBar authenticated />
                 <NavBlocker />
                 <Grid container spacing={3}>
                     <Grid item xs={12}>

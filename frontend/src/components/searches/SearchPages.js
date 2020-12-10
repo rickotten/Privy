@@ -75,7 +75,7 @@ export class SearchPages extends Component {
         console.log(loadingResults)
         return (
             <div>
-                <NavigationBar />
+                <NavigationBar authenticated />
                 <NavBlocker />
                 <h2 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h2>
                 {resultingPages}

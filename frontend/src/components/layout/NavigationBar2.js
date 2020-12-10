@@ -1,10 +1,13 @@
 import React from 'react'
-import { AppBar, Collapse, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import SortIcon from '@material-ui/icons/Sort';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchFormExample from "../searches/SearchFormExample";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { connect } from "react-redux";
+import { logout } from "../../actions/auth";
 
 const useStyles = makeStyles((theme) => ({
 	appbarWrapper: {
@@ -27,10 +30,16 @@ const useStyles = makeStyles((theme) => ({
 		color: '#fff',
 		fontSize: '2rem'
 	},
+	logout: {
+		color: '#fff',
+		fontFamily: "Nunito",
+		fontSize: '1rem'
+	}
 }));
 
-export default function NavigationBar({
-	authenticated
+export function NavigationBar({
+	authenticated,
+	logout
 }) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,14 +73,14 @@ export default function NavigationBar({
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Messages</MenuItem>
 		</a>
-		<a href="#/market">
+		{/* <a href="#/market">
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Market</MenuItem>
-		</a>
-		<a href="#/logout">
+		</a> */}
+		{/* <a href="#/logout">
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Logout</MenuItem>
-		</a>
+		</a> */}
 	</div>)
 
 	return (
@@ -87,6 +96,10 @@ export default function NavigationBar({
 				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 					<SortIcon className={classes.icon} />
 				</IconButton>
+				<IconButton onClick={logout}>
+					<ExitToAppIcon className={classes.icon} />
+					<span className={classes.logout}>Logout</span>
+				</IconButton>
 				<Menu
 					id="simple-menu"
 					anchorEl={anchorEl}
@@ -101,3 +114,5 @@ export default function NavigationBar({
 		</AppBar>
 	)
 }
+
+export default connect(null, { logout })(NavigationBar)
