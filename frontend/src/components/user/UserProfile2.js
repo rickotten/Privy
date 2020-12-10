@@ -172,11 +172,22 @@ export class UserProfile extends Component {
 								<Grid item xs={6}>
 									<div className={classes.columnCentered}>
 										<div className={classes.centered}>
+											<input
+												name="uploadMedia"
+												accept="image/*"
+												className={classes.input}
+												id="contained-button-file"
+												onChange={this.onChangeImage}
+												multiple
+												type="file"
+											/>
+											<label htmlFor="contained-button-file">
 											<IconButton component="span">
 												<Badge badgeContent={'edit'} color="primary">
 													<Avatar alt={username.toUpperCase().charAt(0)} className={classes.profilePicture} src={profilePicture} />
 												</Badge>
 											</IconButton>
+											</label>
 										</div>
 									</div>
 								</Grid>
