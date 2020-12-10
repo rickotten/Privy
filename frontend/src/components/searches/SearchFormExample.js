@@ -11,7 +11,11 @@ import { withStyles } from "@material-ui/core";
 
 const useStyles = theme => ({
     textFields: {
+        fontFamily: "Nunito"
+    },
+    dropdown: {
         fontFamily: "Nunito",
+        color: '#fff'
     }
 })
 export class SearchFormExample extends Component {
@@ -71,7 +75,7 @@ export class SearchFormExample extends Component {
                         type="text"
                         onChange={this.onChange} />
                 </Form>
-                <NavDropdown className={classes.textFields} title={this.state.dropdownTitle}>
+                <NavDropdown className={classes.textFields} title={<span className={classes.dropdown}>{this.state.dropdownTitle}</span>}>
                     <NavDropdown.Item
                         as="button"
                         name="selection"
