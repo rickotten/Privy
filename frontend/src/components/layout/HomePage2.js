@@ -88,7 +88,7 @@ export class HomePage extends Component {
 						key={post.id} tempContent={tempContent} post={post} />);
 				})
 				if (localPosts.length === 0) {
-					this.setState({ userPosts: (<h1 style={{ paddingTop: 10 }}>No Posts yet!</h1>), loading: false })
+					this.setState({ userPosts: ([<h1 className={this.props.classes.heading}>No Posts yet!</h1>]), loading: false })
 				}
 				else {
 					this.setState({ userPosts: localPosts, loading: false });
@@ -103,7 +103,6 @@ export class HomePage extends Component {
 	render() {
 		const { classes } = this.props
 		const { loading, userPosts } = this.state
-		console.log(this.state.loading)
 		return (
 			<div>
 				<NavigationBar authenticated />

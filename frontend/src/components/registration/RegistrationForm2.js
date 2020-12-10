@@ -11,6 +11,7 @@ import Slide from '@material-ui/core/Slide';
 import { REVIEWS } from "../login/FakeReviews";
 import { register } from '../../actions/auth';
 import { createMessage } from '../../actions/errors';
+import NavBlocker from '../../util/NavBlocker'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -196,7 +197,12 @@ export function RegistrationForm({
 								</Grid>
 							</Grid>
 							<Grid container justify="center" style={{ marginTop: '10px' }}>
+								<Grid item>
 								<Button type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Register</Button>
+								</Grid>
+								<Grid item>
+									<a href="#/login"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Already have an account?</Button></a>
+								</Grid>
 							</Grid>
 							<Grid container justify="center" style={{ marginTop: '10px' }}>
 								<div style={{ display: 'flex', margin: 'auto' }}>
