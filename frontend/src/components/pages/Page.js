@@ -23,11 +23,17 @@ const useStyles = theme => ({
 		display: 'flex',
 		justifyContent: 'center'
 	},
+	subscribeButton: {
+		fontFamily: "Nunito",
+		color: '#fff',
+		borderColor: '#fff'
+	}
 })
 export class Page extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			id: 0,
 			title: "Loading...",
 			owner: "Loading",
 			description: "Loading...",
@@ -71,6 +77,7 @@ export class Page extends Component {
 					)
 				})
 				this.setState({
+					id: res.data.id,
 					owner: res.data.owner,
 					title: res.data.title,
 					description: res.data.description,
@@ -89,13 +96,14 @@ export class Page extends Component {
 
 	render() {
 		const classes = this.props.classes
-		const { title, description, dateCreated, owner, members, posts } = this.state;
-		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
+		const { id, title, description, dateCreated, owner, members, posts } = this.state;
+		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button variant="outlined" className={classes.subscribeButton} onClick={this.wrapper}>Subscribe</Button>)
 		return (
 			<div className={classes.root}>
 				<NavigationBar authenticated />
 				<NavBlocker />
 				<PageHeader
+					id={id}
 					title={title}
 					description={description}
 					dateCreated={dateCreated}
@@ -107,7 +115,9 @@ export class Page extends Component {
 					{this.state.posts.length === 0 && <Grid item xs><h4 className={classes.text}>No Posts yet!</h4></Grid>}
 					{this.state.posts.length !== 0 && posts.reverse().map(each => (<Grid item xs={6}>{each}</Grid>))}
 				</Grid>
-				<Footer reload={this.reload} postable page={this.props.match.params.pageID} />
+				{!this.props.noFooter &&
+					<Footer reload={this.reload} postable page={this.props.match.params.pageID} />
+				}
 			</div >
 		)
 	}

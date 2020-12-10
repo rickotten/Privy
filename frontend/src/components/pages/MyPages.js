@@ -6,6 +6,7 @@ import NavigationBar from "../layout/NavigationBar2";
 import CreatePageForm from "./CreatePageForm";
 import PropTypes from 'prop-types'
 import Page from './Page'
+import Footer from "../layout/Footer";
 
 export class MyPages extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export class MyPages extends Component {
                 const localPages = []
                 res.data.forEach(page => {
                     localPages.push(
-                        <Page match={{ params: { pageID: page.id } }} />
+                        <Page noFooter match={{ params: { pageID: page.id } }} />
                     )
                 })
                 if (localPages.length === 0) {
@@ -60,6 +61,7 @@ export class MyPages extends Component {
             <div>
                 <NavigationBar />
                 {this.state.pages}
+                <Footer />
             </div>
         )
     }
