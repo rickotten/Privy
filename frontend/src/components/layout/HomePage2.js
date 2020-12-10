@@ -112,8 +112,8 @@ export class HomePage extends Component {
 								{this.state.userPosts}
 							</div>
 						}
-						<UserPostForm reload={this.reload} />
-						<Footer />
+						{/* <UserPostForm reload={this.reload} /> */}
+						<Footer reload={this.reload} />
 					</div>
 				</div>
 			</div>

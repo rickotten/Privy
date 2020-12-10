@@ -56,7 +56,7 @@ export function UserPostForm({
 					onChange={onChange}
 					fullWidth
 					multiline
-					placeholder="Post some interesting to share with your friends!"
+					placeholder="Post something interesting to share with your friends!"
 					className={classes.textField}
 					rows={8}>
 
