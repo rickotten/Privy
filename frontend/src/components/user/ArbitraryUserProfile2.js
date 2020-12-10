@@ -11,17 +11,14 @@ import PropTypes from 'prop-types'
 import dayjs from 'dayjs';
 // MUI Icons
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import NoteIcon from '@material-ui/icons/Note';
 import FaceIcon from '@material-ui/icons/Face';
 import { connect } from "react-redux";
 import NavigationBar from "../layout/NavigationBar2"
 import { MembersButton } from "../pages/PageHeader";
 import Badge from '@material-ui/core/Badge';
 import UserTimeline from "../layout/UserTimeline2";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Button } from "@material-ui/core";
 import NavBlocker from "../../util/NavBlocker";
 import Footer from "../layout/Footer";
 
@@ -285,6 +282,10 @@ export class ArbitraryUserProfile extends Component {
 									<div className={classes.columnCentered}>
 										<div className={classes.centered}>
 											<Avatar alt={username.toUpperCase().charAt(0)} className={classes.profilePicture} src={profilePicture} />
+										</div>
+										<div className={classes.centered}> 
+										{(this.props.auth.user.username !== username) &&
+											<Button onClick={this.follow} disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="outlined" color="primary">{following ? "Following" : "Follow"}</Button>}
 										</div>
 									</div>
 								</Grid>
