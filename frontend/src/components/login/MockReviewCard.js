@@ -14,18 +14,10 @@ const useStyles = makeStyles({
 	root: {
 		minWidth: 275,
 	},
-	bullet: {
-		display: 'inline-block',
-		margin: '0 2px',
-		transform: 'scale(0.8)',
-	},
 	title: {
 		fontSize: 14,
 		fontStyle: 'italic',
 		fontFamily: "Nunito",
-	},
-	pos: {
-		marginBottom: 12,
 	},
 	header: {
 		width: '100%',
@@ -52,7 +44,6 @@ export default function MockReviewCard({
 	starCount
 }) {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<Card className={classes.root}>

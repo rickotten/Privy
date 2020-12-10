@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
 		background: 'none',
 		// backgroundColor: 'blue'
 	},
-	loginForm: {
-
-	},
 	padding: {
 		padding: theme.spacing.unit * 6,
 		backgroundColor: '#ffffff'

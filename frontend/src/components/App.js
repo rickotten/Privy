@@ -10,7 +10,7 @@ import LoginForm from "./login/LoginForm2";
 // import User from "./user/User";
 import PrivateRoute from "./common/PrivateRoute";
 import ForgotCredentialsForm from "./login/ForgotCredentialsForm";
-import HomePage from "./layout/HomePage";
+import HomePage from "./layout/HomePage2";
 import UserTimeline from "./layout/UserTimeline2"
 import UserPostForm from "./posts/UserPostForm"
 import Logout from "./user/Logout"

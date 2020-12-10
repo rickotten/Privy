@@ -7,7 +7,13 @@ import { get_search_posts_data } from '../../actions/posts';
 import { DropdownButton, NavDropdown } from 'react-bootstrap';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import Nav from 'react-bootstrap/Nav'
+import { withStyles } from "@material-ui/core";
 
+const useStyles = theme => ({
+    textFields: {
+        fontFamily: "Nunito",
+    }
+})
 export class SearchFormExample extends Component {
     state = {
         dropdownTitle: 'Filter by...',
@@ -16,7 +22,8 @@ export class SearchFormExample extends Component {
     }
 
     static propTypes = {
-        isAuthenticated: PropTypes.bool
+        isAuthenticated: PropTypes.bool,
+        classes: PropTypes.object.isRequired
     }
 
     onChange = e => {
@@ -54,16 +61,17 @@ export class SearchFormExample extends Component {
     //What is rendered for the user
 
     render() {
+        const { classes } = this.props
         return (
             <Nav>
                 <Form onSubmit={this.search} inline>
                     {/* The text for the user's post */}
-                    <Form.Control className="textField" type="text" placeholder="Search..."
+                    <Form.Control className={classes.textFields} type="text" placeholder="Search..."
                         name="search_text"
                         type="text"
                         onChange={this.onChange} />
                 </Form>
-                <NavDropdown title={this.state.dropdownTitle}>
+                <NavDropdown className={classes.textFields} title={this.state.dropdownTitle}>
                     <NavDropdown.Item
                         as="button"
                         name="selection"
@@ -95,7 +103,7 @@ export class SearchFormExample extends Component {
                     <DropdownItem as="button" name="selection" onClick={this.onSelect} value="Pages">Pages</DropdownItem>
                 </DropdownButton> */}
             </Nav>
-            
+
         )
     }
 }
@@ -103,4 +111,4 @@ export class SearchFormExample extends Component {
 const mapStateToProps = state => ({
 })
 
-export default connect(mapStateToProps)(SearchFormExample)
+export default connect(mapStateToProps)(withStyles(useStyles)(SearchFormExample))

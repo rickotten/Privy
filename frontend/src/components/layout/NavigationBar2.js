@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SortIcon from '@material-ui/icons/Sort';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import SearchFormExample from "../searches/SearchFormExample";
 
 const useStyles = makeStyles((theme) => ({
 	appbarWrapper: {
@@ -28,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function NavigationBar() {
+export default function NavigationBar({
+	authenticated
+}) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,6 +43,37 @@ export default function NavigationBar() {
 		setAnchorEl(null);
 	};
 
+	const unauthMenu = (<div>
+		<a href="#/login"><MenuItem onClick={handleClose}
+			className={classes.toolMenu}>Login</MenuItem></a>
+		<a href="#/register">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Register</MenuItem></a>
+	</div>)
+
+	const authMenu = (<div>
+		<a href="#/profile">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Profile</MenuItem>
+		</a>
+		<a href="#/pages">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Pages</MenuItem>
+		</a>
+		<a href="#/messages">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Messages</MenuItem>
+		</a>
+		<a href="#/market">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Market</MenuItem>
+		</a>
+		<a href="#/logout">
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Logout</MenuItem>
+		</a>
+	</div>)
+
 	return (
 		<AppBar className={classes.appbar} elevation={0}>
 			<Toolbar className={classes.appbarWrapper}>
@@ -49,6 +83,7 @@ export default function NavigationBar() {
 				<h1 className={classes.appbarTitle}>
 					Privy<span className={classes.colorText}>Social.</span>
 				</h1>
+				<SearchFormExample />
 				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 					<SortIcon className={classes.icon} />
 				</IconButton>
@@ -59,11 +94,8 @@ export default function NavigationBar() {
 					open={Boolean(anchorEl)}
 					onClose={handleClose}
 				>
-					<a href="#/login"><MenuItem onClick={handleClose}
-						className={classes.toolMenu}>Login</MenuItem></a>
-					<a href="#/register">
-						<MenuItem onClick={handleClose}
-							className={classes.toolMenu}>Register</MenuItem></a>
+					{authenticated && authMenu}
+					{!authenticated && unauthMenu}
 				</Menu>
 			</Toolbar>
 		</AppBar>

@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button'
 import PropTypes from 'prop-types'
 import { connect } from "react-redux";
 import { comment_on_post } from "../../actions/posts";
+import SendIcon from '@material-ui/icons/Send';
+import { IconButton } from '@material-ui/core';
 
 export class CommentForm extends Component {
     static propTypes = {
@@ -27,15 +29,17 @@ export class CommentForm extends Component {
 
     render() {
         return (
-            <Form className = "post" onSubmit={this.onSubmit}>
-                <Form.Group controlId="commentForm">
-                    <Form.Label className="textColor">Comment</Form.Label>
-                    <Form.Control className="textField" type="text" placeholder="Type your comment..." onChange={this.onChange}/>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Post
-                </Button>
-            </Form>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                <Form style={{ display: 'flex' }} onSubmit={this.onSubmit}>
+                    <Form.Group controlId="commentForm">
+                        <Form.Label className="textColor">Comment</Form.Label>
+                        <Form.Control style={{ width: '100%' }} className="textField" type="text" placeholder="Type your comment..." onChange={this.onChange} />
+                    </Form.Group>
+                    <IconButton type="submit" size='small'>
+                        <SendIcon />
+                    </IconButton>
+                </Form>
+            </div>
         )
     }
 }
