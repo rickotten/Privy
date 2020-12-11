@@ -19,6 +19,7 @@ import { Paper } from "@material-ui/core";
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { Typography } from "@material-ui/core";
 
 export default class PaymentForm extends React.Component {
 	state = {
@@ -78,7 +79,14 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center'
-	}
+	},
+	title: {
+		fontFamily: "Nunito",
+		fontWeight: "italic",
+		fontSize: "1rem",
+		color: 'rgb(102, 101, 101, 0.7)',
+		width: '100%'
+	},
 }));
 
 function CreditCardForm({
@@ -110,6 +118,9 @@ function CreditCardForm({
 	return (
 		<Paper className={classes.root}>
 			<Grid container spacing={1}>
+				<Grid item xs={12}>
+					<Typography variant='subtitle2' gutterBottom className={classes.title}>*Note this is a mock payment portal. Information is not actually sent</Typography>
+				</Grid>
 				<Grid item xs={12}>
 					<FormControl fullWidth className={classes.margin} variant="filled">
 						<InputLabel htmlFor="filled-adornment-amount">CC #</InputLabel>
