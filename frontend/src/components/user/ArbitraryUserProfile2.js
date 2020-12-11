@@ -101,10 +101,19 @@ export class ArbitraryUserProfile extends Component {
 	}
 
 	componentDidMount() {
+		const currentUserName = this.props.auth.user.username
+		if (this.props.match.params.username === currentUserName) {
+			console.log("should go here")
+			window.location.href = "#/profile"
+		}
 		this.lookUpProfile();
 	}
 
 	componentDidUpdate(prevProps) {
+		const currentUserName = this.props.auth.user.username
+		if (this.props.match.params.username === currentUserName) {
+			window.location.href = "#/profile"
+		}
 		if (this.props.match.params.username !== prevProps.match.params.username) {
 			this.lookUpProfile();
 		}

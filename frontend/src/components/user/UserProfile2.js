@@ -100,6 +100,8 @@ export class UserProfile extends Component {
 		reload: false
 	}
 
+	// componentDidUpda
+
 	componentDidMount = () => {
 		const token = this.props.token;
 		// Headers 
