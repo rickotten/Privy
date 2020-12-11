@@ -16,7 +16,9 @@ export class FacebookOAuth extends Component {
     render() {
         return (
             <FacebookLogin
-                appId="4397489906992106"
+                // DEPECRECATED EXPOSED KEY
+                // appId="4397489906992106"
+                appId={process.env.FACEBOOK_KEY}
                 textButton="Facebook"
                 autoLoad={false}
                 fields="name,email,picture"

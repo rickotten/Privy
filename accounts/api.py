@@ -198,13 +198,13 @@ class ForgotAPI(generics.GenericAPIView):
         
         # send a new password to the email address
         message = Mail(
-            from_email='privy_support@protonmail.com',
+            from_email='devrick2020@gmail.com',
             to_emails=validated_email,
             subject='Forgot Password',
             html_content='Here is your username: ' + retrieved_username + 
             '<br>Here is your temporary password: ' + generated_password)
         try:
-            sg = SendGridAPIClient('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')
+            sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
             response = sg.send(message)
             print(response.status_code)
             print(response.body)

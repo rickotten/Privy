@@ -22,8 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '92_nx2stvk6r1%=gdr1e%3b^ns17s6s%+zqwq#6xgb(y&v+gi7'
-
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -48,7 +47,8 @@ INSTALLED_APPS = [
     'frontend',
     'accounts',
     'knox',
-    'social_django'
+    'social_django',
+    'storages'
 ]
 
 REST_FRAMEWORK = {
@@ -58,10 +58,27 @@ REST_FRAMEWORK = {
     )
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-zWijk9baxNPQQBJqJ-6KTFI'
-SOCIAL_AUTH_FACEBOOK_KEY = '4397489906992106'
-SOCIAL_AUTH_FACEBOOK_SECRET = '02fdbab2fc3f849406f90c443ca43652'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
+S3_USE_SIGV4 = True
+AWS_S3_HOST = 'https://s3.us-east-2.amazonaws.com'
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3Boto3Storage'
+# AWS_QUERYSTRING_AUTH = False
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_REGION_NAME = 'us-east-2'
+
+# EXPOSED KEYS BELLOW DEPRECATED 
+# 
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['GOOGLE_OAUTH_CLIENT_ID']
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-zWijk9baxNPQQBJqJ-6KTFI'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=os.environ['GOOGLE_OAUTH_CLIENT_ID']
+# SOCIAL_AUTH_FACEBOOK_KEY = '4397489906992106'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ['FACEBOOK_KEY']
+# SOCIAL_AUTH_FACEBOOK_SECRET = '02fdbab2fc3f849406f90c443ca43652'
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ['FACEBOOK_SECRET']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
@@ -119,15 +136,16 @@ WSGI_APPLICATION = 'Privy.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+# DEPREACTED EXPOSED MONGO DB URL
+# "mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority",
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
             "name": "PrivyDB",
-            "host": "mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority",
-            "username": "PrivyDBAdminUser",
-            "password": "mP2JQ1a0wkN8BY43",
+            "host": os.environ['MONGO_HOST'],
+            "username": os.environ['MONGO_USER'],
+            "password": os.environ['MONGO_PASSWORD'],
             "authMechanism": "SCRAM-SHA-1",
         },
     }
