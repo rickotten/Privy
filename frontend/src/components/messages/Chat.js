@@ -369,7 +369,7 @@ function CustomChatListItem({
 			onMouseLeave={() => setHover(false)}
 			style={{ justifyContent: 'space-between' }}
 		>
-			<div>
+			<div style={{maxWidth: '100%'}}>
 				<AvatarGroup max={5}>
 					{members.map(member => (
 						<Avatar alt={member.username} src={member.avatar_url} />
