@@ -21,6 +21,7 @@ sendgrid = "*"
 python-social-auth = {extras = ["django"], version = "*"}
 pillow = "*"
 django-storages = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.8"
