@@ -19,6 +19,7 @@ export class ShareButton extends Component {
 		token: PropTypes.string.isRequired,
 		createAlert: PropTypes.func.isRequired,
 		post_id: PropTypes.number.isRequired,
+		page_id: PropTypes.number,
 		reload: PropTypes.func.isRequired
 	}
 
@@ -55,7 +56,7 @@ export class ShareButton extends Component {
 	}
 
 	render() {
-		const { currentUser, postAuthor, post_id } = this.props
+		const { currentUser, postAuthor, post_id, page_id } = this.props
 
 		const deleteButton = (currentUser.username === postAuthor) ? (<MenuItem onClick={this.deletePost(post_id)}>Delete</MenuItem>) : undefined
 
@@ -71,10 +72,12 @@ export class ShareButton extends Component {
 					open={Boolean(this.state.anchorEl)}
 					onClose={this.handleClose}
 				>
-					<a href={`#/profile/${postAuthor}`}><MenuItem onClick={this.handleClose}>Profile</MenuItem></a>
-					<a href={`#/posts/${post_id}` }><MenuItem onClick={this.handleClose}>Share</MenuItem></a>
+					<a href={`#/profile/${postAuthor}`}><MenuItem onClick={this.handleClose}>Visit Profile</MenuItem></a>
+					{page_id && <a href={`#/pages/${page_id}` }><MenuItem onClick={this.handleClose}>Visit Page</MenuItem></a>}
+					<a href={`#/posts/${post_id}`}><MenuItem onClick={this.handleClose}>Share</MenuItem></a>
 					{deleteButton}
 				</Menu>
+				
 			</div>
 		);
 	}
