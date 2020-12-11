@@ -21,6 +21,7 @@ import CommentForm from './CommentForm';
 import Comment from './Comment';
 import ShareButton from './util/ShareButton';
 import Box from '@material-ui/core/Box';
+import { connect } from "react-redux";
 
 const useStyles = theme => ({
     root: {
@@ -56,14 +57,14 @@ const useStyles = theme => ({
 export class UserPost2 extends Component {
 
     static propTypes = {
+        currentUser: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
         post: PropTypes.object.isRequired,
         reload: PropTypes.func.isRequired
     }
 
     addCommentOnPost = (username, comment) => {
-        this.setState({ comments: [...this.state.comments, <Comment key={comment} authorName={username} comment={comment} />] });
-
+        this.setState({ comments: [...this.state.comments, <Comment key={comment} picture={this.props.currentUser.profile.profile_picture} authorName={username} comment={comment} />] });
     }
 
     state = {
@@ -156,4 +157,7 @@ export class UserPost2 extends Component {
     }
 }
 
-export default withStyles(useStyles)(UserPost2);
+const mapStateToProps = state => ({
+    currentUser: state.auth.user
+})
+export default connect(mapStateToProps)(withStyles(useStyles)(UserPost2));
