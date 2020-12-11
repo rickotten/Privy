@@ -59,7 +59,7 @@ export class SearchPages extends Component {
                 const localPages = []
                 res.data.forEach(post => {
                     localPages.push(
-                        <Page match={{ params: { pageID: post.id } }} />
+                        <Page match={{ params: { pageID: post.id } }} noBar/>
                     );
                 })
                 this.setState({ resultingPages: localPages, loadingResults: false });
@@ -76,8 +76,10 @@ export class SearchPages extends Component {
         return (
             <div>
                 <NavigationBar authenticated />
+                {/* <NavBlocker/> */}
                 <NavBlocker />
                 <h2 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h2>
+                {resultingPages.length === 0 && <h3 className={classes.text}>No results!</h3>}
                 {resultingPages}
             </div>
         )

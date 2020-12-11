@@ -48,7 +48,7 @@ export class Page extends Component {
 		match: PropTypes.object.isRequired, // match.params.pageID
 		auth: PropTypes.object.isRequired,
 		toggle_subscribe: PropTypes.func.isRequired,
-		classes: PropTypes.object.isRequired
+		classes: PropTypes.object.isRequired,
 	}
 
 	componentDidMount() {
@@ -95,11 +95,12 @@ export class Page extends Component {
 
 	render() {
 		const classes = this.props.classes
+		const { noBar } = this.props
 		const { id, title, description, dateCreated, owner, members, posts } = this.state;
 		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button variant="outlined" className={classes.subscribeButton} onClick={this.wrapper}>Subscribe</Button>)
 		return (
 			<div className={classes.root}>
-				<NavigationBar authenticated />
+				{!noBar && <NavigationBar authenticated />}
 				<NavBlocker />
 				<PageHeader
 					id={id}

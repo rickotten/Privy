@@ -263,10 +263,11 @@ export class ArbitraryUserProfile extends Component {
 	render() {
 		const { username, profilePicture, email, bio, createdAt, showEmail, following, followers, followingUsers } = this.state;
 		const classes = this.props.classes;
+		const { noBar } = this.props;
 
 		return (
 			<div className={classes.root}>
-				<NavigationBar authenticated />
+				{!noBar && <NavigationBar authenticated />}
 				<NavBlocker />
 				<Grid container spacing={3}>
 					<Grid item xs>

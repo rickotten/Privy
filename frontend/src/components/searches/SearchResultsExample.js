@@ -80,6 +80,7 @@ export class SearchResultsExample extends Component {
                     <Grid item xs={12}>
                         <h3 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h3>
                     </Grid>
+                    {userPosts.length === 0 && <Grid item xs={12}><h3 className={classes.text}>No results!</h3></Grid>}
                     {userPosts.map(each => <Grid item xs={6}>{each}</Grid>)}
                 </Grid>
                 <Footer />

@@ -62,7 +62,7 @@ export class SearchUsers extends Component {
                 const localResults = []
                 results.forEach(user => {
                     localResults.push(
-                        <ArbitraryUserProfile2 match={{ params: { username: user.username } }} />
+                        <ArbitraryUserProfile2 noBar match={{ params: { username: user.username } }} />
                     );
                 })
                 this.setState({ resultingUsers: localResults, loadingResults: false });
@@ -83,6 +83,7 @@ export class SearchUsers extends Component {
                     <Grid item xs={12}>
                         <h3 className={classes.textField}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h3>
                     </Grid>
+                    {resultingUsers.length === 0 && <Grid item xs={12}><h3 className={classes.textField}>No results!</h3></Grid>}
                     {resultingUsers.map(each => <Grid item xs={12}>{each}</Grid>)}
                 </Grid>
                 <Footer />
