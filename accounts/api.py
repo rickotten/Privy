@@ -276,7 +276,7 @@ class UserPostAPI(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         post = UserPost.objects.get(id=kwargs['post_id'])
-        return Response(UserPostSerializer(post).data)
+        return Response(UserPostSerializer(post, context=self.get_serializer_context()).data)
 
     def delete(self, request, *args, **kwargs):
         post = UserPost.objects.get(id=kwargs['post_id'])
