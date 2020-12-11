@@ -47,7 +47,7 @@ import { CssBaseline, CssBaseling } from '@material-ui/core';
 // Alert Options
 const alertOptions = {
   timeout: 3000,
-  position: "top center",
+  position: "bottom center",
 };
 
 const useStyles = (theme) => ({

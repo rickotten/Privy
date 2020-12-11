@@ -52,7 +52,6 @@ export class Page extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props)
 		this.getPage();
 	}
 
@@ -67,7 +66,6 @@ export class Page extends Component {
 	}
 
 	getPage() {
-		console.log(this.props.match.params.pageID)
 		axios.get(`/pages/${this.props.match.params.pageID}`)
 			.then(res => {
 				const localPosts = []
@@ -83,7 +81,8 @@ export class Page extends Component {
 					description: res.data.description,
 					dateCreated: res.data.date_created,
 					posts: localPosts,
-					members: res.data.members
+					members: res.data.members,
+					reload: false
 				})
 			}).catch(err => {
 				console.log(err)
@@ -113,7 +112,7 @@ export class Page extends Component {
 				/>
 				<Grid container spacing={3}>
 					{this.state.posts.length === 0 && <Grid item xs><h4 className={classes.text}>No Posts yet!</h4></Grid>}
-					{this.state.posts.length !== 0 && posts.reverse().map(each => (<Grid item xs={6}>{each}</Grid>))}
+					{this.state.posts.length !== 0 && posts.map(each => (<Grid item xs={6}>{each}</Grid>))}
 				</Grid>
 				{!this.props.noFooter &&
 					<Footer reload={this.reload} postable page={this.props.match.params.pageID} />

@@ -271,7 +271,8 @@ class PageSerializer(serializers.ModelSerializer):
     # Request data
     title = serializers.CharField()
     description = serializers.CharField()
-    posts = UserPostSerializer(many=True, read_only=True)
+    # posts = UserPostSerializer(many=True, read_only=True)
+    posts = serializers.SerializerMethodField()
     
     class Meta:
         model = Page
@@ -289,6 +290,10 @@ class PageSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         page = Page.objects.create(owner=self.context['request'].user, title=validated_data['title'], description=validated_data['description'])
         return page
+    
+    def get_posts(self, instance):
+        posts = instance.posts.all().order_by('-date_created')
+        return UserPostSerializer(posts, many=True).data
 
 # The difference between this serializer and the regular page serializer is that this serializer only returns the page id and the title.
 class TinyPageSerializer(serializers.ModelSerializer):

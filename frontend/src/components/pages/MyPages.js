@@ -7,7 +7,20 @@ import CreatePageForm from "./CreatePageForm";
 import PropTypes from 'prop-types'
 import Page from './Page'
 import Footer from "../layout/Footer";
+import { withStyles } from "@material-ui/core";
+import NavBlocker from "../../util/NavBlocker";
 
+const useStyles = (theme) => ({
+    title: {
+        color: '#fff',
+        fontSize: '2rem',
+        fontWeight: 'bold'
+    },
+    colorText: {
+        color: '#5AFF3D',
+        fontWeight: 'bold'
+    },
+})
 export class MyPages extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +30,8 @@ export class MyPages extends Component {
     }
 
     static propTypes = {
-        auth: PropTypes.object.isRequired
+        auth: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
     }
 
     componentDidMount() {
@@ -27,6 +41,7 @@ export class MyPages extends Component {
     getUserPages = () => {
         // Code below taken from auth.js action
         const token = this.props.auth.token;
+        const classes = this.props.classes
         // Headers
         const config = {
             headers: {
@@ -47,7 +62,9 @@ export class MyPages extends Component {
                     )
                 })
                 if (localPages.length === 0) {
-                    this.setState({ pages: <h2>You're not subscribed to any pages!</h2> })
+                    this.setState({
+                        pages: <h3 className={classes.title}>
+                            You are not subscribed to any Privy<span className={classes.colorText}>Pages.</span> Start searching!</h3>})
                 } else {
                     this.setState({ pages: localPages })
                 }
@@ -59,7 +76,8 @@ export class MyPages extends Component {
     render() {
         return (
             <div>
-                <NavigationBar />
+                <NavigationBar authenticated/>
+                <NavBlocker/>
                 {this.state.pages}
                 <Footer />
             </div>
@@ -71,4 +89,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(MyPages)
+export default connect(mapStateToProps)(withStyles(useStyles)(MyPages))
