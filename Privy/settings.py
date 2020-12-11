@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -131,15 +130,14 @@ WSGI_APPLICATION = 'Privy.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
             "name": "PrivyDB",
-            "host": "mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority",
-            "username": "PrivyDBAdminUser",
-            "password": "mP2JQ1a0wkN8BY43",
+            "host": os.environ['MONGO_HOST'],
+            "username": os.environ['MONGO_USER'],
+            "password": os.environ['MONGO_PASSWORD'],
             "authMechanism": "SCRAM-SHA-1",
         },
     }
