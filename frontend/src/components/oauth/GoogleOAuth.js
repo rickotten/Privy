@@ -19,7 +19,7 @@ export class GoogleOAuth extends Component {
             return (
                 <GoogleLogin
                     clientId="449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com"
-                    buttonText="Sign in with Google"
+                    buttonText="Google"
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
                     cookiePolicy={'single_host_origin'}
@@ -34,4 +34,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps,  { google_oauth })(GoogleOAuth)
+export default connect(mapStateToProps, { google_oauth })(GoogleOAuth)

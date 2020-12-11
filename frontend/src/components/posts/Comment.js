@@ -9,65 +9,63 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 
+const useStyles = theme => ({
+    root: {
+
+    },
+    title: {
+        fontSize: 14,
+        fontStyle: 'italic',
+        fontFamily: "Nunito",
+    },
+    header: {
+        width: '100%',
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'space-around',
+        fontFamily: "Nunito",
+    },
+    subHeader: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    review: {
+        paddingLeft: 10,
+        flexGrow: 2,
+        fontFamily: "Nunito",
+    }
+})
 export class Comment extends Component {
     static propTypes = {
         authorName: PropTypes.string.isRequired,
         comment: PropTypes.string.isRequired,
-        picture: PropTypes.string
+        picture: PropTypes.string,
+        classes: PropTypes.object.isRequired
     }
 
     render() {
+        const { authorName, comment, picture, classes } = this.props
         const avatar = <a href={"#profile/" + this.props.authorName}>
-            <Avatar alt={this.props.authorName.toUpperCase().charAt(0)} src={this.props.picture}/>
-                                </a>
+            <Avatar alt={this.props.authorName.toUpperCase().charAt(0)} src={picture} />
+        </a>
         return (
-
-            <div className="comment card-body" padding="20px">
-                <main style={{display: "table"}}>
+            <Card className={classes.root}>
+                <CardContent className={classes.header}>
                     {avatar}
-                    {this.props.authorName}
-                </main>
-                <div>
-                    <Typography>{this.props.comment}</Typography>
-                </div>
-            </div>
+                    <div className={classes.subHeader}>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Via {authorName}
+                        </Typography>
+                    </div>
 
-            /*
-            <Card>
-                <CardHeader 
-                    avatar={avatar}
-                    title={this.props.authorName}
-                />
-                <CardContent>
-                    <Typography variant="body1" color="textPrimary" component="p">
-                        {this.props.comment}
-                    </Typography>
+                    <Typography className={classes.review} variant="body2" component="p">
+                        "{comment}"
+				</Typography>
                 </CardContent>
             </Card>
-            */
         )
-
-        // return (
-        //     <Grid
-        //         container
-        //         direction="row"
-        //         justify="flex-start"
-        //         alignItems="center"
-        //         spacing={4}
-        //     >
-        //         <Grid item>
-        //             <Avatar>
-        //                 {this.props.authorName.toUpperCase().charAt(0)}
-        //             </Avatar>
-        //         </Grid>
-        //         <Grid item>
-        //             <Typography variant="subtitle1" gutterBottom>
-        //                 {this.props.comment}
-        //             </Typography>
-        //         </Grid>
-        //     </Grid>
-        // )
     }
 }
 
-export default Comment
+export default withStyles(useStyles)(Comment)

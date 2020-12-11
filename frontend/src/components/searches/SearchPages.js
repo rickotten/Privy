@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import NavigationBar from '../layout/NavigationBar';
+import NavigationBar from '../layout/NavigationBar2';
+import NavBlocker from '../../util/NavBlocker'
 import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import axios from 'axios'
-import { Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles'
+import Page from '../pages/Page'
 
+const useStyles = theme => ({
+    text: {
+        fontFamily: 'Nunito',
+        fontWeight: 'bold',
+        color: '#fff',
+        display: 'flex',
+        justifyContent: 'center'
+    },
+})
 export class SearchPages extends Component {
 
     constructor(props) {
@@ -26,7 +37,7 @@ export class SearchPages extends Component {
             this.lookUpPages();
         }
     }
-    
+
     lookUpPages = () => {
         // Code below taken from auth.js action
         const token = this.props.auth.token;
@@ -41,41 +52,33 @@ export class SearchPages extends Component {
             config.headers['Authorization'] = `Token ${token}`;
         }
 
-            
+
         //Getting the user
         axios.get(`searchpages/?search=${this.props.match.params.terms}`, config)
             .then(res => {
                 const localPages = []
                 res.data.forEach(post => {
                     localPages.push(
-                            <a href={`#/pages/${post.id}`}>
-                                <Paper style={{width: 600, height: 100, padding: 15, marginTop: 15}} rounded={true}>
-                                    <h1>Title: {post.title}</h1>
-                                </Paper>
-                            </a>
-                        );
+                        <Page match={{ params: { pageID: post.id } }} />
+                    );
                 })
-                this.setState({resultingPages: localPages, loadingResults: false});
+                this.setState({ resultingPages: localPages, loadingResults: false });
 
             }).catch(err => {
                 console.log(err);
             });
     }
-        
+
     render() {
+        const classes = this.props.classes
         const { resultingPages, loadingResults } = this.state
         console.log(loadingResults)
         return (
             <div>
-                <NavigationBar/>
-                <div className="card card-body">
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        {loadingResults && <h1>Loading Search Results</h1>}
-                        {(resultingPages.length === 0 && !loadingResults) ? <h1>No results!</h1> : resultingPages}
-                        </div>
-                    </div>
-                </div>
+                <NavigationBar authenticated />
+                <NavBlocker />
+                <h2 className={classes.text}>{loadingResults ? 'Loading Results...' : 'Search Results'}</h2>
+                {resultingPages}
             </div>
         )
     }
@@ -85,4 +88,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(SearchPages)
+export default connect(mapStateToProps)(withStyles(useStyles)(SearchPages))

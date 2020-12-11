@@ -24,6 +24,7 @@ class UserSettings(models.Model):
         User, related_name="settings", on_delete=models.CASCADE, primary_key=True)
     show_email_on_profile = models.BooleanField(default=True)
     dark_mode = models.BooleanField(default=False)
+    private_profile = models.BooleanField(default=False)
 
 # Model for user privacy page
 

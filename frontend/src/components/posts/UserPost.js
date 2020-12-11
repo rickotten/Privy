@@ -43,6 +43,13 @@ const useStyles = theme => ({
     avatar: {
         backgroundColor: red[500],
     },
+    text: {
+        fontFamily: "Nunito",
+    },
+    commentsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+    }
 });
 
 
@@ -97,9 +104,9 @@ export class UserPost2 extends Component {
         const created_on = this.props.post.date_created ? this.props.post.date_created : "2020-01-31T12:59-0500";
         // <Card className={classes.root} style={{paddingbottom: 20}}>
         return (
-            <Box width="100%" 
-                style={{paddingTop: 10, paddingBottom: 10}}
-                >
+            <Box width="100%"
+                style={{ paddingTop: 10, paddingBottom: 10 }}
+            >
                 <Card>
                     <CardHeader className="post"
                         avatar={avatar}
@@ -110,32 +117,37 @@ export class UserPost2 extends Component {
                         subheader={dayjs(created_on).fromNow()}
                     />
                     {media}
-                    <CardContent style={{display: 'flex', justifyContent: 'center'}}>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                    <CardContent style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
                             {post.description}
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing className="post">
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <LikeButton post={post} postId={post.id} />
 
-                        <LikeButton post={post} postId={post.id} />
-
-                        <IconButton
-                            className={clsx(classes.expand, {
-                                [classes.expandOpen]: expanded,
-                            })}
-                            onClick={this.toggleCommentForm}
-                            aria-expanded={expanded}
-                            aria-label="show comments"
-                        >
-                            <CommentIcon />
-                        </IconButton>
-                        <span>{comments.length} comments</span>
+                            <IconButton
+                                className={clsx(classes.expand, {
+                                    [classes.expandOpen]: expanded,
+                                })}
+                                onClick={this.toggleCommentForm}
+                                aria-expanded={expanded}
+                                aria-label="show comments"
+                            >
+                                <CommentIcon />
+                            </IconButton>
+                            <span>{comments.length} comments</span>
+                        </div>
 
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <CardContent className="post">
+                        <CardContent style={{ display: 'flex' }} className="post">
                             <CommentForm addCommentOnPost={this.addCommentOnPost} postId={post.id} />
-                            {comments}
+                            <div style={{ display: 'flex', flexGrow: 2, justifyContent: 'center' }}>
+                                <div className={classes.commentsContainer}>
+                                    {comments}
+                                </div>
+                            </div>
                         </CardContent>
                     </Collapse>
                 </Card>

@@ -3,17 +3,37 @@ import { toggle_subscribe } from "../../actions/pages";
 import { connect } from "react-redux";
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import NavigationBar from "../layout/NavigationBar"
+import NavigationBar from "../layout/NavigationBar2"
 import UserPost2 from '../posts/UserPost'
 import { Button, Grid } from '@material-ui/core';
 import UserPostForm from '../posts/UserPostForm';
 import PageHeader from './PageHeader'
+import NavBlocker from "../../util/NavBlocker";
+import { withStyles } from "@material-ui/core";
+import Footer from "../layout/Footer";
 
-
+const useStyles = theme => ({
+	root: {
+		minHeight: '100vh'
+	},
+	text: {
+		fontFamily: 'Nunito',
+		fontWeight: 'bold',
+		color: '#fff',
+		display: 'flex',
+		justifyContent: 'center'
+	},
+	subscribeButton: {
+		fontFamily: "Nunito",
+		color: '#fff',
+		borderColor: '#fff'
+	}
+})
 export class Page extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			id: 0,
 			title: "Loading...",
 			owner: "Loading",
 			description: "Loading...",
@@ -27,10 +47,12 @@ export class Page extends Component {
 	static propTypes = {
 		match: PropTypes.object.isRequired, // match.params.pageID
 		auth: PropTypes.object.isRequired,
-		toggle_subscribe: PropTypes.func.isRequired
+		toggle_subscribe: PropTypes.func.isRequired,
+		classes: PropTypes.object.isRequired
 	}
 
 	componentDidMount() {
+		console.log(this.props)
 		this.getPage();
 	}
 
@@ -45,6 +67,7 @@ export class Page extends Component {
 	}
 
 	getPage() {
+		console.log(this.props.match.params.pageID)
 		axios.get(`/pages/${this.props.match.params.pageID}`)
 			.then(res => {
 				const localPosts = []
@@ -54,6 +77,7 @@ export class Page extends Component {
 					)
 				})
 				this.setState({
+					id: res.data.id,
 					owner: res.data.owner,
 					title: res.data.title,
 					description: res.data.description,
@@ -71,12 +95,15 @@ export class Page extends Component {
 	}
 
 	render() {
-		const { title, description, dateCreated, owner, members } = this.state;
-		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button color="primary" onClick={this.wrapper}>Subscribe/Unsubscribe to this Page</Button>)
+		const classes = this.props.classes
+		const { id, title, description, dateCreated, owner, members, posts } = this.state;
+		const subscribeButton = (this.props.auth.user.username === this.state.owner) ? (<div></div>) : (<Button variant="outlined" className={classes.subscribeButton} onClick={this.wrapper}>Subscribe</Button>)
 		return (
-			<div>
-				<NavigationBar/>
+			<div className={classes.root}>
+				<NavigationBar authenticated />
+				<NavBlocker />
 				<PageHeader
+					id={id}
 					title={title}
 					description={description}
 					dateCreated={dateCreated}
@@ -84,17 +111,14 @@ export class Page extends Component {
 					members={members}
 					subscribeButton={subscribeButton}
 				/>
-				<div className="card card-body">
-					<UserPostForm reload={this.reload} page_id={this.props.match.params.pageID}/>
-				</div>
-				{/* <div style={{display: 'flex', justifyContent: 'center'}}> */}
-				<div style={{display: 'flex', justifyContent: 'center'}}>
-					<div style={{width: '80%', display: 'flex', flexDirection: 'column'}}>
-							{this.state.posts.length === 0 ? <h4>No Posts yet!</h4> : this.state.posts.reverse()}
-					</div>
-				</div>
-				{/* </div> */}
-			</div>
+				<Grid container spacing={3}>
+					{this.state.posts.length === 0 && <Grid item xs><h4 className={classes.text}>No Posts yet!</h4></Grid>}
+					{this.state.posts.length !== 0 && posts.reverse().map(each => (<Grid item xs={6}>{each}</Grid>))}
+				</Grid>
+				{!this.props.noFooter &&
+					<Footer reload={this.reload} postable page={this.props.match.params.pageID} />
+				}
+			</div >
 		)
 	}
 }
@@ -103,4 +127,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 })
 
-export default connect(mapStateToProps, { toggle_subscribe })(Page)
+export default connect(mapStateToProps, { toggle_subscribe })(withStyles(useStyles)(Page))
