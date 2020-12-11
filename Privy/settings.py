@@ -58,6 +58,12 @@ REST_FRAMEWORK = {
     )
 }
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 # EXPOSED KEYS BELLOW DEPRECATED 
 # 
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '449793272806-rmmuu0tqqflvroe6r09bbul8e6scndbq.apps.googleusercontent.com'
