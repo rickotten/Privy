@@ -220,7 +220,8 @@ class UserPostSerializer(serializers.ModelSerializer):
         try:
             picture_url = post.author.profile.profile_picture.url
             return request.build_absolute_uri(picture_url)
-        except:
+        except Exception as e:
+            print(e)
             return None
 
     def create(self, validated_data):
@@ -293,7 +294,7 @@ class PageSerializer(serializers.ModelSerializer):
     
     def get_posts(self, instance):
         posts = instance.posts.all().order_by('-date_created')
-        return UserPostSerializer(posts, many=True).data
+        return UserPostSerializer(posts, many=True, context=self.context).data
 
 # The difference between this serializer and the regular page serializer is that this serializer only returns the page id and the title.
 class TinyPageSerializer(serializers.ModelSerializer):
