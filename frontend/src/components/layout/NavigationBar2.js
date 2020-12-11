@@ -78,6 +78,10 @@ export function NavigationBar({
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Messages</MenuItem>
 		</a>
+		<a href='#/marketplace'>
+			<MenuItem onClick={handleClose}
+				className={classes.toolMenu}>Market</MenuItem>
+		</a>
 
 		{/* <a href="#/market">
 			<MenuItem onClick={handleClose}

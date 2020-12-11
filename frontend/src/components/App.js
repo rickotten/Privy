@@ -39,11 +39,10 @@ import PaymentPortal from "./payment/PaymentPortal";
 import ThemeSelector from "./themes/ThemeSelector2";
 import Chat from './messages/Chat';
 import { ThemeProvider } from '@livechat/ui-kit'
-import { Marketplace } from "./payment/Marketplace";
+import { Marketplace } from "./payment/Marketplace2";
 
 import { withStyles } from '@material-ui/core/styles';
 import { CssBaseline, CssBaseling } from '@material-ui/core';
-import { ComplexGrid } from "./payment/MarketItem";
 
 // Alert Options
 const alertOptions = {
@@ -112,7 +111,6 @@ export class App extends Component {
                       <PrivateRoute exact path="/messages" component={Chat} />
                       <Route exact path="/searchusers/:terms" component={SearchUsers} />
                       <Route exact path="/searchpages/:terms" component={SearchPages} />
-                      <Route exact path="/test/" component={ComplexGrid}/>
                     </Switch>
                   </div>
                 </Fragment>

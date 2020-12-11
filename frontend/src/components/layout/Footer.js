@@ -156,7 +156,10 @@ export default function Footer({
 						<MenuItem onClick={closeMenu}
 							className={classes.toolMenu}>Messages</MenuItem>
 					</a>
-
+					<a href='#/marketplace'>
+						<MenuItem onClick={handleClose}
+							className={classes.toolMenu}>Market</MenuItem>
+					</a>
 					{/* <a href="#/market">
 						<MenuItem onClick={closeMenu}
 							className={classes.toolMenu}>Market</MenuItem>

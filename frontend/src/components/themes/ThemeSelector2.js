@@ -26,7 +26,6 @@ export function ThemeSelector({
 	try {
 		const use_dark_background = user.settings.dark_mode;
 		root_class = use_dark_background ? classes.altBackground : classes.root
-		console.log("Got settings")
 	} catch (error) {
 		console.log("No settings")
 	}
