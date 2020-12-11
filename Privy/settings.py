@@ -136,6 +136,8 @@ WSGI_APPLICATION = 'Privy.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# DEPREACTED EXPOSED MONGO DB URL
+# "mongodb+srv://PrivyDBAdminUser:mP2JQ1a0wkN8BY43@cluster0.5rmgh.mongodb.net/PrivyDB?retryWrites=true&w=majority",
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
