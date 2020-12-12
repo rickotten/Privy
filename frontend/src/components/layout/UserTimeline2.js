@@ -19,7 +19,8 @@ export class UserTimeline extends Component {
 		super(props);
 		this.state = {
 			userPosts: [],
-			loading: true
+			loading: true,
+			reload: props.reload
 		}
 	}
 
@@ -29,7 +30,8 @@ export class UserTimeline extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.username !== prevProps.match.params.username || this.props.reload) {
+		if (this.props.match.params.username !== prevProps.match.params.username || this.state.reload) {
+			this.setState({ reload: false })
 			this.lookUpPosts();
 
 		}
@@ -63,6 +65,8 @@ export class UserTimeline extends Component {
 					console.log(err);
 					this.setState({ loading: false })
 				});
+		} else {
+			this.setState({ loading: false })
 		}
 	}
 
