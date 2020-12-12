@@ -1,5 +1,6 @@
 # social-network-group-2
-[https://privy-social-app.herokuapp.com/#/](Our website)
+
+https://privy-social-app.herokuapp.com/#/
 
 For the rest to make sense, make sure you are using a Linux-like environment. I think [https://ubuntu.com/tutorials/ubuntu-on-windows#1-overview](this) shell works well for Windows.
 
