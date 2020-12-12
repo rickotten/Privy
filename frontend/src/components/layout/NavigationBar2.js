@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: '0 auto'
 	},
 	appbarTitle: {
-		flexGrow: '1'
+		flexGrow: '1',
+		fontFamily: "Nunito",
+		fontWeight: 'bold'
 	},
 	toolMenu: {
 		fontFamily: "Nunito",
@@ -24,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: 'rgb(82, 106, 107, 0.6)'
 	},
 	colorText: {
-		color: '#5AFF3D'
+		fontFamily: "Nunito",
+		color: '#5AFF3D',
+		fontWeight: 'bold'
 	},
 	icon: {
 		color: '#fff',
@@ -33,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 	logout: {
 		color: '#fff',
 		fontFamily: "Nunito",
-		fontSize: '1rem'
+		fontSize: '1rem',
+		fontWeight: 'bold'
 	}
 }));
 
