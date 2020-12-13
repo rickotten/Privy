@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography, Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import SortIcon from '@material-ui/icons/Sort';
 import Menu from '@material-ui/core/Menu';
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
 	appbarTitle: {
 		flexGrow: '1',
 		fontFamily: "Nunito",
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		color: '#fff'
 	},
 	toolMenu: {
 		fontFamily: "Nunito",
@@ -63,11 +64,11 @@ export function NavigationBar({
 		<a href="#/register">
 			<MenuItem onClick={handleClose}
 				className={classes.toolMenu}>Register</MenuItem></a>
-				<a href="#/forgot">
+		<a href="#/forgot">
 			<MenuItem onClick={handleClose} className={classes.toolMenu}>
 				Forgot Password
 			</MenuItem>
-				</a>
+		</a>
 	</div>)
 
 	const authMenu = (<div>
@@ -109,20 +110,28 @@ export function NavigationBar({
 				<a href="#/">
 					<img className="key" src="/static/images/loginOuthouse.png" alt="yellow key" width='50' height='50'></img>
 				</a>
-				<a href="#/">
+				{/* <a href="#/"> */}
+				<Button style={{ textTransform: 'none' }} onClick={() => window.location.href = "#/"}>
+					{/* <Button href="#/" style={{ textTransform: 'none' }}> */}
 					<h1 className={classes.appbarTitle}>
-					Privy<span className={classes.colorText}>Social.</span>
-				</h1>
-				</a>
+						{/* <Typography variant='h1' className={classes.appbarTitle}> */}
+						Privy<span className={classes.colorText}>Social.</span>
+						{/* </Typography> */}
+					</h1>
+				</Button>
+				<div style={{ flexGrow: 1 }}>
+
+				</div>
+				{/* </a> */}
 				{authenticated && <SearchFormExample />}
 				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 					<SortIcon className={classes.icon} />
 				</IconButton>
 				{authenticated &&
-				<IconButton onClick={clickLogout}>
-					<ExitToAppIcon className={classes.icon} />
-					<span className={classes.logout}>Logout</span>
-				</IconButton>
+					<IconButton onClick={clickLogout}>
+						<ExitToAppIcon className={classes.icon} />
+						<span className={classes.logout}>Logout</span>
+					</IconButton>
 				}
 				<Menu
 					id="simple-menu"
