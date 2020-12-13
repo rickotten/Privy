@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	padding: {
 		padding: theme.spacing.unit * 6,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#ffffff',
+		height: '100%'
 	},
 	loginGreeting: {
 		fontFamily: "Nunito",
@@ -125,96 +126,102 @@ export function RegistrationForm({
 	}
 
 	return (
-		<div className={classes.root}>
+		<div>
 			<NavigationBar />
-			<div className={classes.containers}>
-				<div className={classes.reviewCards}>
-					{REVIEWS.map(review => (
-						<Slide direction="up" in={true} timeout={1000} mountOnEnter unmountOnExit>
-							<Paper elevation={4}>
-								<MockReviewCard
-									className={classes.reviewCard}
-									author={review.author}
-									review={review.review}
-									starCount={review.starCount} />
-							</Paper>
-						</Slide>
-					))}
-				</div>
+			<NavBlocker />
+			<div className={classes.root}>
+				<div className={classes.containers}>
+					<div className={classes.reviewCards}>
+						{REVIEWS.map(review => (
+							<Slide direction="up" in={true} timeout={1000} mountOnEnter unmountOnExit>
+								<Paper elevation={4}>
+									<MockReviewCard
+										className={classes.reviewCard}
+										author={review.author}
+										review={review.review}
+										starCount={review.starCount} />
+								</Paper>
+							</Slide>
+						))}
+					</div>
 
-			</div>
-			<div className={classes.containers}>
-				<form onSubmit={onSubmit}>
-					<Paper className={classes.padding} elevation={5}>
-						<Typography variant={'h5'} className={classes.loginGreeting}>Thank you for choosing Privy<span className={classes.colorText}>Social</span>!</Typography>
-						<div className={classes.margin}>
-							<Grid container spacing={8} alignItems="flex-end">
-								<Grid item>
-									<Face />
+				</div>
+				<div className={classes.containers}>
+					<form onSubmit={onSubmit}>
+						<Paper className={classes.padding} elevation={5}>
+							<Typography variant={'h5'} className={classes.loginGreeting}>Thank you for choosing Privy<span className={classes.colorText}>Social</span>! No email verification needed!</Typography>
+							{/* <Typography variant={'subtitle1'} className={classes.loginGreeting}>
+							Get started now! No email verification needed.
+						</Typography> */}
+							<div className={classes.margin}>
+								<Grid container spacing={8} alignItems="flex-end">
+									<Grid item>
+										<Face />
+									</Grid>
+									<Grid item md={true} sm={true} xs={true}>
+										{/* <TextField id="username" label="Username" type="email" fullWidth autoFocus required /> */}
+										<TextField name="username" onChange={onChange} id="username" label="Username" fullWidth autoFocus required />
+									</Grid>
 								</Grid>
-								<Grid item md={true} sm={true} xs={true}>
-									{/* <TextField id="username" label="Username" type="email" fullWidth autoFocus required /> */}
-									<TextField name="username" onChange={onChange} id="username" label="Username" fullWidth autoFocus required />
+								<Grid container spacing={8} alignItems="flex-end">
+									<Grid item>
+										<Email />
+									</Grid>
+									<Grid item md={true} sm={true} xs={true}>
+										<TextField name="email" onChange={onChange} id="email" label="Email" type="email" fullWidth autoFocus required />
+									</Grid>
 								</Grid>
-							</Grid>
-							<Grid container spacing={8} alignItems="flex-end">
-								<Grid item>
-									<Email />
+								<Grid container spacing={8} alignItems="flex-end">
+									<Grid item>
+										<Fingerprint />
+									</Grid>
+									<Grid item md={true} sm={true} xs={true}>
+										<TextField
+											onChange={onChange}
+											name="password"
+											color='secondary' id="password" label="Password" type="password" fullWidth required />
+									</Grid>
 								</Grid>
-								<Grid item md={true} sm={true} xs={true}>
-									<TextField name="email" onChange={onChange} id="email" label="Email" type="email" fullWidth autoFocus required />
+								<Grid container spacing={8} alignItems="flex-end">
+									<Grid item>
+										<Fingerprint />
+									</Grid>
+									<Grid item md={true} sm={true} xs={true}>
+										<TextField
+											onChange={onChange}
+											name="password2"
+											color='secondary' id="password2" label="Confirm Password" type="password" fullWidth required />
+									</Grid>
 								</Grid>
-							</Grid>
-							<Grid container spacing={8} alignItems="flex-end">
-								<Grid item>
-									<Fingerprint />
+								<Grid container alignItems="center" justify="space-between">
+									<Grid item>
+										<FormControlLabel control={
+											<Checkbox
+												color="primary"
+											/>
+										} label="Remember me" />
+									</Grid>
 								</Grid>
-								<Grid item md={true} sm={true} xs={true}>
-									<TextField
-										onChange={onChange}
-										name="password"
-										color='secondary' id="password" label="Password" type="password" fullWidth required />
+								<Grid container justify="center" style={{ marginTop: '10px' }}>
+									<Grid item style={{ display: 'flex', justifyContent: 'center' }} xs={12}>
+										<Button type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Register</Button>
+									</Grid>
+									<Grid item style={{ display: 'flex', justifyContent: 'center' }} xs={12}>
+										<a href="#/login"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Already have an account?</Button></a>
+									</Grid>
 								</Grid>
-							</Grid>
-							<Grid container spacing={8} alignItems="flex-end">
-								<Grid item>
-									<Fingerprint />
+								<Grid container justify="center" style={{ marginTop: '10px' }}>
+									<div style={{ display: 'flex', margin: 'auto' }}>
+										<GoogleOAuth />
+										<FacebookOAuth />
+									</div>
 								</Grid>
-								<Grid item md={true} sm={true} xs={true}>
-									<TextField
-										onChange={onChange}
-										name="password2"
-										color='secondary' id="password2" label="Confirm Password" type="password" fullWidth required />
-								</Grid>
-							</Grid>
-							<Grid container alignItems="center" justify="space-between">
-								<Grid item>
-									<FormControlLabel control={
-										<Checkbox
-											color="primary"
-										/>
-									} label="Remember me" />
-								</Grid>
-							</Grid>
-							<Grid container justify="center" style={{ marginTop: '10px' }}>
-								<Grid item style={{ display: 'flex', justifyContent: 'center' }} xs={12}>
-								<Button type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Register</Button>
-								</Grid>
-								<Grid item style={{display: 'flex', justifyContent: 'center'}} xs={12}>
-									<a href="#/login"><Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Already have an account?</Button></a>
-								</Grid>
-							</Grid>
-							<Grid container justify="center" style={{ marginTop: '10px' }}>
-								<div style={{ display: 'flex', margin: 'auto' }}>
-									<GoogleOAuth />
-									<FacebookOAuth />
-								</div>
-							</Grid>
-						</div>
-					</Paper>
-				</form>
-			</div>
-		</div >
+							</div>
+						</Paper>
+					</form>
+				</div>
+			</div >
+		</div>
 	)
 }
 
