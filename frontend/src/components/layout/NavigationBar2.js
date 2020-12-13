@@ -109,9 +109,11 @@ export function NavigationBar({
 				<a href="#/">
 					<img className="key" src="/static/images/loginOuthouse.png" alt="yellow key" width='50' height='50'></img>
 				</a>
-				<h1 className={classes.appbarTitle}>
+				<a href="#/">
+					<h1 className={classes.appbarTitle}>
 					Privy<span className={classes.colorText}>Social.</span>
 				</h1>
+				</a>
 				{authenticated && <SearchFormExample />}
 				<IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
 					<SortIcon className={classes.icon} />
